@@ -10,8 +10,8 @@ public class MeshGenerator : MonoBehaviour
     Vector3[] vertices;
     int[] triangles;
 
-    public int xSize = 20;
-    public int zSize = 20;
+    public int xSize = 150;
+    public int zSize = 150;
 
     
     void Start()
@@ -26,29 +26,14 @@ public class MeshGenerator : MonoBehaviour
    void CreateShape() 
    {
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-
-        float lastY = 0f;
         
         for(int i = 0, z = 0; z <= zSize; z++)
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float amplitude = 1;
-                float frequency = 1;
-                float noiseHeight = 0;
-                for (int octave = 0; octave < 5; octave++)
-                {
-                    float sampleX = x / frequency;
-                    float sampleZ = z / frequency;
-
-                    float perlinValue = Mathf.PerlinNoise(sampleX * .2f, sampleZ * .2f) * 1.4f;
-                    noiseHeight += perlinValue * amplitude;
-
-                    amplitude *= 2f;
-                    frequency *= 2f;
-
-                }
-                vertices[i] = new Vector3(x, noiseHeight, z);
+                Vector2 offset = new Vector2(0, 0);
+                float y = generateNoiseValue(x, z, 2.0f, 5, 1.8f, 0.6f, 1222, offset);
+                vertices[i] = new Vector3(x, y, z);
                 i++;
             }
         }
@@ -72,6 +57,46 @@ public class MeshGenerator : MonoBehaviour
             vert++;
         }
    }
+
+    /**
+     * x: The world's x position.
+     * z: The world's z position.
+     * scale: The scale.
+     * octaves: The amount of times that the perlin noise is recalculated with
+     * altered samples.
+     * persistance: changes amplitude. 
+     *      Should not be greater than 3.0f or lower than 0.0f.
+     * lucanarity: affects frequency -- the higher, the spikier the terrain.
+     *      Should not be greater than 1.0f or lower than 0.0f.
+     */
+    float generateNoiseValue(int x, int z, float scale, int octaves, float persistance, float lucanarity, int seed, Vector2 offset)
+    {
+        System.Random r = new System.Random(seed);
+        Vector2[] octaveOffsets = new Vector2[octaves];
+        for (int i = 0; i < octaves; i++)
+        {
+            float offsetX = r.Next(-100000, 100000) + offset.x;
+            float offsetZ = r.Next(-100000, 100000) + offset.y;
+            octaveOffsets[i] = new Vector2(offsetX, offsetZ);
+        }
+
+        float amplitude = 1;
+        float frequency = 1;
+        float noiseHeight = 0;
+        for (int octave = 0; octave < octaves; octave++)
+        {
+            float sampleX = x / scale * frequency + octaveOffsets[octave].x;
+            float sampleZ = z / scale * frequency + octaveOffsets[octave].y;
+
+            float perlinValue = Mathf.PerlinNoise(sampleX * .2f, sampleZ * .2f) * 2 - 1;
+            noiseHeight += perlinValue * amplitude;
+
+            amplitude *= persistance;
+            frequency *= lucanarity;
+
+        }
+        return noiseHeight;
+    }
 
    void UpdateMesh() 
    {
