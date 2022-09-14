@@ -26,7 +26,6 @@ public class MeshGenerator : MonoBehaviour
    void CreateShape() 
    {
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-
         
         for(int i = 0, z = 0; z <= zSize; z++)
         {
@@ -39,7 +38,7 @@ public class MeshGenerator : MonoBehaviour
         }
         triangles = new int[xSize * zSize * 6];
         int vert = 0, tris = 0;
-        for(int z = 0; z < zSize; z++)
+        for (int z = 0; z < zSize; z++)
         {
             for (int x = 0; x < xSize; x++)
             {
@@ -56,8 +55,6 @@ public class MeshGenerator : MonoBehaviour
             }
             vert++;
         }
-        
-        
    }
 
    void UpdateMesh() 
@@ -68,9 +65,13 @@ public class MeshGenerator : MonoBehaviour
         mesh.triangles = triangles;
 
         mesh.RecalculateNormals();
-        
- 
-   }
+
+        //Collision detection
+        MeshCollider meshCollider = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
+        meshCollider.sharedMesh = null;
+        meshCollider.sharedMesh = GetComponent<MeshFilter>().mesh;
+
+    }
 
     private void OnDrawGizmos()
     {
