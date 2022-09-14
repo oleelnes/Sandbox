@@ -26,13 +26,29 @@ public class MeshGenerator : MonoBehaviour
    void CreateShape() 
    {
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+
+        float lastY = 0f;
         
         for(int i = 0, z = 0; z <= zSize; z++)
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float y = Mathf.PerlinNoise(x * .3f, z * .3f) * 2f;
-                vertices[i] = new Vector3(x, y, z);
+                float amplitude = 1;
+                float frequency = 1;
+                float noiseHeight = 0;
+                for (int octave = 0; octave < 5; octave++)
+                {
+                    float sampleX = x / frequency;
+                    float sampleZ = z / frequency;
+
+                    float perlinValue = Mathf.PerlinNoise(sampleX * .2f, sampleZ * .2f) * 1.4f;
+                    noiseHeight += perlinValue * amplitude;
+
+                    amplitude *= 2f;
+                    frequency *= 2f;
+
+                }
+                vertices[i] = new Vector3(x, noiseHeight, z);
                 i++;
             }
         }
