@@ -70,7 +70,6 @@ public class MeshGenerator : MonoBehaviour
         MeshCollider meshCollider = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
         meshCollider.sharedMesh = null;
         meshCollider.sharedMesh = GetComponent<MeshFilter>().mesh;
-
     }
 
     private void OnDrawGizmos()
