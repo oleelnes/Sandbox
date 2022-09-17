@@ -473,9 +473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c079a5172cb9140b23bbe40108a7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 50
   groundDrag: 5
-  jumpForce: 7
+  jumpForce: 50
   jumpCooldown: 0.25
   airMultiplier: 0.4
   walkSpeed: 0
@@ -631,8 +631,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a50aadae0418134680c05c7983e9330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSize: 150
-  zSize: 150
+  xSize: 255
+  zSize: 255
+  meshHeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.032396905
+      outSlope: 0.032396905
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.4308164
+      value: 0.013957119
+      inSlope: 0.17974104
+      outSlope: 0.17974104
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.13257156
+      outWeight: 0.4066992
+    - serializedVersion: 3
+      time: 0.6848051
+      value: 0.123888455
+      inSlope: 1.0993307
+      outSlope: 1.0993307
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20038517
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8917454
+      value: 0.5395892
+      inSlope: 2.445738
+      outSlope: 2.445738
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.09570281
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9830935
+      value: 0.87738556
+      inSlope: 2.7536209
+      outSlope: 2.7536209
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2939821
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 7.252503
+      outSlope: 7.252503
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  heightScale: 30
 --- !u!23 &2140568057
 MeshRenderer:
   m_ObjectHideFlags: 0
