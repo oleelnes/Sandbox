@@ -4,15 +4,44 @@ using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+   public GameObject heartPrefab;
+   public PlayerHealth playerHealth;
+   List<HealthHeart> hearts = new List<HealthHeart>();
+
+    public void DrawHearts() {
+        ClearHearts();
+
+        //Determine how many hearts to make total
+        //Based of max health
+        float maxHealthRemainder = playerHealt.maxHealth % 2;
+        int heartsToMake = (int)(playerHealth.maxHealth / 2 + maxHealthRemainder);
+        for(int i = 0; i < heartsToMake; i++) {
+            CreateEmptyHeart(); 
+        }
         
+        // From guide, unsure if it is best practice
+        for(int i = 0; i < hearts.Count; i++) {
+            int heartStatusRemainder = (int)Mathf.Clamp(playerHealth.health - (i*2), 0, 2)
+            hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
+        }
+    }
+    public void CreateEmptyHeart()
+    {
+        GameObject newHeart = Instansiate(heartPrefab);
+        newHeart.transform.SetParent(transform);
+
+        HealthHeart heartComponent = newHeart.GetComponent<HealthHeart>();
+        heartComponent.SetHeartImage(HeartStatus.Empty);
+        HeartStatus.Add(heartComponent);
     }
 
-    // Update is called once per frame
-    void Update()
+   public void ClearHearts()
+   {
+    foreach(Transform t in transform)
     {
-        
+        Destroy(t.GameObject);
     }
+
+    hearts = new List<HealthHeart>();
+   }
 }
