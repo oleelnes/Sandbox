@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MeshGenerator
   - Melee
+  - Enemy
   layers:
   - Default
   - TransparentFX

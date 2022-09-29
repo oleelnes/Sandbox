@@ -11,6 +11,10 @@ public class MeleeAttack : MonoBehaviour
 
     [Header("Mouse buttons")]
     public KeyCode mouse0 = KeyCode.Mouse0;
+
+
+    [Header("Damage")]
+    public float meleeDamage;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -34,4 +38,17 @@ public class MeleeAttack : MonoBehaviour
             anim.SetBool("attacking", false);
         }
     }
+
+    void OnTriggerEnter(Collider collision)
+    {
+
+        if (collision.tag == "Enemy")
+        {
+            if (anim.GetBool("attacking"))
+            {
+                collision.SendMessage("receiveDamage", meleeDamage, SendMessageOptions.DontRequireReceiver);
+            }
+        }
+    }
+
 }
