@@ -15,11 +15,17 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
 
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
+    private float walkSpeed = 7;
+    private float sprintSpeed = 14;
 
+    
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+
+    public KeyCode sprintKey = KeyCode.LeftShift;
+
+    public KeyCode crouchKey = KeyCode.LeftControl;
+    
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -50,12 +56,16 @@ public class PlayerMovement : MonoBehaviour
 
         MyInput();
         SpeedControl();
+        Sprint();
+        Crouch();
 
         // handle drag
         if (grounded)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+
     }
 
     private void FixedUpdate()
@@ -65,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MyInput()
     {
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -112,8 +123,26 @@ public class PlayerMovement : MonoBehaviour
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
+
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    private void Sprint() {
+        if (Input.GetKey(sprintKey)) {
+            moveSpeed = sprintSpeed;
+        } else {
+            moveSpeed = walkSpeed;
+        }
+    }
+
+    private void Crouch() {
+        if (Input.GetKey(crouchKey)) {
+            transform.localScale = new Vector3(0.8f, 0.5f, 0.8f);
+        } else {
+            transform.localScale = new Vector3(0.8f, 1f, 0.8f);
+        }
+
     }
 }
