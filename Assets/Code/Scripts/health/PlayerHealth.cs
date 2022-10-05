@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     public float health, maxHealth;
     void Start()
     {
-        health = maxHealth;
+        //health = maxHealth;
     }
 
     public void TakeDamage(float amount)

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: af0222d191c423d4f966b2e6c24caa5c
+guid: 5ea4d4b1281054d43841d80975e5f22b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,7 +104,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hearts_full
+      name: halfHeart
       rect:
         serializedVersion: 2
         x: 0
@@ -118,50 +118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9bf1a067af95adf4f83f88da19c34b64
-      internalID: -603276163
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hearts_half
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b1e750db0977bff4097878a0d4141e2d
-      internalID: 90140474
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hearts_empty
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 03d74946c0a210041a71a1a4e39d0e5b
-      internalID: 1207136439
+      spriteID: 552b63d7df9ae274ca0c6a830e7c79a7
+      internalID: 1662914736
       vertices: []
       indices: 
       edges: []
@@ -169,7 +127,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: ec5075b2e3fa93d49ac491891f454105
+    spriteID: 6039949ad641d624e87e3eacfe433274
     internalID: 0
     vertices: []
     indices: 
@@ -177,9 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      hearts_empty: 1207136439
-      hearts_half: 90140474
-      hearts_full: -603276163
+      halfHeart: 1662914736
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
