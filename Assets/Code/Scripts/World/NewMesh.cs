@@ -1,19 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-public class MeshGenerator : MonoBehaviour
+public class NewMesh : MonoBehaviour
 {
     Mesh mesh;
-    
+    MeshData meshData;
+
     Vector3[] vertices;
     int[] triangles;
     Color[] colors;
 
     public const int mapChunkSize = 241;
 
-    public int seed = 10000;
+    public int seedMain = 10000;
     public int xSize = 241;
     public int zSize = 241;
     public float scale = 2.0f;
@@ -21,35 +23,56 @@ public class MeshGenerator : MonoBehaviour
     public AnimationCurve meshHeightCurve;
     public int heightScale = 30;
 
-    
-    void Start()
+    Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
+
+    public void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-
-        CreateMesh();
+        CreateMeshData(0,0);
         UpdateMesh();
     }
+    public oleMeshData CreateNewMesh(int seedXOffset, int seedZOffset)
+    {
 
-   void CreateMesh() 
-   {
+        return CreateMeshData(10*seedXOffset, 15*seedZOffset);
+        //UpdateMesh();
+
+       // return mesh;
+    }
+    void Update()
+    {
+        if (meshDataThreadInfoQueue.Count > 0)
+        {
+            for (int i = 0; i < meshDataThreadInfoQueue.Count; i++)
+            {
+                MapThreadInfo<MeshData> threadInfo = meshDataThreadInfoQueue.Dequeue();
+                threadInfo.callback(threadInfo.parameter);
+            }
+        }
+    }
+
+    oleMeshData CreateMeshData(int seedXOffset, int seedZOffset)
+    {
 
         //----------------------------------------IMRPROVEMENT_TODO----------------------------------------
         //TODO: A LOT of performance improvements can be done with the code below (between the lines)
 
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+
         
+
         for (int i = 0, z = 0; z <= zSize; z++)
         {
             for (int x = 0; x <= xSize; x++)
             {
                 Vector2 offset = new Vector2(0, 0);
-                float y = generateNoiseValue(x, z, scale, 7, 2.8f, 0.5f, seed, offset);
+                float y = generateNoiseValue(x, z, scale, 7, 2.8f, 0.5f, seedMain + seedXOffset + seedZOffset, offset);
                 vertices[i] = new Vector3(x, y, z);
                 i++;
             }
         }
-       
+
         //Updating max and min noise value
         float maxHeight = 0, minHeight = float.MaxValue;
         for (int i = 0; i < vertices.Length; i++)
@@ -60,9 +83,9 @@ public class MeshGenerator : MonoBehaviour
 
         float heightDeltaValue = Mathf.Abs(maxHeight - minHeight);
         //max value will now be 1, min will be 0
-        for (int i = 0; i < vertices.Length; i++) 
+        for (int i = 0; i < vertices.Length; i++)
             vertices[i].y = (vertices[i].y - minHeight) / heightDeltaValue;
-  
+
 
         //This FL and the one above could be the same but I'm separating them for the sake of experimentation for now
         colors = new Color[vertices.Length];
@@ -107,9 +130,17 @@ public class MeshGenerator : MonoBehaviour
             }
             vert++;
         }
+        oleMeshData meshData = new oleMeshData(vertices,colors, triangles);
+        return meshData;
+    }
 
-       // return new MapData(vertices, )
-   }
+    public Mesh createMesh(MeshFilter meshFilter, Vector3[] vertices, int[] triangles, Color[] colors)
+    {
+        meshFilter.mesh.vertices = vertices;
+        meshFilter.mesh.triangles = triangles;
+        meshFilter.mesh.colors = colors;
+        return meshFilter.mesh;
+    }
 
 
     /**
@@ -140,8 +171,8 @@ public class MeshGenerator : MonoBehaviour
         float noiseHeight = 0;
         for (int octave = 0; octave < octaves; octave++)
         {
-            float sampleX = (x + octaveOffsets[octave].x) / scale * frequency ;
-            float sampleZ = (z + octaveOffsets[octave].y) / scale * frequency ;
+            float sampleX = (x + octaveOffsets[octave].x) / scale * frequency;
+            float sampleZ = (z + octaveOffsets[octave].y) / scale * frequency;
 
             float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ) * 2;
             noiseHeight += perlinValue * amplitude;
@@ -153,15 +184,15 @@ public class MeshGenerator : MonoBehaviour
         return noiseHeight;
     }
 
-   void UpdateMesh() 
-   {
+    void UpdateMesh()
+    {
         mesh.Clear();
-        
+
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.colors = colors;
-        
-        
+
+
 
         //Lighting(?)
         mesh.RecalculateNormals();
@@ -172,26 +203,80 @@ public class MeshGenerator : MonoBehaviour
         meshCollider.sharedMesh = GetComponent<MeshFilter>().mesh;
     }
 
-    /*private void OnDrawGizmos()
+    public void RequestMeshData(Action<MeshData> callback)
     {
-        if (vertices == null) 
-            return;
-        for(int i = 0; i < vertices.Length; i++)
+        ThreadStart threadStart = delegate {
+            MeshDataThread(callback);
+        };
+
+        new Thread(threadStart).Start();
+    }
+
+    struct MapThreadInfo<T>
+    {
+        public readonly Action<T> callback;
+        public readonly T parameter;
+
+        public MapThreadInfo(Action<T> callback, T parameter)
         {
-            Gizmos.DrawSphere(vertices[i], 0.1f);
+            this.callback = callback;
+            this.parameter = parameter;
         }
-    }*/
+
+    }
+
+    void MeshDataThread(Action<MeshData> callback)
+    {
+       // MeshData meshD = CreateNewMesh();
+      
+        lock (meshDataThreadInfoQueue)
+        {
+          //  meshDataThreadInfoQueue.Enqueue(new MapThreadInfo<MeshData>(callback, meshD));
+        }
+    }
 
 }
 
-public struct MapData
+public class oleMeshData
 {
-    public float[,] heightMap;
-    public Color[,] colorMap;
-    
-    public MapData(float[,] heightMap, Color[,] colorMap)
+    public Color[] colors;
+    //public Mesh mesh;
+    public int[] triangles;
+    public Vector3[] vertices;
+
+    public oleMeshData(Vector3[] inVertices, Color[] inColors, int[] inTriangles)
     {
-        this.heightMap = heightMap;
-        this.colorMap = colorMap;
+        vertices = inVertices;
+        colors = inColors;
+        triangles = inTriangles;
+        //mesh = inMesh;
+    }
+}
+
+public class MeshData
+{
+    public Vector3[] vertices;
+    public int[] triangles;
+    public Color[] colors;
+
+
+    public MeshData(int meshWidth, int meshHeight)
+    {
+        vertices = new Vector3[meshWidth * meshHeight];
+        //uvs = new Vector2[meshWidth * meshHeight];
+        triangles = new int[(meshWidth - 1) * (meshHeight - 1) * 6];
+        colors = new Color[meshWidth * meshHeight]; 
+    }
+
+
+
+    public Mesh CreateMesh()
+    {
+        Mesh mesh = new Mesh();
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.colors = colors;
+        mesh.RecalculateNormals();
+        return mesh;
     }
 }
