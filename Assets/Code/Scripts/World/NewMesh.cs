@@ -49,7 +49,7 @@ public class NewMesh : MonoBehaviour
         triangles = CreateTriangles(xSize * zSize * 6);
         
         //Creating the instance of the MeshData that will be returned
-        return new MeshData(vertices,colors, triangles);
+        return new MeshData(vertices,colors, triangles, zSize);
     }
 
     private Color[] HeightScaleAndColor(Vector3[] noiseMap, float waterLevel)
@@ -107,12 +107,14 @@ public class MeshData
     //public Mesh mesh;
     public int[] triangles;
     public Vector3[] vertices;
+    public int zSize;
 
-    public MeshData(Vector3[] inVertices, Color[] inColors, int[] inTriangles)
+    public MeshData(Vector3[] inVertices, Color[] inColors, int[] inTriangles, int inZSize)
     {
         vertices = inVertices;
         colors = inColors;
         triangles = inTriangles;
+        zSize = inZSize;
     }
 
     public Mesh CreateMesh()
@@ -121,6 +123,19 @@ public class MeshData
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.colors = colors;
+        
         return mesh;
+    }
+    
+    public float GetLocalHeight(int x, int z, MeshCollider collider)
+    {
+        RaycastHit hit;
+        float hitHeight = -999.9f;
+        Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
+        if (!collider.Raycast(ray, out hit, 200.0f))
+        {
+            hitHeight = hit.point.y;
+        }
+        return hitHeight;
     }
 }
