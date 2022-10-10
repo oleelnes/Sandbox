@@ -30,6 +30,34 @@ public class EndlessTerrain : MonoBehaviour
 	{
 		viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
 		UpdateVisibleChunks();
+		Debug.Log("height: " + GetHeight(1000.0f, 1000.0f) + "\n");
+		Debug.Log("Height player: " + GetHeight(viewerPosition.x, viewerPosition.y) + "\n");
+	}
+
+	public float GetHeight(float x, float z)
+    {
+		float retFloat = -999.0f;
+
+		int currentChunkCoordX = Mathf.RoundToInt(x / chunkSize);
+		int currentChunkCoordY = Mathf.RoundToInt(z / chunkSize);
+
+		int internalXPos = Mathf.Abs(Mathf.RoundToInt(x) % chunkSize);
+		int internalZPos = Mathf.Abs(Mathf.RoundToInt(z) % chunkSize);
+
+		for (int yOffset = -chunksVisibleInViewDst; yOffset <= chunksVisibleInViewDst; yOffset++)
+		{
+			for (int xOffset = -chunksVisibleInViewDst; xOffset <= chunksVisibleInViewDst; xOffset++)
+			{
+				Vector2 viewedChunkCoord = new Vector2(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
+
+				if (terrainChunkDictionary.ContainsKey(viewedChunkCoord))
+				{
+					retFloat = terrainChunkDictionary[viewedChunkCoord].meshData
+						.GetLocalHeight(internalXPos, internalZPos, terrainChunkDictionary[viewedChunkCoord].meshCollider);
+				}
+			}
+		}
+		return retFloat;
 	}
 
 	void UpdateVisibleChunks()
@@ -73,13 +101,13 @@ public class EndlessTerrain : MonoBehaviour
 		GameObject meshObject;
 		Vector2 position;
 		Bounds bounds;
-		Color[] colors;
 
-		MeshData meshData;
+		public MeshData meshData;
 		
 
 		MeshRenderer meshRenderer;
 		MeshFilter meshFilter;
+		public MeshCollider meshCollider;
 
         public TerrainChunk(Vector2 coord, int size, Transform parent, Material material)
 		{
@@ -105,7 +133,7 @@ public class EndlessTerrain : MonoBehaviour
 			meshRenderer.material = material;
 			
 			//Adding collision detection to the mesh
-			MeshCollider meshCollider = meshObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
+			meshCollider = meshObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
 			meshCollider.sharedMesh = null;
 			meshCollider.sharedMesh = meshFilter.mesh;
 
