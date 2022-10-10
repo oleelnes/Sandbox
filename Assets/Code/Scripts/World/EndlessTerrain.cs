@@ -75,7 +75,7 @@ public class EndlessTerrain : MonoBehaviour
 		Bounds bounds;
 		Color[] colors;
 
-		oleMeshData meshData;
+		MeshData meshData;
 		
 
 		MeshRenderer meshRenderer;
@@ -96,23 +96,15 @@ public class EndlessTerrain : MonoBehaviour
 			SetVisible(false);
 			
 
-			//meshFilter.mesh
 			meshData = mapGenerator.CreateNewMesh((int)position.x, (int)position.y);
-			meshFilter.mesh = mapGenerator.createMesh(meshFilter, meshData.vertices, meshData.triangles, meshData.colors);
-			
+			//meshFilter.mesh = mapGenerator.createMesh(meshFilter, meshData.vertices, meshData.triangles, meshData.colors);
+			meshFilter.mesh = meshData.CreateMesh();
 
-			/*colors = new Color[meshFilter.mesh.vertices.Length];
-			for (int i = 0; i < meshFilter.mesh.vertices.Length; i++)
-			{
-				colors[i] = Color.green;
-			}*/
-			
-
-			//meshFilter.mesh.colors = colors;
+			//lighting(?)
 			meshFilter.mesh.RecalculateNormals();
 			meshRenderer.material = material;
 			
-
+			//Adding collision detection to the mesh
 			MeshCollider meshCollider = meshObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
 			meshCollider.sharedMesh = null;
 			meshCollider.sharedMesh = meshFilter.mesh;

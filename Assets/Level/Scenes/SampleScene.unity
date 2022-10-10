@@ -612,7 +612,6 @@ GameObject:
   - component: {fileID: 2140568058}
   - component: {fileID: 2140568057}
   - component: {fileID: 2140568060}
-  - component: {fileID: 2140568061}
   - component: {fileID: 2140568062}
   m_Layer: 0
   m_Name: MeshGenerator
@@ -700,47 +699,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewer: {fileID: 605695036}
   materialTest: {fileID: 2100000, guid: cf0e13d23a0831c46b7cc32d8e4129ce, type: 2}
---- !u!114 &2140568061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140568055}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5028c042440f20140b883793ccc5b187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seed: 10000
-  xSize: 241
-  zSize: 241
-  scale: 2
-  meshHeightCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  heightScale: 30
 --- !u!114 &2140568062
 MonoBehaviour:
   m_ObjectHideFlags: 0
