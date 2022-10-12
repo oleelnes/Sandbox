@@ -19,6 +19,8 @@ public class EndlessTerrain : MonoBehaviour
 	Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
 	List<TerrainChunk> terrainChunksVisibleLastUpdate = new List<TerrainChunk>();
 
+	Dictionary<Vector2, Seams> seamDictionary = new Dictionary<Vector2, Seams> ();
+
 	void Start()
 	{
 		mapGenerator = FindObjectOfType<NewMesh>();
@@ -61,6 +63,7 @@ public class EndlessTerrain : MonoBehaviour
 		return retFloat;
 	}
 
+	//from tutorial
 	void UpdateVisibleChunks()
 	{
 
@@ -110,6 +113,8 @@ public class EndlessTerrain : MonoBehaviour
 		MeshFilter meshFilter;
 		public MeshCollider meshCollider;
 
+		public List<Seams> chunkSeams;
+
         public TerrainChunk(Vector2 coord, int size, Transform parent, Material material)
 		{
 			position = coord * size;
@@ -125,7 +130,7 @@ public class EndlessTerrain : MonoBehaviour
 			SetVisible(false);
 			
 
-			meshData = mapGenerator.CreateNewMesh((int)position.x, (int)position.y);
+			meshData = mapGenerator.CreateNewMesh(position);
 			//meshFilter.mesh = mapGenerator.createMesh(meshFilter, meshData.vertices, meshData.triangles, meshData.colors);
 			meshFilter.mesh = meshData.CreateMesh();
 
@@ -138,7 +143,12 @@ public class EndlessTerrain : MonoBehaviour
 			meshCollider.sharedMesh = null;
 			meshCollider.sharedMesh = meshFilter.mesh;
 
-			
+			/*
+			 * Sea
+			 * 
+			 
+			 
+			 */
 		}
 
 
@@ -162,4 +172,6 @@ public class EndlessTerrain : MonoBehaviour
 		}
 
 	}
+
+	
 }
