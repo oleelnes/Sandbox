@@ -17,12 +17,15 @@ public class PlayerMovement : MonoBehaviour
 
     private float walkSpeed = 7;
     private float sprintSpeed = 14;
+    private float superSprintSpeed = 50;
 
     
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
 
     public KeyCode sprintKey = KeyCode.LeftShift;
+
+    public KeyCode superSprintKey = KeyCode.Q;
 
     public KeyCode crouchKey = KeyCode.LeftControl;
     
@@ -130,9 +133,15 @@ public class PlayerMovement : MonoBehaviour
     private void Sprint() {
         if (Input.GetKey(sprintKey)) {
             moveSpeed = sprintSpeed;
-        } else {
+        } 
+        else if(Input.GetKey(superSprintKey))
+        {
+            moveSpeed = superSprintSpeed;
+        }
+        else {
             moveSpeed = walkSpeed;
         }
+        
     }
 
     private void Crouch() {
