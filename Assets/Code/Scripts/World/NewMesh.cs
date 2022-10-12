@@ -148,21 +148,3 @@ public class MeshData
         return hitHeight;
     }
 }
-
-public class Seams
-{
-    public Vector2 chunkCoordinates;
-    public Vector3[] northSeams;
-    public Vector3[] southSeams;
-    public Vector3[] westSeams;
-    public Vector3[] eastSeams;
-
-    public Seams(Vector2 chunkCoordinates, Vector3[] northSeams, Vector3[] southSeams, Vector3[] westSeams, Vector3[] eastSeams)
-    {
-        this.chunkCoordinates = chunkCoordinates;
-        this.northSeams = northSeams;
-        this.southSeams = southSeams;
-        this.westSeams = westSeams;
-        this.eastSeams = eastSeams;
-    }
-}
