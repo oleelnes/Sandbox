@@ -44,6 +44,7 @@ public class EndlessTerrain : MonoBehaviour
 		int internalXPos = Mathf.Abs(Mathf.RoundToInt(x) % chunkSize);
 		int internalZPos = Mathf.Abs(Mathf.RoundToInt(z) % chunkSize);
 
+
 		for (int yOffset = -chunksVisibleInViewDst; yOffset <= chunksVisibleInViewDst; yOffset++)
 		{
 			for (int xOffset = -chunksVisibleInViewDst; xOffset <= chunksVisibleInViewDst; xOffset++)
