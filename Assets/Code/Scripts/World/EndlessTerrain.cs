@@ -19,8 +19,6 @@ public class EndlessTerrain : MonoBehaviour
 	Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
 	List<TerrainChunk> terrainChunksVisibleLastUpdate = new List<TerrainChunk>();
 
-	Dictionary<Vector2, Seams> seamDictionary = new Dictionary<Vector2, Seams> ();
-
 	void Start()
 	{
 		mapGenerator = FindObjectOfType<NewMesh>();
@@ -113,7 +111,6 @@ public class EndlessTerrain : MonoBehaviour
 		MeshFilter meshFilter;
 		public MeshCollider meshCollider;
 
-		public List<Seams> chunkSeams;
 
         public TerrainChunk(Vector2 coord, int size, Transform parent, Material material)
 		{
