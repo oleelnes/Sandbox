@@ -56,6 +56,8 @@ public class NoiseMapGenerator
             }
         }
 
+        //test
+
         //Updating max and min noise value
         /*float maxHeight = 0, minHeight = float.MaxValue;
         for (int i = 0; i < vertices.Length; i++)
