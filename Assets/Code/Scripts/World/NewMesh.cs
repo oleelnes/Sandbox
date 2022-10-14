@@ -40,7 +40,7 @@ public class NewMesh : MonoBehaviour
         NoiseMapGenerator noiseMapGenerator = new NoiseMapGenerator();
         Vector3[] vertices = new Vector3[(xSize + 1) * (zSize + 1)];
 
-        NoiseData noiseData = noiseMapGenerator.CreateNoiseMap(xSize, zSize, seedMain, scale, position + offset, 7, 2.8f, 0.5f);
+        NoiseData noiseData = noiseMapGenerator.CreateNoiseMap(xSize, zSize, seedMain, scale, position + offset, 7, 2.8f, 0.5f, (int) position.x / 240);
 
 
         vertices = noiseData.noiseMap;

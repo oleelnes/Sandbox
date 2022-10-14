@@ -30,8 +30,8 @@ public class EndlessTerrain : MonoBehaviour
 	{
 		viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
 		UpdateVisibleChunks();
-		Debug.Log("height: " + GetHeight(1000.0f, 1000.0f) + "\n");
-		Debug.Log("Height player: " + GetHeight(viewerPosition.x, viewerPosition.y) + "\n");
+		//Debug.Log("height: " + GetHeight(1000.0f, 1000.0f) + "\n");
+		//Debug.Log("Height player: " + GetHeight(viewerPosition.x, viewerPosition.y) + "\n");
 	}
 
 	public float GetHeight(float x, float z)
