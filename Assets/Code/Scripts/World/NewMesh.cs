@@ -8,7 +8,7 @@ public class NewMesh : MonoBehaviour
 {
     Mesh mesh;
 
-    Vector3[] vertices;
+    //Vector3[] vertices;
     int[] triangles;
     Color[] colors;
 
@@ -18,6 +18,7 @@ public class NewMesh : MonoBehaviour
     public int xSize = 241;
     public int zSize = 241;
     public float scale = 2.0f;
+    public Vector2 offset;
 
     public AnimationCurve meshHeightCurve;
     public int heightScale = 30;
@@ -29,16 +30,21 @@ public class NewMesh : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
     }
-    public MeshData CreateNewMesh(int seedXOffset, int seedZOffset)
+    public MeshData CreateNewMesh(Vector2 position)
     {
-        return CreateMeshData(10*seedXOffset, 15*seedZOffset);
+        return CreateMeshData(position);
     }
   
-    MeshData CreateMeshData(int seedXOffset, int seedZOffset)
+    MeshData CreateMeshData(Vector2 position)
     {
         NoiseMapGenerator noiseMapGenerator = new NoiseMapGenerator();
-        vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-        vertices = noiseMapGenerator.CreateNoiseMap(xSize, zSize, seedMain + seedXOffset + seedZOffset, scale);
+        Vector3[] vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+
+        NoiseData noiseData = noiseMapGenerator.CreateNoiseMap(xSize, zSize, seedMain, scale, position + offset, 7, 2.8f, 0.5f);
+
+
+        vertices = noiseData.noiseMap;
+
 
         colors = new Color[vertices.Length];
         //Creating the color array AND adjusting the height according to both heightMapCurve and the heightScale
@@ -59,7 +65,7 @@ public class NewMesh : MonoBehaviour
         for (int i = 0; i < noiseMap.Length; i++)
         {
             //Using the heightMapCurve (AnimationCurve) to evaluate the height value of the mesh!
-            noiseMap[i].y = meshHeightCurve.Evaluate(vertices[i].y);// * heightScale;
+            noiseMap[i].y = meshHeightCurve.Evaluate(noiseMap[i].y);// * heightScale;
             if (noiseMap[i].y < waterLevel)
             {
                 noiseMap[i].y = waterLevel;
