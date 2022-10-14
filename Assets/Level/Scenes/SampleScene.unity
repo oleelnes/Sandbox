@@ -1294,6 +1294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewer: {fileID: 605695036}
   materialTest: {fileID: 2100000, guid: cf0e13d23a0831c46b7cc32d8e4129ce, type: 2}
+  polyScale: 1
 --- !u!114 &2140568062
 MonoBehaviour:
   m_ObjectHideFlags: 0

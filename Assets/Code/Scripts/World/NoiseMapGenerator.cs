@@ -7,8 +7,10 @@ public class NoiseMapGenerator
 
 
 
-    public NoiseData CreateNoiseMap(int xSize, int zSize, int seed, float scale, Vector2 offset, int octaves, float persistance, float lucanarity, int biomeIndicator)
+    public NoiseData CreateNoiseMap(int xSize, int zSize, int seed, float scale, Vector2 offset, int octaves, float persistance, float lucanarity, int biomeIndicator, int polyScale = 1)
     {
+
+       if (polyScale < 1) polyScale = 1;  
        
         Debug.Log("biomeIndicator: " + biomeIndicator);
 
@@ -39,15 +41,15 @@ public class NoiseMapGenerator
       
 
 
-        for (int i = 0, z = 0; z <= zSize; z++)
+        for (int i = 0, z = 0; z <= zSize * polyScale; z += polyScale)
         {
-            for (int x = 0; x <= xSize; x++)
+            for (int x = 0; x <= xSize * polyScale; x += polyScale)
             {
                 float y = generateNoiseValue(x, z, scale, octaves, persistance, lucanarity, frequency, octaveOffsets, amplitude);
 
 
 
-                if (x != 0 && x != xSize && z != 0 && z != zSize)
+                if (x != 0 && x != xSize * polyScale && z != 0 && z != zSize * polyScale)
                 {
                     // Debug.Log("inside");
                            

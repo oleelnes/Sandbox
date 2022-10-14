@@ -9,6 +9,8 @@ public class EndlessTerrain : MonoBehaviour
 
 	public Material materialTest;
 
+	public int polyScale = 1;
+
 	///public Material mapMaterial;
 
 	public static Vector2 viewerPosition;
@@ -22,8 +24,8 @@ public class EndlessTerrain : MonoBehaviour
 	void Start()
 	{
 		mapGenerator = FindObjectOfType<NewMesh>();
-		chunkSize = NewMesh.mapChunkSize - 1;
-		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
+		chunkSize = (NewMesh.mapChunkSize * polyScale) - 1;
+		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / (chunkSize / polyScale));
 	}
 
 	void Update()
@@ -38,11 +40,11 @@ public class EndlessTerrain : MonoBehaviour
     {
 		float retFloat = -999.0f;
 
-		int currentChunkCoordX = Mathf.RoundToInt(x / chunkSize);
-		int currentChunkCoordY = Mathf.RoundToInt(z / chunkSize);
+		int currentChunkCoordX = Mathf.RoundToInt(x / (chunkSize));
+		int currentChunkCoordY = Mathf.RoundToInt(z / (chunkSize));
 
-		int internalXPos = Mathf.Abs(Mathf.RoundToInt(x) % chunkSize);
-		int internalZPos = Mathf.Abs(Mathf.RoundToInt(z) % chunkSize);
+		int internalXPos = Mathf.Abs(Mathf.RoundToInt(x) % (chunkSize));
+		int internalZPos = Mathf.Abs(Mathf.RoundToInt(z) % (chunkSize));
 
 
 		for (int yOffset = -chunksVisibleInViewDst; yOffset <= chunksVisibleInViewDst; yOffset++)
@@ -90,7 +92,8 @@ public class EndlessTerrain : MonoBehaviour
 				}
 				else
 				{
-					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, transform, materialTest));
+					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, transform, materialTest, polyScale));
+					Debug.Log("chunkcoord: " + viewedChunkCoord + ", chunksVisibleInDist: " + chunksVisibleInViewDst);
 				}
 
 			}
@@ -112,10 +115,10 @@ public class EndlessTerrain : MonoBehaviour
 		public MeshCollider meshCollider;
 
 
-        public TerrainChunk(Vector2 coord, int size, Transform parent, Material material)
+        public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, int polyScale)
 		{
 			position = coord * size;
-			bounds = new Bounds(position, Vector2.one * size);
+			bounds = new Bounds(position / polyScale, Vector2.one * size);
 			Vector3 positionV3 = new Vector3(position.x, 0, position.y);
 
 			meshObject = new GameObject("Terrain Chunk");
@@ -127,7 +130,7 @@ public class EndlessTerrain : MonoBehaviour
 			SetVisible(false);
 			
 
-			meshData = mapGenerator.CreateNewMesh(position);
+			meshData = mapGenerator.CreateNewMesh(position, polyScale);
 			//meshFilter.mesh = mapGenerator.createMesh(meshFilter, meshData.vertices, meshData.triangles, meshData.colors);
 			meshFilter.mesh = meshData.CreateMesh();
 
