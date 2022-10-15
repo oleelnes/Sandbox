@@ -37,10 +37,6 @@ public class NoiseMapGenerator
         }
 
 
-
-      
-
-
         for (int i = 0, z = 0; z <= zSize * polyScale; z += polyScale)
         {
             for (int x = 0; x <= xSize * polyScale; x += polyScale)
@@ -107,7 +103,7 @@ public class NoiseMapGenerator
     * lucanarity: affects frequency -- the higher, the spikier the terrain.
     *      Should not be greater than 1.0f or lower than 0.0f.
     */
-    float generateNoiseValue(int x, int z, float scale, int octaves, float persistance, float lucanarity, float frequency, Vector2[] octaveOffsets, float amplitude)
+    public float generateNoiseValue(int x, int z, float scale, int octaves, float persistance, float lucanarity, float frequency, Vector2[] octaveOffsets, float amplitude)
     {
 
         float noiseHeight = 0;

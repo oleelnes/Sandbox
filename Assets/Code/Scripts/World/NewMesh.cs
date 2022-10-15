@@ -12,11 +12,10 @@ public class NewMesh : MonoBehaviour
     int[] triangles;
     Color[] colors;
 
-    public const int mapChunkSize = 241;
+    
 
     public int seedMain = 10000;
-    public int xSize = 241;
-    public int zSize = 241;
+    
     public float scale = 2.0f;
     public Vector2 offset;
 
@@ -30,17 +29,17 @@ public class NewMesh : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
     }
-    public MeshData CreateNewMesh(Vector2 position, int polyScale)
+    public MeshData CreateNewMesh(Vector2 position, int polyScale, int chunkSize)
     {
-        return CreateMeshData(position, polyScale);
+        return CreateMeshData(position, polyScale, chunkSize);
     }
   
-    MeshData CreateMeshData(Vector2 position, int polyScale)
+    MeshData CreateMeshData(Vector2 position, int polyScale, int chunkSize)
     {
         NoiseMapGenerator noiseMapGenerator = new NoiseMapGenerator();
-        Vector3[] vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+        Vector3[] vertices = new Vector3[(chunkSize + 1) * (chunkSize + 1)];
 
-        NoiseData noiseData = noiseMapGenerator.CreateNoiseMap(xSize, zSize, seedMain, scale, position + offset, 7, 2.8f, 0.5f, (int) position.x / 240, polyScale);
+        NoiseData noiseData = noiseMapGenerator.CreateNoiseMap(chunkSize, chunkSize, seedMain, scale, position + offset, 7, 2.8f, 0.5f, (int) position.x / (chunkSize - 1), polyScale);
 
 
         vertices = noiseData.noiseMap;
@@ -52,10 +51,10 @@ public class NewMesh : MonoBehaviour
 
 
         //Ordering the vertices of the mesh into triangles
-        triangles = CreateTriangles(xSize * zSize * 6);
+        triangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize);
         
         //Creating the instance of the MeshData that will be returned
-        return new MeshData(vertices,colors, triangles, zSize);
+        return new MeshData(vertices, colors, triangles);
     }
 
     private Color[] HeightScaleAndColor(Vector3[] noiseMap, float waterLevel, Vector2 position)
@@ -68,6 +67,8 @@ public class NewMesh : MonoBehaviour
         float waterIterator = 0.0f;
         float mountainSideColor = 0.0f;
         
+        Vector2[] UVs = new Vector2[noiseMap.Length];
+
         for (int i = 0; i < noiseMap.Length; i++)
         {
             //Using the heightMapCurve (AnimationCurve) to evaluate the height value of the mesh!
@@ -81,10 +82,21 @@ public class NewMesh : MonoBehaviour
             else if (noiseMap[i].y > waterLevel && noiseMap[i].y < 0.6f)
             {
 
+                //Groundgrass color is procedurally set(without octaves), thus varying the shade of green of the ground. 
+                //The divisors (254.66 and 291.3) are arbitrarily set and adjust the rate of change of color.
+                //
+                //TODO: Implement the coloring of the ground in a custom shader.
                 groundGrassColor = Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 254.66f,
                     ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 291.3f);
+                groundGrassColor += (Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 0.26f,
+                    ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 0.3f)) / 9.5f ;
+                groundGrassColor += (Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 0.012f,
+                    ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 0.014f)) / 10.5f;
 
-                colorMap[i] = new Color(0.1f + (groundGrassColor / 1.5f), 0.2f + (groundGrassColor / 1.2f), 0.1f + (groundGrassColor / 2.5f));
+
+
+
+                colorMap[i] = new Color(0.1f + (groundGrassColor / 2.5f), 0.2f + (groundGrassColor / 1.2f), 0.1f + (groundGrassColor / 2.5f));
 
             }
             else if (noiseMap[i].y >= 0.6f && noiseMap[i].y < 0.85f)
@@ -96,6 +108,11 @@ public class NewMesh : MonoBehaviour
             }
             else colorMap[i] = Color.white;
 
+           /* if (i % 4 == 0) UVs[i] = new Vector2(0.0f, 0.0f);
+            else if (i % 4 == 1) UVs[i] = new Vector2(1.0f, 0.0f);
+            else if (i % 4 == 2) UVs[i] = new Vector2(0.0f, 1.0f);
+            else if (i % 4 == 3) UVs[i] = new Vector2(1.0f, 1.0f);*/
+
             noiseMap[i].y *= heightScale;
         }
 
@@ -103,21 +120,26 @@ public class NewMesh : MonoBehaviour
 
         return colorMap;
     }
-    private int[] CreateTriangles(int size)
+
+    /*
+     * Function that returns an integer array consisting of the ordering of the triangles within the noisemap.
+     * int size: the size of the noisemap.
+     */
+    private int[] CreateTriangles(int size, int chunkSize)
     {
         int[] triangleArray = new int[size];
         int vert = 0, tris = 0;
-        for (int z = 0; z < zSize; z++)
+        for (int z = 0; z < chunkSize; z++)
         {
-            for (int x = 0; x < xSize; x++)
+            for (int x = 0; x < chunkSize; x++)
             {
                 triangleArray[tris + 0] = vert + 0;
-                triangleArray[tris + 1] = vert + xSize + 1;
+                triangleArray[tris + 1] = vert + chunkSize + 1;
                 triangleArray[tris + 2] = vert + 1;
 
                 triangleArray[tris + 3] = vert + 1;
-                triangleArray[tris + 4] = vert + xSize + 1;
-                triangleArray[tris + 5] = vert + xSize + 2;
+                triangleArray[tris + 4] = vert + chunkSize + 1;
+                triangleArray[tris + 5] = vert + chunkSize + 2;
 
                 vert++;
                 tris += 6;
@@ -133,26 +155,29 @@ public class NewMesh : MonoBehaviour
 public class MeshData
 {
     public Color[] colors;
-    //public Mesh mesh;
+    //public Vector2[] UVs;
     public int[] triangles;
     public Vector3[] vertices;
-    public int zSize;
+    //public int zSize;
 
-    public MeshData(Vector3[] inVertices, Color[] inColors, int[] inTriangles, int inZSize)
+    public MeshData(Vector3[] inVertices, Color[] colors, int[] inTriangles)
     {
         vertices = inVertices;
-        colors = inColors;
+        this.colors = colors;
         triangles = inTriangles;
-        zSize = inZSize;
+        //zSize = inZSize;
     }
 
-    public Mesh CreateMesh()
+    public Mesh CreateMesh(bool flatShading)
     {
         Mesh mesh = new Mesh();
+        if(flatShading) FlatShading();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.colors = colors;
-        
+        mesh.RecalculateNormals();
+        //mesh.uv = UVs;
+
         return mesh;
     }
 
@@ -169,5 +194,20 @@ public class MeshData
             hitHeight = hit.point.y;
         }
         return hitHeight;
+    }
+
+    void FlatShading()
+    {
+        Vector3[] flatShadedVertices = new Vector3[triangles.Length];
+        Color[] flatShadedColors = new Color[triangles.Length];
+
+        for (int i = 0; i < triangles.Length; i++)
+        {
+            flatShadedVertices[i] = vertices[triangles[i]];
+            flatShadedColors[i] = colors[triangles[i]];
+            triangles[i] = i;
+        }
+        vertices = flatShadedVertices;
+        colors = flatShadedColors;
     }
 }

@@ -8,6 +8,14 @@ public class EndlessTerrain : MonoBehaviour
 	public Transform viewer;
 
 	public Material materialTest;
+	public Texture texture;
+	MeshRenderer renderer;
+
+	public int mapChunkSize = 241;
+
+	
+
+	public bool flatshading = false;
 
 	public int polyScale = 1;
 
@@ -24,8 +32,11 @@ public class EndlessTerrain : MonoBehaviour
 	void Start()
 	{
 		mapGenerator = FindObjectOfType<NewMesh>();
-		chunkSize = (NewMesh.mapChunkSize * polyScale) - 1;
-		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / (chunkSize / polyScale));
+		chunkSize = (mapChunkSize * polyScale) - 1;// + eller - 1, originalt -;
+		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / (chunkSize ));
+		renderer = GetComponent<MeshRenderer>();
+		
+		renderer.material.SetTexture("Grass", texture);
 	}
 
 	void Update()
@@ -92,7 +103,7 @@ public class EndlessTerrain : MonoBehaviour
 				}
 				else
 				{
-					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, transform, materialTest, polyScale));
+					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, transform, materialTest, polyScale, texture, mapChunkSize, flatshading));
 					Debug.Log("chunkcoord: " + viewedChunkCoord + ", chunksVisibleInDist: " + chunksVisibleInViewDst);
 				}
 
@@ -115,7 +126,7 @@ public class EndlessTerrain : MonoBehaviour
 		public MeshCollider meshCollider;
 
 
-        public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, int polyScale)
+        public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, int polyScale, Texture texture, int mapChunkSize, bool flatShading)
 		{
 			position = coord * size;
 			bounds = new Bounds(position / polyScale, Vector2.one * size);
@@ -130,13 +141,16 @@ public class EndlessTerrain : MonoBehaviour
 			SetVisible(false);
 			
 
-			meshData = mapGenerator.CreateNewMesh(position, polyScale);
+			meshData = mapGenerator.CreateNewMesh(position, polyScale, mapChunkSize);
 			//meshFilter.mesh = mapGenerator.createMesh(meshFilter, meshData.vertices, meshData.triangles, meshData.colors);
-			meshFilter.mesh = meshData.CreateMesh();
+			meshFilter.mesh = meshData.CreateMesh(flatShading);
 
 			//lighting(?)
-			meshFilter.mesh.RecalculateNormals();
+			//meshFilter.mesh.RecalculateNormals();
 			meshRenderer.material = material;
+			
+			
+			
 			
 			//Adding collision detection to the mesh
 			meshCollider = meshObject.AddComponent(typeof(MeshCollider)) as MeshCollider;

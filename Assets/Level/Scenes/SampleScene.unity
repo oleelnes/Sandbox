@@ -1293,8 +1293,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewer: {fileID: 605695036}
-  materialTest: {fileID: 2100000, guid: cf0e13d23a0831c46b7cc32d8e4129ce, type: 2}
-  polyScale: 1
+  materialTest: {fileID: 2100000, guid: e6cc1e94673bcdc4a9ad6513bcb0a495, type: 2}
+  texture: {fileID: 2800000, guid: 3cf543484d2fb7347b203b934a632fa6, type: 3}
+  mapChunkSize: 80
+  flatshading: 1
+  polyScale: 6
 --- !u!114 &2140568062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1308,8 +1311,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seedMain: 10000
-  xSize: 241
-  zSize: 241
   scale: 5
   offset: {x: 20, y: 20}
   meshHeightCurve:
