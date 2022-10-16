@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : State
+public class NoticedState : State
 {
-    public NoticedState noticedState;
-    public bool canSeeThePlayer;
+    public ChaseState chaseState;
+    public bool isInAttackRange;
     public override State RunCurrentState()
     {
-        if (canSeePlayer)
+        if (isInAttackRange)
         {
-            return noticedState;
+            return chaseState;
         }
         else
         {
             return this;
         }
     }
-
 }

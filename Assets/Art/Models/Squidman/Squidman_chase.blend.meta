@@ -1,12 +1,27 @@
 fileFormatVersion: 2
-guid: c8c6c6f43124ba244a6a4e71d8374662
+guid: 3fecc3ab46f6d5549bcfd40a9c52575d
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -623603649343465320
     second: Scene
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AggresiveEyes
+    second: {fileID: 2100000, guid: 3ecee5225636b874192999fead82abeb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DarkBody
+    second: {fileID: 2100000, guid: 0ba6888b655f6414ead9d6fa8c62f8fc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LightBody
+    second: {fileID: 2100000, guid: 0c634ed25e6b05d40b7fb68a9aa907ad, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -40,7 +55,7 @@ ModelImporter:
       takeName: Scene
       internalID: 0
       firstFrame: 1
-      lastFrame: 250
+      lastFrame: 52
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

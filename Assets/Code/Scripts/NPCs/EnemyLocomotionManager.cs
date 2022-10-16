@@ -8,49 +8,54 @@ using UnityEngine.AI;
 public class EnemyLocomotionManager : MonoBehaviour
 {
 
-    EnemyManager enemyManager;
+    /* EnemyManager enemyManager;*/
     EnemyAnimationManager enemyAnimationManager;
-    NavMeshAgent navMeshAgent;
     public Rigidbody enemyRigidBody;
-
     public CharacterStats currentTarget;
-    private GameObject player;
 
-
+    //The higher and lower respectively these angles are the greater dectection field of view
     [Header("Detection")]
-    public float triggerDistance = 20f;
+    public float maximumDetectionAngle = 50f;
+    public float minimumDetectionAngle = -50f;
     public float distance;
-    public float stoppingDistance = 1f;
+    public float triggerDistance = 20f;
 
-    public float rotationSpeed = 15f;
+    public float stoppingDistance = 2f;
+    public float passiveDistance = 30f;
+    public float movementSpeed = 3f;
 
     private void Awake()
     {
-        enemyManager = GetComponent<EnemyManager>();
+        /* enemyManager = GetComponent<EnemyManager>();*/
         enemyAnimationManager = GetComponentInChildren<EnemyAnimationManager>();
-        /*navMeshAgent = GetComponentInChildren<NavMeshAgent>();*/
         enemyRigidBody = GetComponent<Rigidbody>();
-        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Start()
     {
-        /*navMeshAgent.enabled = false;*/
+
+        //Enemy falls down
         enemyRigidBody.isKinematic = false;
+    }
+
+    private void Update()
+    {
+        //calculate distance between enemy and player
+        distance = Vector3.Distance(transform.position, Player.instance.transform.position);
     }
 
     public void HandleDetection()
     {
-        //should be currentTarget if target is not only player
-        distance = Vector3.Distance(transform.position, player.transform.position);
+       /* enemyAnimationManager.animator.SetBool("Chase State", true);*/
+        //NOTE: should be currentTarget if target is not only player
         if (distance <= triggerDistance)
         {
-            Vector3 targetDirection = player.transform.position - transform.position;
+            Vector3 targetDirection = Player.instance.transform.position - transform.position;
             float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
 
-            if (viewableAngle > enemyManager.minimumDetectionAngle && viewableAngle < enemyManager.maximumDetectionAngle)
+            if (viewableAngle > minimumDetectionAngle && viewableAngle < maximumDetectionAngle)
             {
-                currentTarget = player.GetComponent<CharacterStats>();
+                currentTarget = Player.instance.GetComponent<CharacterStats>();
             }
         }
 
@@ -58,64 +63,29 @@ public class EnemyLocomotionManager : MonoBehaviour
 
     public void HandleMoveToTarget()
     {
-        Debug.Log("HANDLEMOVE");
-        Vector3 targetDiretion = currentTarget.transform.position - transform.position;
-        float viewableAngle = Vector3.Angle(targetDiretion, transform.forward);
 
-        enemyAnimationManager.animator.SetBool("Patrol State", true);
-        //if we are performing an action, stop our movement!
-/*        if (enemyManager.isPerformingAction)
-        {
-            *//*enemyAnimationManager.animator.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);*//*
-            enemyManager.
-            *//*navMeshAgent.enabled = false;*//*
+        transform.LookAt(Player.instance.transform.position);
 
-        }
-        else
+        if (currentTarget != null)
         {
-            if(distance > stoppingDistance)
+            if (distance > stoppingDistance)
             {
-                enemyAnimationManager.animator.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
+                enemyAnimationManager.animator.SetBool("Attack State", false);
+                enemyAnimationManager.animator.SetBool("Chase State", true);
+                transform.position = Vector3.MoveTowards(transform.position, Player.instance.transform.position, movementSpeed * Time.deltaTime);
             }
             else if (distance <= stoppingDistance)
             {
-                enemyAnimationManager.animator.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
+                //ATTACK CODE HERE
+                enemyAnimationManager.animator.SetBool("Attack State", true);
             }
-        }
-*/
-        /*HandleRotateTowardsTarget();*/
 
-/*        navMeshAgent.transform.localPosition = Vector3.zero;
-        navMeshAgent.transform.localRotation = Quaternion.identity;*/
-    }
-
-    public void HandleRotateTowardsTarget()
-    {
-        if (enemyManager.isPerformingAction)
-        {
-            Vector3 direction = currentTarget.transform.position - transform.position;
-            direction.y = 0;
-            direction.Normalize();
-
-            if(direction == Vector3.zero)
+            //Return to idle state
+            if (distance >= passiveDistance)
             {
-                direction = transform.forward;
+                enemyAnimationManager.animator.SetBool("Chase State", false);
+                currentTarget = null;
             }
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed);
         }
-         //Rotate with pathfinding (navmesh)
-         else
-        {
-            Vector3 relativeDirection = transform.InverseTransformDirection(navMeshAgent.desiredVelocity);
-            Vector3 targetVelocity = enemyRigidBody.velocity;
-
-            navMeshAgent.enabled = true;
-            navMeshAgent.SetDestination(currentTarget.transform.position);
-            enemyRigidBody.velocity = targetVelocity;
-            transform.rotation = Quaternion.Slerp(transform.rotation, navMeshAgent.transform.rotation, rotationSpeed / Time.deltaTime);
-
-        }
-
     }
 }

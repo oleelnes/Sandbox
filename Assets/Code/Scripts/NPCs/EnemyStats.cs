@@ -5,12 +5,10 @@ using UnityEngine;
 public class EnemyStats : CharacterStats
 {
 
-    Animator animator;
+    [Header("Enemy stats")]
+    public float maxHP = 100f;
+    public float currentHP = 100f;
 
-    private void Awake()
-    {
-        animator = GetComponentInChildren<Animator>();
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +19,5 @@ public class EnemyStats : CharacterStats
     private int SetMaxHealthInFromHealthLevel()
     {
         return 10 * healthLevel;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
