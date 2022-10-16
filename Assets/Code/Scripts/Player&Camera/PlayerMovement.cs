@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode superSprintKey = KeyCode.Q;
 
     public KeyCode crouchKey = KeyCode.LeftControl;
+
+    
     
 
     [Header("Ground Check")]
