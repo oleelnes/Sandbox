@@ -88,8 +88,8 @@ public class NewMesh : MonoBehaviour
                 //TODO: Implement the coloring of the ground in a custom shader.
                 groundGrassColor = Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 254.66f,
                     ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 291.3f);
-                groundGrassColor += (Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 0.26f,
-                    ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 0.3f)) / 9.5f ;
+                groundGrassColor += (Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 2.26f,
+                    ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 2.3f)) / 9.5f ;
                 groundGrassColor += (Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 0.012f,
                     ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 0.014f)) / 10.5f;
 
@@ -160,11 +160,11 @@ public class MeshData
     public Vector3[] vertices;
     //public int zSize;
 
-    public MeshData(Vector3[] inVertices, Color[] colors, int[] inTriangles)
+    public MeshData(Vector3[] vertices, Color[] colors, int[] triangles)
     {
-        vertices = inVertices;
+        this.vertices = vertices;
         this.colors = colors;
-        triangles = inTriangles;
+        this.triangles = triangles;
         //zSize = inZSize;
     }
 
@@ -184,16 +184,33 @@ public class MeshData
     /*
      https://answers.unity.com/questions/607226/get-height-of-a-mesh-by-x-and-z-coordinates.html
      */
-    public float GetLocalHeight(int x, int z, MeshCollider collider)
+    public float GetLocalHeight(float x, float z, MeshCollider collider)
     {
         RaycastHit hit;
         float hitHeight = -999.9f;
         Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
-        if (!collider.Raycast(ray, out hit, 200.0f))
+        //Debug.Log("x and z: " + x + " and " + z);
+        //return FetchHeightFromLocation(Mathf.RoundToInt(x), Mathf.RoundToInt(z));
+        if (!collider.Raycast(ray, out hit, 150.0f))
         {
             hitHeight = hit.point.y;
         }
+        
         return hitHeight;
+    }
+
+    private float FetchHeightFromLocation(int x, int z)
+    {
+        float height = -20.0f;
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            if (vertices[i].x == x && vertices[i].z == z)
+            {
+                height = vertices[i].y;
+                break;
+            }
+        }
+        return height;
     }
 
     void FlatShading()

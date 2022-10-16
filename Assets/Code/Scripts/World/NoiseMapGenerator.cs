@@ -51,6 +51,8 @@ public class NoiseMapGenerator
                            
                 }
 
+                if (x == xSize * polyScale) Debug.Log("x: " + x); 
+
 
 
 
