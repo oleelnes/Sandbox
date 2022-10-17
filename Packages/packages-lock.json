@@ -49,12 +49,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.2d.sprite": {
-      "version": "1.0.0",
-      "depth": 1,
-      "source": "builtin",
-      "dependencies": {}
-    },
     "com.unity.2d.spriteshape": {
       "version": "7.0.4",
       "depth": 1,
