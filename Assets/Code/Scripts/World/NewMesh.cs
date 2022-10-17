@@ -181,23 +181,6 @@ public class MeshData
         return mesh;
     }
 
-    /*
-     https://answers.unity.com/questions/607226/get-height-of-a-mesh-by-x-and-z-coordinates.html
-     */
-    public float GetLocalHeight(float x, float z, MeshCollider collider)
-    {
-        RaycastHit hit;
-        float hitHeight = -999.9f;
-        Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
-        //Debug.Log("x and z: " + x + " and " + z);
-        //return FetchHeightFromLocation(Mathf.RoundToInt(x), Mathf.RoundToInt(z));
-        if (!collider.Raycast(ray, out hit, 150.0f))
-        {
-            hitHeight = hit.point.y;
-        }
-        
-        return hitHeight;
-    }
 
     private float FetchHeightFromLocation(int x, int z)
     {
