@@ -8,6 +8,7 @@ public class MeleeAttack : MonoBehaviour
     //weapon animation
     Animator anim;
     Collider weaponColl;
+    public bool disableAnimation = false;
 
     [Header("Mouse buttons")]
     public KeyCode mouse0 = KeyCode.Mouse0;
@@ -24,18 +25,9 @@ public class MeleeAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(mouse0))
+        if(!disableAnimation)
         {
-           //Trigger only when clicked
-            weaponColl.isTrigger = true;
-
-            //initialize animation
-            anim.SetBool("attacking", true);
-
-        }else if (Input.GetKeyUp(mouse0))
-        {
-            weaponColl.isTrigger = false;
-            anim.SetBool("attacking", false);
+            attack();
         }
     }
 
@@ -48,6 +40,24 @@ public class MeleeAttack : MonoBehaviour
             {
                 collision.SendMessage("receiveDamage", meleeDamage, SendMessageOptions.DontRequireReceiver);
             }
+        }
+    }
+
+    void attack()
+    {
+        if (Input.GetKeyDown(mouse0))
+        {
+            //Trigger only when clicked
+            weaponColl.isTrigger = true;
+
+            //initialize animation
+            anim.SetBool("attacking", true);
+
+        }
+        else if (Input.GetKeyUp(mouse0))
+        {
+            weaponColl.isTrigger = false;
+            anim.SetBool("attacking", false);
         }
     }
 
