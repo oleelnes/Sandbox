@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopulateWithTrees : MonoBehaviour
+public class PopulateWithObjects : MonoBehaviour
 {
 
-    public GameObject objectToClone;
-    public GameObject parent;
+    public GameObject treeObjectToClone;
+    public GameObject caveEntranceObjectToClone;
+    //public GameObject parent;
 
     EndlessTerrain world;
 
@@ -39,14 +40,29 @@ public class PopulateWithTrees : MonoBehaviour
         makeTreeVisible(3, false);*/
     }
 
-    public GameObject createNewTree(Vector3 position)
+    public GameObject createNewObject(Vector3 position, string objectName)
     {
-        GameObject newTree = Instantiate(objectToClone);
-        newTree.transform.localScale *= 2.7f;
-        newTree.transform.position = position;
-        newTree.transform.parent = GameObject.Find("Trees").transform;
+        //GameObject objectToCreate = Instantiate(treeObjectToClone);
+        GameObject objectToCreate = InstantiateClone(objectName);
+        objectToCreate.transform.localScale *= 2.7f;
+        objectToCreate.transform.position = position;
+        objectToCreate.transform.parent = GameObject.Find(objectName).transform;
         //children.Add(newTree);
-        return newTree;
+        return objectToCreate;
+    }
+
+    public GameObject InstantiateClone(string objectName)
+    {
+        switch(objectName.ToLower())
+        {
+            case "tree":
+                return Instantiate(treeObjectToClone);
+            case "caveentrance":
+                return Instantiate(caveEntranceObjectToClone);
+            default:
+                Debug.Log(objectName + " did not match any of the cases");
+                return null;
+        }
     }
 
     public void makeTreeVisible(GameObject tree, bool visibility)

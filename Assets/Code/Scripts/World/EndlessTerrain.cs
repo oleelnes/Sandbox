@@ -23,7 +23,7 @@ public class EndlessTerrain : MonoBehaviour
 
 	public static Vector2 viewerPosition;
 	static NewMesh mapGenerator;
-	static PopulateWithTrees treePopulator;
+	static PopulateWithObjects treePopulator;
 
 	int chunkSize;
 	int chunksVisibleInViewDst;
@@ -34,7 +34,7 @@ public class EndlessTerrain : MonoBehaviour
 	void Start()
 	{
 		mapGenerator = FindObjectOfType<NewMesh>();
-		treePopulator = FindObjectOfType<PopulateWithTrees>();
+		treePopulator = FindObjectOfType<PopulateWithObjects>();
 
 		chunkSize = ((mapChunkSize) * polyScale);// + eller - 1, originalt -;
 		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / (chunkSize ));
@@ -47,7 +47,6 @@ public class EndlessTerrain : MonoBehaviour
 		viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
 		UpdateVisibleChunks();
 		//Debug.Log("height: " + GetHeight(1000.0f, 1000.0f) + "\n");
-		Debug.Log("Height player: " + GetHeight(viewerPosition.x, viewerPosition.y) + "\n");
 	}
 
 	/// <summary> 
@@ -124,6 +123,7 @@ public class EndlessTerrain : MonoBehaviour
 		}
 	}
 
+
 	/// <summary>
 	/// Class that manages the individual terrain chunks.
 	/// </summary>
@@ -142,6 +142,8 @@ public class EndlessTerrain : MonoBehaviour
 
 		//Ground objects
 		List<GameObject> treeList;
+		List<GameObject> caveEntranceList;
+		BoxCollider caveEntranceCollider;
 		WorldPopulated worldPopulated = WorldPopulated.FALSE;
 		bool trees;
 
@@ -154,6 +156,9 @@ public class EndlessTerrain : MonoBehaviour
 		{
 			world = FindObjectOfType<EndlessTerrain>();
 			treeList = new List<GameObject>();
+			caveEntranceList = new List<GameObject>();
+			caveEntranceCollider = FindObjectOfType<BoxCollider>();
+			
 			
 			position = coord * size;
 			bounds = new Bounds(position , Vector2.one * size);
@@ -193,8 +198,22 @@ public class EndlessTerrain : MonoBehaviour
 			float viewerDstFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(viewerPosition));
 			bool visible = viewerDstFromNearestEdge <= maxViewDst;
 			SetVisible(visible);
-			if (worldPopulated == WorldPopulated.FALSE) populateTerrainChunk(trees);
+			if (worldPopulated == WorldPopulated.FALSE)
+			{
+				worldPopulated = WorldPopulated.TRUE;
+				populateTerrainChunk(trees);
+			}
+			if (worldPopulated == WorldPopulated.TRUE)
+            {
+				for (int i = 0; i < caveEntranceList.Count; i++)
+                {
+					BoxCollider collider = caveEntranceList[i].GetComponent<BoxCollider>();
+					
+                }
+            }
 		}
+
+		
 
 		public void SetVisible(bool visible)
 		{
@@ -210,8 +229,65 @@ public class EndlessTerrain : MonoBehaviour
 
 		public void populateTerrainChunk(bool trees)
         {
-			if (trees) populateWithTrees();
-			//if (rocks) populateWithRocks();
+			if (trees)
+			{
+				populateWithCaveEntrances();
+				populateWithTrees();
+			}
+				//if (rocks) populateWithRocks();
+        }
+
+		
+
+		//TODO: move out of this file!
+		void populateWithTrees()
+        {
+			for (int x = 0; x < 10; x++)
+			{
+				for (int y = 0; y < 10; y++)
+				{
+					float height = world.GetHeight((float)(10 + x * 5) + meshObject.transform.position.x, (float)(10 + y * 5) + meshObject.transform.position.z);
+					if (height > 0.0f)
+					{
+						float placementLocationX = 10 + x * 5 + meshObject.transform.position.x;
+						float placementLocationZ = 10 + y * 5 + meshObject.transform.position.z;
+						Vector3 vec = new Vector3(placementLocationX, height, placementLocationZ);
+						treeList.Add(treePopulator.createNewObject(vec, "Tree"));
+					}
+				}
+			}
+			if (treeList.Count > 4) treePopulator.makeTreeVisible(treeList[2], false);
+
+			//Setting the world populated enum to true.
+			
+		}
+
+		void populateWithCaveEntrances()
+        {
+			float height = world.GetHeight((float)(200) + meshObject.transform.position.x, (float)(200) + meshObject.transform.position.z);
+			caveEntranceList.Add(treePopulator.createNewObject(new Vector3((float)(200) + meshObject.transform.position.x, height, (float)(200) + meshObject.transform.position.z), "CaveEntrance"));
+        }
+
+		/// <summary>
+		/// Function that changes the visibility of objects that are populated in the world.
+		/// </summary>
+		/// <param name="visible">The visibility of the objects.</param>
+		void ObjectsVisible(bool visible)
+        {
+			caveEntranceList.ForEach(gameObject => gameObject.SetActive(visible));
+			treeList.ForEach(gameObject => gameObject.SetActive(visible));
+			if (visible) worldPopulated = WorldPopulated.TRUE;
+			else worldPopulated = WorldPopulated.HIDDEN;
+        }
+
+		/// <summary>
+		/// Handles the state of the world population.
+		/// </summary>
+		enum WorldPopulated
+        {
+			TRUE,
+			FALSE,
+			HIDDEN
         }
 
 		/// <summary>
@@ -227,52 +303,8 @@ public class EndlessTerrain : MonoBehaviour
 			Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
 
 			if (!meshCollider.Raycast(ray, out hit, 150.0f)) hitHeight = hit.point.y;
-			
+
 			return hitHeight;
 		}
-
-		//TODO: move out of this file!
-		void populateWithTrees()
-        {
-			for (int x = 0; x < 10; x++)
-			{
-				for (int y = 0; y < 10; y++)
-				{
-					float height = world.GetHeight((float)(10 + x * 5) + meshObject.transform.position.x, (float)(10 + y * 5) + meshObject.transform.position.z);
-					if (height > 0.0f)
-					{
-						float placementLocationX = 10 + x * 5 + meshObject.transform.position.x;
-						float placementLocationZ = 10 + y * 5 + meshObject.transform.position.z;
-						Vector3 vec = new Vector3(placementLocationX, height, placementLocationZ);
-						treeList.Add(treePopulator.createNewTree(vec));
-					}
-				}
-			}
-			if (treeList.Count > 4) treePopulator.makeTreeVisible(treeList[2], false);
-
-			//Setting the world populated enum to true.
-			worldPopulated = WorldPopulated.TRUE;
-		}
-
-		/// <summary>
-		/// Function that changes the visibility of objects that are populated in the world.
-		/// </summary>
-		/// <param name="visible">The visibility of the objects.</param>
-		void ObjectsVisible(bool visible)
-        {
-			treeList.ForEach(gameObject => gameObject.SetActive(visible));
-			if (visible) worldPopulated = WorldPopulated.TRUE;
-			else worldPopulated = WorldPopulated.HIDDEN;
-        }
-
-		/// <summary>
-		/// Handles the state of the world population.
-		/// </summary>
-		enum WorldPopulated
-        {
-			TRUE,
-			FALSE,
-			HIDDEN
-        }
 	}
 }
