@@ -7,6 +7,9 @@ public class PopulateWithObjects : MonoBehaviour
 
     public GameObject treeObjectToClone;
     public GameObject caveEntranceObjectToClone;
+    public GameObject caveWallOne;
+
+    public Transform parentTransform;
     //public GameObject parent;
 
     EndlessTerrain world;
@@ -34,20 +37,20 @@ public class PopulateWithObjects : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        /*Destroy(children[2]);
-        makeTreeVisible(3, false);*/
-    }
-
+  
     public GameObject createNewObject(Vector3 position, string objectName)
     {
-        //GameObject objectToCreate = Instantiate(treeObjectToClone);
         GameObject objectToCreate = InstantiateClone(objectName);
+        
+        for (int i = 0; i < objectToCreate.transform.childCount; i++)
+        {
+            objectToCreate.transform.GetChild(i).gameObject.SetActive(true);
+        }
+
         objectToCreate.transform.localScale *= 2.7f;
         objectToCreate.transform.position = position;
+
         objectToCreate.transform.parent = GameObject.Find(objectName).transform;
-        //children.Add(newTree);
         return objectToCreate;
     }
 
