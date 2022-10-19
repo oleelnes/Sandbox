@@ -7,13 +7,19 @@ public class NoiseMapGenerator
 
 
 
-    public NoiseData CreateNoiseMap(int xSize, int zSize, int seed, float scale, Vector2 offset, int octaves, float persistance, float lucanarity)
+    public NoiseData CreateNoiseMap(int xSize, int zSize, int seed, float scale, Vector2 offset, int octaves, float persistance, float lucanarity, int biomeIndicator, int polyScale = 1)
     {
+
+       if (polyScale < 1) polyScale = 1;  
        
+        Debug.Log("biomeIndicator: " + biomeIndicator);
+
         //Offsetting the noise value and adding different layers of random numbers to the noise 
         System.Random r = new System.Random(seed);
 
         Vector3[] vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+
+
 
         float maxPossibleHeight = 0;
         float amplitude = 1;
@@ -31,26 +37,37 @@ public class NoiseMapGenerator
         }
 
 
-
-        for (int i = 0, z = 0; z <= zSize; z++)
+        for (int i = 0, z = 0; z <= zSize * polyScale; z += polyScale)
         {
-            for (int x = 0; x <= xSize; x++)
+            for (int x = 0; x <= xSize * polyScale; x += polyScale)
             {
-                
-                float yOffset = 0f;
+                float y = generateNoiseValue(x, z, scale, octaves, persistance, lucanarity, frequency, octaveOffsets, amplitude);
 
-                float y = yOffset + generateNoiseValue(x, z, scale, octaves, persistance, lucanarity, frequency, octaveOffsets, amplitude);
+
+
+                if (x != 0 && x != xSize * polyScale && z != 0 && z != zSize * polyScale)
+                {
+                    // Debug.Log("inside");
+                           
+                }
+
+                if (x == xSize * polyScale) Debug.Log("x: " + x); 
+
+
+
+
                 vertices[i] = new Vector3(x, y, z);
                
                 i++;
             }
         }
 
+
         for (int z = 0, i = 0; z <= zSize; z++)
         {
             for(int x = 0; x <= xSize; x++)
             {
-                float normalizedHeight = vertices[i].y / (2f * maxPossibleHeight / 1.4f);
+                float normalizedHeight = vertices[i].y / (2f * maxPossibleHeight / 1.25f);
                 vertices[i].y = normalizedHeight;
                 i++;
             }
@@ -88,7 +105,7 @@ public class NoiseMapGenerator
     * lucanarity: affects frequency -- the higher, the spikier the terrain.
     *      Should not be greater than 1.0f or lower than 0.0f.
     */
-    float generateNoiseValue(int x, int z, float scale, int octaves, float persistance, float lucanarity, float frequency, Vector2[] octaveOffsets, float amplitude)
+    public float generateNoiseValue(int x, int z, float scale, int octaves, float persistance, float lucanarity, float frequency, Vector2[] octaveOffsets, float amplitude)
     {
 
         float noiseHeight = 0;
@@ -108,6 +125,23 @@ public class NoiseMapGenerator
         }
         return noiseHeight;
     }
+    
+    public float PerlinNoise3D(float x, float y, float z)
+    {
+        float AB = Mathf.PerlinNoise(x, y);
+        float BC = Mathf.PerlinNoise(y, z);
+        float AC = Mathf.PerlinNoise(x, z);
+
+        float BA = Mathf.PerlinNoise(y, x);
+        float CB = Mathf.PerlinNoise(z, y);
+        float CA = Mathf.PerlinNoise(z, x);
+
+        float ABC = AB + BC + AC + BA + CB + CA;
+
+        return (ABC % 6f); //original: ABC / 6f;
+    }
+
+
 }
 
 public class NoiseData
