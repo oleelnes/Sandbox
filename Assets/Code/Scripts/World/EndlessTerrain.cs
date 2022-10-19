@@ -170,7 +170,7 @@ public class EndlessTerrain : MonoBehaviour
 
 
 			//Requesting mesh data for new terrain chunk
-			meshData = mapGenerator.CreateNewMesh(position, polyScale, mapChunkSize);
+			meshData = mapGenerator.CreateNewMesh(position, polyScale, mapChunkSize, material);
 
 			//Using the mesh data to create a new mesh. 
 			meshFilter.mesh = meshData.CreateMesh(flatShading);

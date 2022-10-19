@@ -29,12 +29,12 @@ public class NewMesh : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
     }
-    public MeshData CreateNewMesh(Vector2 position, int polyScale, int chunkSize)
+    public MeshData CreateNewMesh(Vector2 position, int polyScale, int chunkSize, Material material)
     {
-        return CreateMeshData(position, polyScale, chunkSize);
+        return CreateMeshData(position, polyScale, chunkSize, material);
     }
   
-    MeshData CreateMeshData(Vector2 position, int polyScale, int chunkSize)
+    MeshData CreateMeshData(Vector2 position, int polyScale, int chunkSize, Material material)
     {
         NoiseMapGenerator noiseMapGenerator = new NoiseMapGenerator();
         Vector3[] vertices = new Vector3[(chunkSize + 1) * (chunkSize + 1)];
@@ -47,7 +47,7 @@ public class NewMesh : MonoBehaviour
 
         colors = new Color[vertices.Length];
         //Creating the color array AND adjusting the height according to both heightMapCurve and the heightScale
-        colors = HeightScaleAndColor(vertices, 0.05f, position);
+        colors = HeightScaleAndColor(vertices, 0.05f, position, material);
 
 
         //Ordering the vertices of the mesh into triangles
@@ -57,7 +57,7 @@ public class NewMesh : MonoBehaviour
         return new MeshData(vertices, colors, triangles);
     }
 
-    private Color[] HeightScaleAndColor(Vector3[] noiseMap, float waterLevel, Vector2 position)
+    private Color[] HeightScaleAndColor(Vector3[] noiseMap, float waterLevel, Vector2 position, Material material)
     {
         Color[] colorMap = new Color[noiseMap.Length];
 
@@ -116,7 +116,26 @@ public class NewMesh : MonoBehaviour
             noiseMap[i].y *= heightScale;
         }
 
-        
+        //material.SetInt("baseColorCount", )
+
+        /*int amount = 4;
+
+        float[] heights = new float[amount];
+        heights[0] = waterLevel;
+        heights[1] = 10f;
+        heights[2] = 15f;
+        heights[3] = 20f;
+
+        Color[] colors = new Color[amount];
+        colors[0] = Color.blue;
+        colors[1] = Color.green;
+        colors[2] = new Color(122f, 44f, 10f);
+        colors[3] = Color.grey;
+        material.SetColorArray("baseColors", colors);
+
+        material.SetFloat("minHeight", 0f);*/
+        //material.SetFloat("maxHeight", 1f * (float)heightScale);
+
 
         return colorMap;
     }
