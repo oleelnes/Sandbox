@@ -49,3 +49,9 @@ public class Inventory : MonoBehaviour {
 // https://medium.com/@yonem9/create-an-unity-inventory-part-2-configure-the-inventory-3a990eff8cba
 
 // https://medium.com/@yonem9/create-an-unity-inventory-part-3-ui-cd4c5e8dedba
+
+// https://medium.com/@yonem9/create-an-unity-inventory-part-4-display-items-in-ui-6cdac8f734b7
+
+// https://medium.com/@yonem9/create-an-unity-inventory-part-5-drag-and-drop-d4374201539b
+
+// https://medium.com/@yonem9/create-an-unity-inventory-part-6-generate-tooltip-c50dedcf7457
