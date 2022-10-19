@@ -184,7 +184,6 @@ public class MeshData
         this.vertices = vertices;
         this.colors = colors;
         this.triangles = triangles;
-        //zSize = inZSize;
     }
 
     public Mesh CreateMesh(bool flatShading)
