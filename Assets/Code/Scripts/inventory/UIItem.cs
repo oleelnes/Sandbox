@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-
+    
 public class UIItem : MonoBehaviour, IPointerClickHandler { 
     public Item item; 
     private Image spriteImage; 

@@ -10,6 +10,7 @@ public class MeleeAttack : MonoBehaviour
     Collider weaponColl;
     public bool disableAnimation = false;
 
+
     [Header("Mouse buttons")]
     public KeyCode mouse0 = KeyCode.Mouse0;
 
@@ -24,7 +25,9 @@ public class MeleeAttack : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {    
+    {   
+        checkInventoryStatus();
+        
         if(!disableAnimation)
         {
             attack();
@@ -58,6 +61,14 @@ public class MeleeAttack : MonoBehaviour
         {
             weaponColl.isTrigger = false;
             anim.SetBool("attacking", false);
+        }
+    }
+
+    void checkInventoryStatus() {
+        if(Inventory.inventoryStatus == true){
+            disableAnimation = true;
+        } else {
+            disableAnimation = false;
         }
     }
 
