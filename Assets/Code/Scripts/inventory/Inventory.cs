@@ -8,6 +8,8 @@ public class Inventory : MonoBehaviour {
     public ItemDatabase itemDatabase;
     public UIInventory inventoryUI;
 
+    public static bool inventoryStatus = false;
+
     private void Start() {
         GiveItem(0);
         inventoryUI.gameObject.SetActive(false);
@@ -16,7 +18,16 @@ public class Inventory : MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.I)) {
             inventoryUI.gameObject.SetActive(!inventoryUI.gameObject.activeSelf);
-        }
+            if(inventoryUI.gameObject.activeSelf){
+                inventoryStatus = true;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+            } else {
+                inventoryStatus = false;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        } 
     }
 
     public void GiveItem(int id) {
@@ -44,6 +55,7 @@ public class Inventory : MonoBehaviour {
             Debug.Log("Item removed: " + item.title);
         }
     }
+
 }
 
 // https://medium.com/@yonem9/create-an-unity-inventory-part-2-configure-the-inventory-3a990eff8cba
