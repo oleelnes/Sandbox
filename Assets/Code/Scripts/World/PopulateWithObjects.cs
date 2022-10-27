@@ -24,6 +24,8 @@ public class PopulateWithObjects : MonoBehaviour
     {
         GameObject objectToCreate = InstantiateClone(objectName, subType);
 
+        Debug.Log("herhere");
+
         if (objectToCreate == null) return null;
         //child nodes have to be set to inactive in the hierarchy, and then activated here. If not, the position won't  
         //get changed

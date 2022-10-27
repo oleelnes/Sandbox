@@ -116,7 +116,6 @@ public class EndlessTerrain : MonoBehaviour
 				else
 				{
 					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, transform, materialTest, polyScale, texture, mapChunkSize , flatshading, trees));
-					Debug.Log("chunkcoord: " + viewedChunkCoord + ", chunksVisibleInDist: " + chunksVisibleInViewDst);
 				}
 
 			}
@@ -127,9 +126,8 @@ public class EndlessTerrain : MonoBehaviour
 	/// <summary>
 	/// Class that manages the individual terrain chunks.
 	/// </summary>
-	public class TerrainChunk
+	public class TerrainChunk 
 	{
-
 		//Reference to the class within which TerrainChunk recides (better way to do this?)
 		EndlessTerrain world;
 
@@ -141,10 +139,10 @@ public class EndlessTerrain : MonoBehaviour
 		MeshFilter meshFilter;
 
 		//Ground objects
-		List<GameObject> treeList;
-		List<GameObject> caveEntranceList;
+		ChunkObjects chunkObjects;
+
+
 		BoxCollider caveEntranceCollider;
-		WorldPopulated worldPopulated = WorldPopulated.FALSE;
 		bool trees;
 
 		//Positions
@@ -159,9 +157,10 @@ public class EndlessTerrain : MonoBehaviour
 		{
 			this.chunkSize = mapChunkSize * polyScale;
 			
+			
+			
 			world = FindObjectOfType<EndlessTerrain>();
-			treeList = new List<GameObject>();
-			caveEntranceList = new List<GameObject>();
+
 			caveEntranceCollider = FindObjectOfType<BoxCollider>();
 			
 			
@@ -195,6 +194,7 @@ public class EndlessTerrain : MonoBehaviour
 			meshCollider.sharedMesh = meshFilter.mesh;
 
 			this.trees = trees;
+			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees);
 		}
 
 
@@ -204,24 +204,25 @@ public class EndlessTerrain : MonoBehaviour
 			float viewerDstFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(viewerPosition));
 			bool visible = viewerDstFromNearestEdge <= maxViewDst;
 			SetVisible(visible);
-			if (count >= 45)
-            {
-				SetObjectsVisible(position);
-				count = 0;
-            }
-			if (worldPopulated == WorldPopulated.FALSE)
+			
+			if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.FALSE)
 			{
-				worldPopulated = WorldPopulated.TRUE;
-				populateTerrainChunk(trees);
+				chunkObjects.worldPopulated = ChunkObjects.WorldPopulated.TRUE;
+				chunkObjects.populateTerrainChunk(true, meshObject, meshData, world, treePopulator);
 			}
-			if (worldPopulated == WorldPopulated.TRUE)
+			if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.TRUE)
             {
-				for (int i = 0; i < caveEntranceList.Count; i++)
+				for (int i = 0; i < chunkObjects.caveEntranceList.Count; i++)
                 {
-					BoxCollider collider = caveEntranceList[i].GetComponent<BoxCollider>();
+					BoxCollider collider = chunkObjects.caveEntranceList[i].GetComponent<BoxCollider>();
 					
                 }
             }
+			if (count >= 45)
+			{
+				chunkObjects.SetObjectsVisible(position);
+				count = 0;
+			}
 		}
 
 		
@@ -231,133 +232,12 @@ public class EndlessTerrain : MonoBehaviour
 			meshObject.SetActive(visible);
 		}
 
-		public void SetObjectsVisible(Vector2 position)
-        {
-			if (worldPopulated != WorldPopulated.FALSE)
-            {
-				ObjectsVisible(position, 300f);
-            }
-        }
 
 		public bool IsVisible()
 		{
 			return meshObject.activeSelf;
 		}
 
-		public void populateTerrainChunk(bool trees)
-        {
-			if (trees)
-			{
-				populateWithCaveEntrances();
-				populateWithTrees(20, 20, 50*50);
-			}
-				//if (rocks) populateWithRocks();
-        }
-
-		/// <summary>
-		/// Function that changes the visibility of objects that are populated in the world.
-		/// </summary>
-		/// <param name="visible">The visibility of the objects.</param>
-		void ObjectsVisible(Vector2 position, float distance)
-		{
-			for (int i = 0; i < treeList.Count; i++)
-            {
-				Vector3 vec3 = new Vector3(position.x, 0.0f, position.y);
-				if (treeList[i].activeSelf && Vector3.Distance(vec3, treeList[i].transform.position) > distance)
-                {
-					treeList[i].SetActive(false);
-                }
-				else if (Vector3.Distance(vec3, treeList[i].transform.position) <= distance)
-                {
-					treeList[i].SetActive(true);
-
-				}
-			}
-			
-			/*caveEntranceList.ForEach(gameObject => gameObject.SetActive(visible));
-			treeList.ForEach(gameObject => gameObject.SetActive(visible));
-			if (visible) worldPopulated = WorldPopulated.TRUE;
-			else worldPopulated = WorldPopulated.HIDDEN;*/
-		}
-
-
-
-		//TODO: move out of this file!
-		void populateWithTrees(int xSize, int zSize, int amount)
-        {
-			System.Random treePosRandom = new System.Random(121112);
-			System.Random treeType = new System.Random(12141234);
-
-			float density = 1.0f;
-
-			for (int x = 0; x < 300; x += Mathf.RoundToInt(10 * density))
-			{
-				for (int y = 0; y < 300; y += Mathf.RoundToInt(10 * density))
-				{
-					float internalX = x + treePosRandom.Next(-4, 4);
-					float internalY = y + treePosRandom.Next(-4, 4);
-					float placementLocationX = internalX + meshObject.transform.position.x;
-					float placementLocationZ = internalY + meshObject.transform.position.z;
-					float height = world.GetHeight(placementLocationX, placementLocationZ);
-						/*Debug.Log("height: " + height + "; x and z after: " + 
-							placementLocationX + " and " + placementLocationZ 
-							+ "x and z before: " + x + " and " + y);*/
-					if (!IsWater(height) && internalX < chunkSize && internalY < chunkSize)
-					{
-						Vector3 vec = new Vector3(placementLocationX, height, placementLocationZ);
-
-						int treeIndicator = treeType.Next(0, 100);
-						string subType = "treeOne";
-						float treeScale = 5f;
-						if (treeIndicator == 0)
-                        {
-							subType = "treeOne";
-							treeScale = 5f + treePosRandom.Next(-2, 3);
-						}
-						else if (treeIndicator == 1)
-                        {
-							subType = "treeTwo";
-							treeScale = 2f + treePosRandom.Next(-1, 4);
-						}
-						else if (treeIndicator > 1 && treeIndicator < 5)
-                        {
-							subType = "treeThree";
-							treeScale = 5f + treePosRandom.Next(-1, 3);
-						}
-						else
-                        {
-							subType = "treeFour";
-							treeScale = 5f + treePosRandom.Next(-1, 3);
-						}
-						GameObject newTree = treePopulator.createNewObject(vec, "tree", treeScale, subType);
-						if (newTree != null) treeList.Add(newTree);
-					}
-					
-				}
-			}
-			if (treeList.Count > 4) treePopulator.makeTreeVisible(treeList[2], false);
-
-			//Setting the world populated enum to true.
-			
-		}
-
-		void populateWithCaveEntrances()
-        {
-			float height = world.GetHeight((float)(200) + meshObject.transform.position.x, (float)(200) + meshObject.transform.position.z);
-			caveEntranceList.Add(treePopulator.createNewObject(new Vector3((float)(200) + meshObject.transform.position.x, height, (float)(200) + meshObject.transform.position.z), "dungeonEntrance", 1.5f));
-        }
-
-		
-
-		/// <summary>
-		/// Handles the state of the world population.
-		/// </summary>
-		enum WorldPopulated
-        {
-			TRUE,
-			FALSE,
-			HIDDEN
-        }
 
 		/// <summary>
 		/// Function that gets the height (y coordinate) of a mesh given coordinates x and z.
@@ -375,27 +255,5 @@ public class EndlessTerrain : MonoBehaviour
 
 			return hitHeight;
 		}
-
-		/*public bool IsWater(float x, float z)
-        {
-			if (GetLocalHeight(x, z) >= meshData.getWaterLevel()) return false;
-			return true;
-        }*/
-
-		public bool IsWater(float height)
-		{
-			//Debug.Log("mesh water: " + meshData.getWaterLevel() + ", current height: " + height);
-			if (height > meshData.getWaterLevel())
-			{
-				
-				return false;
-			}
-			return true;
-		}
-
-		public bool IsMountainTop(float x, float z)
-        {
-			return true;
-        }
 	}
 }

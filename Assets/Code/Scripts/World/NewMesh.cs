@@ -53,7 +53,6 @@ public class NewMesh : MonoBehaviour
         triangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize);
 
         MeshData meshData = new MeshData(vertices, colors, triangles);
-        Debug.Log("water level: " + globalWaterLevel);
         meshData.setWaterLevel(globalWaterLevel);
         //Creating the instance of the MeshData that will be returned
         return meshData;
@@ -168,7 +167,6 @@ public class MeshData
 
     public MeshData(Vector3[] vertices, Color[] colors, int[] triangles)
     {
-        Debug.Log("waterlevel: " + waterLevel + ", calculated: " + 0.01f * 30);
         this.vertices = vertices;
         this.colors = colors;
         this.triangles = triangles;
