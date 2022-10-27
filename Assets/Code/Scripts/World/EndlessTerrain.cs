@@ -107,7 +107,7 @@ public class EndlessTerrain : MonoBehaviour
 
 				if (terrainChunkDictionary.ContainsKey(viewedChunkCoord))
 				{
-					terrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk();
+					terrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk(new Vector2(viewerPosition.x, viewerPosition.y));
 					if (terrainChunkDictionary[viewedChunkCoord].IsVisible())
 					{
 						terrainChunksVisibleLastUpdate.Add(terrainChunkDictionary[viewedChunkCoord]);
@@ -150,10 +150,15 @@ public class EndlessTerrain : MonoBehaviour
 		//Positions
 		Vector2 position;
 		Bounds bounds;
+		int chunkSize;
+
+		int count = 0;
 
 
 		public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, int polyScale, Texture texture, int mapChunkSize, bool flatShading, bool trees)
 		{
+			this.chunkSize = mapChunkSize * polyScale;
+			
 			world = FindObjectOfType<EndlessTerrain>();
 			treeList = new List<GameObject>();
 			caveEntranceList = new List<GameObject>();
@@ -193,11 +198,17 @@ public class EndlessTerrain : MonoBehaviour
 		}
 
 
-		public void UpdateTerrainChunk()
+		public void UpdateTerrainChunk(Vector2 position)
 		{
+			count++;
 			float viewerDstFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(viewerPosition));
 			bool visible = viewerDstFromNearestEdge <= maxViewDst;
 			SetVisible(visible);
+			if (count >= 45)
+            {
+				SetObjectsVisible(position);
+				count = 0;
+            }
 			if (worldPopulated == WorldPopulated.FALSE)
 			{
 				worldPopulated = WorldPopulated.TRUE;
@@ -218,9 +229,17 @@ public class EndlessTerrain : MonoBehaviour
 		public void SetVisible(bool visible)
 		{
 			meshObject.SetActive(visible);
-			if(worldPopulated == WorldPopulated.HIDDEN && visible == true) ObjectsVisible(true);
-			else if (worldPopulated == WorldPopulated.TRUE && visible == false) ObjectsVisible(false);
+			//if(worldPopulated == WorldPopulated.HIDDEN && visible == true) ObjectsVisible(true);
+			//else if (worldPopulated == WorldPopulated.TRUE && visible == false) ObjectsVisible(false);
 		}
+
+		public void SetObjectsVisible(Vector2 position)
+        {
+			if (worldPopulated != WorldPopulated.FALSE)
+            {
+				ObjectsVisible(position, 300f);
+            }
+        }
 
 		public bool IsVisible()
 		{
@@ -232,28 +251,61 @@ public class EndlessTerrain : MonoBehaviour
 			if (trees)
 			{
 				populateWithCaveEntrances();
-				populateWithTrees();
+				populateWithTrees(20, 20, 50*50);
 			}
 				//if (rocks) populateWithRocks();
         }
 
-		
+		/// <summary>
+		/// Function that changes the visibility of objects that are populated in the world.
+		/// </summary>
+		/// <param name="visible">The visibility of the objects.</param>
+		void ObjectsVisible(Vector2 position, float distance)
+		{
+			for (int i = 0; i < treeList.Count; i++)
+            {
+				Vector3 vec3 = new Vector3(position.x, 0.0f, position.y);
+				if (treeList[i].activeSelf && Vector3.Distance(vec3, treeList[i].transform.position) > distance)
+                {
+					treeList[i].SetActive(false);
+                }
+				else if (Vector3.Distance(vec3, treeList[i].transform.position) <= distance)
+                {
+					treeList[i].SetActive(true);
+
+				}
+			}
+			
+			/*caveEntranceList.ForEach(gameObject => gameObject.SetActive(visible));
+			treeList.ForEach(gameObject => gameObject.SetActive(visible));
+			if (visible) worldPopulated = WorldPopulated.TRUE;
+			else worldPopulated = WorldPopulated.HIDDEN;*/
+		}
+
+
 
 		//TODO: move out of this file!
-		void populateWithTrees()
+		void populateWithTrees(int xSize, int zSize, int amount)
         {
-			for (int x = 0; x < 10; x++)
+			System.Random treePosRandom = new System.Random(121112);
+			for (int x = 0; x < 300; x+=10)
 			{
-				for (int y = 0; y < 10; y++)
+				for (int y = 0; y < 300; y+=10)
 				{
-					float height = world.GetHeight((float)(10 + x * 5) + meshObject.transform.position.x, (float)(10 + y * 5) + meshObject.transform.position.z);
-					if (height > 0.0f)
+					float internalX = x + treePosRandom.Next(-4, 4);
+					float internalY = y + treePosRandom.Next(-4, 4);
+					float placementLocationX = internalX + meshObject.transform.position.x;
+					float placementLocationZ = internalY + meshObject.transform.position.z;
+					float height = world.GetHeight(placementLocationX, placementLocationZ);
+						/*Debug.Log("height: " + height + "; x and z after: " + 
+							placementLocationX + " and " + placementLocationZ 
+							+ "x and z before: " + x + " and " + y);*/
+					if (!IsWater(height) && internalX < chunkSize && internalY < chunkSize)
 					{
-						float placementLocationX = 10 + x * 5 + meshObject.transform.position.x;
-						float placementLocationZ = 10 + y * 5 + meshObject.transform.position.z;
 						Vector3 vec = new Vector3(placementLocationX, height, placementLocationZ);
-						treeList.Add(treePopulator.createNewObject(vec, "Tree"));
+						treeList.Add(treePopulator.createNewObject(vec, "Tree", 5f + treePosRandom.Next(-1, 3)));
 					}
+					
 				}
 			}
 			if (treeList.Count > 4) treePopulator.makeTreeVisible(treeList[2], false);
@@ -265,20 +317,10 @@ public class EndlessTerrain : MonoBehaviour
 		void populateWithCaveEntrances()
         {
 			float height = world.GetHeight((float)(200) + meshObject.transform.position.x, (float)(200) + meshObject.transform.position.z);
-			caveEntranceList.Add(treePopulator.createNewObject(new Vector3((float)(200) + meshObject.transform.position.x, height, (float)(200) + meshObject.transform.position.z), "CaveEntrance"));
+			caveEntranceList.Add(treePopulator.createNewObject(new Vector3((float)(200) + meshObject.transform.position.x, height, (float)(200) + meshObject.transform.position.z), "dungeonEntrance", 1.5f));
         }
 
-		/// <summary>
-		/// Function that changes the visibility of objects that are populated in the world.
-		/// </summary>
-		/// <param name="visible">The visibility of the objects.</param>
-		void ObjectsVisible(bool visible)
-        {
-			caveEntranceList.ForEach(gameObject => gameObject.SetActive(visible));
-			treeList.ForEach(gameObject => gameObject.SetActive(visible));
-			if (visible) worldPopulated = WorldPopulated.TRUE;
-			else worldPopulated = WorldPopulated.HIDDEN;
-        }
+		
 
 		/// <summary>
 		/// Handles the state of the world population.
@@ -302,9 +344,31 @@ public class EndlessTerrain : MonoBehaviour
 			float hitHeight = -999.9f;
 			Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
 
-			if (!meshCollider.Raycast(ray, out hit, 150.0f)) hitHeight = hit.point.y;
+			if (!meshCollider.Raycast(ray, out hit, 150.0f)) return hit.point.y;
 
 			return hitHeight;
 		}
+
+		/*public bool IsWater(float x, float z)
+        {
+			if (GetLocalHeight(x, z) >= meshData.getWaterLevel()) return false;
+			return true;
+        }*/
+
+		public bool IsWater(float height)
+		{
+			//Debug.Log("mesh water: " + meshData.getWaterLevel() + ", current height: " + height);
+			if (height > meshData.getWaterLevel())
+			{
+				
+				return false;
+			}
+			return true;
+		}
+
+		public bool IsMountainTop(float x, float z)
+        {
+			return true;
+        }
 	}
 }

@@ -6,48 +6,26 @@ public class PopulateWithObjects : MonoBehaviour
 {
 
     public GameObject treeObjectToClone;
-    public GameObject caveEntranceObjectToClone;
-    public GameObject caveWallOne;
-
-    public Transform parentTransform;
-    //public GameObject parent;
-
-    EndlessTerrain world;
-
-    List<GameObject> children;
+    public GameObject dungeonEntranceToClone;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        children = new List<GameObject>();
-       /* for (int x = 0; x < 3; x++)
-        {
-            for(int y = 0; y < 3; y++)
-            {
-                //float height = world.GetHeight(10 + x * 5, 10 + y * 5).HasValue ? world.GetHeight(10 + x * 5, 10 + y * 5).Value : -1000f;
-                float height = world.GetHeight(10 + x * 5, 10 + y * 5);
-                Debug.Log("retreived height:" + height);
-                if (height > -100f)
-                {
-                    createNewTree(new Vector3(10 + x * 5, height, 10 + y * 5));
-                }
-            }  
-        }*/
-    }
-
-    // Update is called once per frame
-  
-    public GameObject createNewObject(Vector3 position, string objectName)
+    /// <summary>
+    /// Function that returns a game object 
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="objectName"></param>
+    /// <param name="scale"></param>
+    /// <returns></returns>
+    public GameObject createNewObject(Vector3 position, string objectName, float scale)
     {
         GameObject objectToCreate = InstantiateClone(objectName);
         
+        //child nodes have to be set to inactive in the hierarchy, and then activated here. If not, the position won't  
+        //get changed
         for (int i = 0; i < objectToCreate.transform.childCount; i++)
-        {
             objectToCreate.transform.GetChild(i).gameObject.SetActive(true);
-        }
-
-        objectToCreate.transform.localScale *= 2.7f;
+        
+        objectToCreate.transform.localScale *= scale;
         objectToCreate.transform.position = position;
 
         objectToCreate.transform.parent = GameObject.Find(objectName).transform;
@@ -60,8 +38,9 @@ public class PopulateWithObjects : MonoBehaviour
         {
             case "tree":
                 return Instantiate(treeObjectToClone);
-            case "caveentrance":
-                return Instantiate(caveEntranceObjectToClone);
+            case "dungeonentrance":
+                return Instantiate(dungeonEntranceToClone);
+            //case: "rock":
             default:
                 Debug.Log(objectName + " did not match any of the cases");
                 return null;
