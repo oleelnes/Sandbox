@@ -229,8 +229,6 @@ public class EndlessTerrain : MonoBehaviour
 		public void SetVisible(bool visible)
 		{
 			meshObject.SetActive(visible);
-			//if(worldPopulated == WorldPopulated.HIDDEN && visible == true) ObjectsVisible(true);
-			//else if (worldPopulated == WorldPopulated.TRUE && visible == false) ObjectsVisible(false);
 		}
 
 		public void SetObjectsVisible(Vector2 position)
@@ -288,9 +286,13 @@ public class EndlessTerrain : MonoBehaviour
 		void populateWithTrees(int xSize, int zSize, int amount)
         {
 			System.Random treePosRandom = new System.Random(121112);
-			for (int x = 0; x < 300; x+=10)
+			System.Random treeType = new System.Random(12141234);
+
+			float density = 1.0f;
+
+			for (int x = 0; x < 300; x += Mathf.RoundToInt(10 * density))
 			{
-				for (int y = 0; y < 300; y+=10)
+				for (int y = 0; y < 300; y += Mathf.RoundToInt(10 * density))
 				{
 					float internalX = x + treePosRandom.Next(-4, 4);
 					float internalY = y + treePosRandom.Next(-4, 4);
@@ -303,7 +305,32 @@ public class EndlessTerrain : MonoBehaviour
 					if (!IsWater(height) && internalX < chunkSize && internalY < chunkSize)
 					{
 						Vector3 vec = new Vector3(placementLocationX, height, placementLocationZ);
-						treeList.Add(treePopulator.createNewObject(vec, "Tree", 5f + treePosRandom.Next(-1, 3)));
+
+						int treeIndicator = treeType.Next(0, 100);
+						string subType = "treeOne";
+						float treeScale = 5f;
+						if (treeIndicator == 0)
+                        {
+							subType = "treeOne";
+							treeScale = 5f + treePosRandom.Next(-2, 3);
+						}
+						else if (treeIndicator == 1)
+                        {
+							subType = "treeTwo";
+							treeScale = 2f + treePosRandom.Next(-1, 4);
+						}
+						else if (treeIndicator > 1 && treeIndicator < 5)
+                        {
+							subType = "treeThree";
+							treeScale = 5f + treePosRandom.Next(-1, 3);
+						}
+						else
+                        {
+							subType = "treeFour";
+							treeScale = 5f + treePosRandom.Next(-1, 3);
+						}
+						GameObject newTree = treePopulator.createNewObject(vec, "tree", treeScale, subType);
+						if (newTree != null) treeList.Add(newTree);
 					}
 					
 				}
