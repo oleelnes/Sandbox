@@ -5,65 +5,70 @@ using UnityEngine;
 public class PopulateWithObjects : MonoBehaviour
 {
 
-    public GameObject treeObjectToClone;
-    public GameObject caveEntranceObjectToClone;
-    public GameObject caveWallOne;
+    public GameObject treeObjectOne;
+    public GameObject treeObjectTwo;
+    public GameObject treeObjectThree;
+    public GameObject treeObjectFour;
 
-    public Transform parentTransform;
-    //public GameObject parent;
-
-    EndlessTerrain world;
-
-    List<GameObject> children;
+    public GameObject dungeonEntranceToClone;
 
 
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Function that returns a game object 
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="objectName"></param>
+    /// <param name="scale"></param>
+    /// <returns></returns>
+    public GameObject createNewObject(Vector3 position, string objectName, float scale, string subType = null)
     {
-        children = new List<GameObject>();
-       /* for (int x = 0; x < 3; x++)
-        {
-            for(int y = 0; y < 3; y++)
-            {
-                //float height = world.GetHeight(10 + x * 5, 10 + y * 5).HasValue ? world.GetHeight(10 + x * 5, 10 + y * 5).Value : -1000f;
-                float height = world.GetHeight(10 + x * 5, 10 + y * 5);
-                Debug.Log("retreived height:" + height);
-                if (height > -100f)
-                {
-                    createNewTree(new Vector3(10 + x * 5, height, 10 + y * 5));
-                }
-            }  
-        }*/
-    }
+        GameObject objectToCreate = InstantiateClone(objectName, subType);
 
-    // Update is called once per frame
-  
-    public GameObject createNewObject(Vector3 position, string objectName)
-    {
-        GameObject objectToCreate = InstantiateClone(objectName);
-        
+        Debug.Log("herhere");
+
+        if (objectToCreate == null) return null;
+        //child nodes have to be set to inactive in the hierarchy, and then activated here. If not, the position won't  
+        //get changed
         for (int i = 0; i < objectToCreate.transform.childCount; i++)
-        {
             objectToCreate.transform.GetChild(i).gameObject.SetActive(true);
-        }
-
-        objectToCreate.transform.localScale *= 2.7f;
+        
+        objectToCreate.transform.localScale *= scale;
         objectToCreate.transform.position = position;
 
         objectToCreate.transform.parent = GameObject.Find(objectName).transform;
         return objectToCreate;
     }
 
-    public GameObject InstantiateClone(string objectName)
+    public GameObject InstantiateClone(string objectName, string subType = null)
     {
         switch(objectName.ToLower())
         {
             case "tree":
-                return Instantiate(treeObjectToClone);
-            case "caveentrance":
-                return Instantiate(caveEntranceObjectToClone);
+                return GetTreeType(subType);
+            case "dungeonentrance":
+                return Instantiate(dungeonEntranceToClone);
+            //case: "rock":
             default:
                 Debug.Log(objectName + " did not match any of the cases");
+                return null;
+        }
+    }
+
+    public GameObject GetTreeType(string subType)
+    {
+        if (subType == null) return null;
+        switch(subType.ToLower())
+        {
+            case "treeone":
+                return Instantiate(treeObjectOne);
+            case "treetwo":
+                return Instantiate(treeObjectTwo);
+            case "treethree":
+                return Instantiate(treeObjectThree);
+            case "treefour":
+                return Instantiate(treeObjectFour);
+            default:
+                Debug.Log(subType + " did not match any of the cases");
                 return null;
         }
     }
