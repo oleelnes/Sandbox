@@ -27,13 +27,22 @@ public class ChunkObjects
 		caveEntranceList = new List<GameObject>();
 	}
 
-    public void SetObjectsVisible(Vector2 position)
+    public void SetObjectsVisible(Vector2 position, bool objectsVisible)
     {
 		//Debug.Log(treeList.Count);
         if (worldPopulated != WorldPopulated.FALSE)
         {
-            ObjectsVisible(position, 300f);
+			if (!objectsVisible)
+			{
+				ObjectsVisible(position, 0f);
+			}
+			else
+            {
+				ObjectsVisible(position, 300f);
+
+            }
         }
+		
     }
 
     public void populateTerrainChunk(bool trees, GameObject meshObject, MeshData meshData, EndlessTerrain world, PopulateWithObjects treePopulator)
@@ -84,6 +93,8 @@ public class ChunkObjects
 		System.Random treePosRandom = new System.Random(121112);
 
 		float density = 1.0f;
+
+		if (!trees) return;
 
 		for (int x = 0; x < 300; x += Mathf.RoundToInt(10 * density))
 		{
@@ -141,6 +152,7 @@ public class ChunkObjects
 		}
 		Debug.Log("Subtype: " + subType);
 		GameObject newTree = treePopulator.createNewObject(vec, "tree", treeScale, subType);
+		newTree.SetActive(false);
 		if (newTree != null) treeList.Add(newTree);
 	}
 
@@ -172,12 +184,11 @@ public class ChunkObjects
 	public float GetLocalHeight(float x, float z)
 	{
 		RaycastHit hit;
-		float hitHeight = -999.9f;
 		Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
 
 		if (!meshCollider.Raycast(ray, out hit, 150.0f)) return hit.point.y;
 
-		return hitHeight;
+		return -999f;
 	}
 
 	/*public bool IsWater(float x, float z)

@@ -107,7 +107,7 @@ public class EndlessTerrain : MonoBehaviour
 
 				if (terrainChunkDictionary.ContainsKey(viewedChunkCoord))
 				{
-					terrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk(new Vector2(viewerPosition.x, viewerPosition.y));
+					terrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk(new Vector2(viewerPosition.x, viewerPosition.y), trees);
 					if (terrainChunkDictionary[viewedChunkCoord].IsVisible())
 					{
 						terrainChunksVisibleLastUpdate.Add(terrainChunkDictionary[viewedChunkCoord]);
@@ -198,7 +198,7 @@ public class EndlessTerrain : MonoBehaviour
 		}
 
 
-		public void UpdateTerrainChunk(Vector2 position)
+		public void UpdateTerrainChunk(Vector2 position, bool visibility)
 		{
 			count++;
 			float viewerDstFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(viewerPosition));
@@ -220,7 +220,7 @@ public class EndlessTerrain : MonoBehaviour
             }
 			if (count >= 45)
 			{
-				chunkObjects.SetObjectsVisible(position);
+				chunkObjects.SetObjectsVisible(position, visibility);
 				count = 0;
 			}
 		}
