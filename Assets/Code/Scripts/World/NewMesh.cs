@@ -12,7 +12,7 @@ public class NewMesh : MonoBehaviour
     int[] triangles;
     Color[] colors;
 
-    
+    private float globalWaterLevel = 0.0f;
 
     public int seedMain = 10000;
     
@@ -40,21 +40,22 @@ public class NewMesh : MonoBehaviour
         Vector3[] vertices = new Vector3[(chunkSize + 1) * (chunkSize + 1)];
 
         NoiseData noiseData = noiseMapGenerator.CreateNoiseMap(chunkSize, chunkSize, seedMain, scale, position + offset, 7, 2.8f, 0.5f, (int) position.x / (chunkSize - 1), polyScale);
-
+        //NoiseData noiseData = noiseMapGenerator.CreateMurmurationNoiseMap(chunkSize, chunkSize , seedMain, 0.1f, offset, 7, 20, 2, 1.0f, chunkSize * chunkSize, polyScale);
 
         vertices = noiseData.noiseMap;
 
-
         colors = new Color[vertices.Length];
         //Creating the color array AND adjusting the height according to both heightMapCurve and the heightScale
-        colors = HeightScaleAndColor(vertices, 0.05f, position, material);
+        colors = HeightScaleAndColor(vertices, 0.01f, position, material);
 
 
         //Ordering the vertices of the mesh into triangles
         triangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize);
-        
+
+        MeshData meshData = new MeshData(vertices, colors, triangles);
+        meshData.setWaterLevel(globalWaterLevel);
         //Creating the instance of the MeshData that will be returned
-        return new MeshData(vertices, colors, triangles);
+        return meshData;
     }
 
     private Color[] HeightScaleAndColor(Vector3[] noiseMap, float waterLevel, Vector2 position, Material material)
@@ -66,15 +67,19 @@ public class NewMesh : MonoBehaviour
         float groundGrassColor = 0.0f;
         float waterIterator = 0.0f;
         float mountainSideColor = 0.0f;
+        bool firstWater = true;
+        //bool water = false;
         
-        Vector2[] UVs = new Vector2[noiseMap.Length];
+        //Vector2[] UVs = new Vector2[noiseMap.Length];
 
         for (int i = 0; i < noiseMap.Length; i++)
         {
+            bool water = false;
             //Using the heightMapCurve (AnimationCurve) to evaluate the height value of the mesh!
             noiseMap[i].y = meshHeightCurve.Evaluate(noiseMap[i].y);// * heightScale;
             if (noiseMap[i].y < waterLevel)
             {
+                water = true;
                 noiseMap[i].y = waterLevel;
                 colorMap[i] = new Color(0.1f + (waterIterator / 2.5f), 0.1f + (waterIterator / 2.5f), 0.3f + waterIterator);
                 waterIterator = (float)colorRandomizer.NextDouble() % 0.25f;
@@ -94,12 +99,10 @@ public class NewMesh : MonoBehaviour
                     ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 0.014f)) / 10.5f;
 
 
-
-
                 colorMap[i] = new Color(0.1f + (groundGrassColor / 2.5f), 0.2f + (groundGrassColor / 1.2f), 0.1f + (groundGrassColor / 2.5f));
 
             }
-            else if (noiseMap[i].y >= 0.6f && noiseMap[i].y < 0.85f)
+            else if (noiseMap[i].y >= 0.6f && noiseMap[i].y < 0.87f)
             {
                 groundGrassColor = Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 24.2f,
                     ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 20.3f);
@@ -108,34 +111,14 @@ public class NewMesh : MonoBehaviour
             }
             else colorMap[i] = Color.white;
 
-           /* if (i % 4 == 0) UVs[i] = new Vector2(0.0f, 0.0f);
-            else if (i % 4 == 1) UVs[i] = new Vector2(1.0f, 0.0f);
-            else if (i % 4 == 2) UVs[i] = new Vector2(0.0f, 1.0f);
-            else if (i % 4 == 3) UVs[i] = new Vector2(1.0f, 1.0f);*/
-
             noiseMap[i].y *= heightScale;
+
+            if (water)
+            {
+                globalWaterLevel = noiseMap[i].y;
+            }
+          
         }
-
-        //material.SetInt("baseColorCount", )
-
-        /*int amount = 4;
-
-        float[] heights = new float[amount];
-        heights[0] = waterLevel;
-        heights[1] = 10f;
-        heights[2] = 15f;
-        heights[3] = 20f;
-
-        Color[] colors = new Color[amount];
-        colors[0] = Color.blue;
-        colors[1] = Color.green;
-        colors[2] = new Color(122f, 44f, 10f);
-        colors[3] = Color.grey;
-        material.SetColorArray("baseColors", colors);
-
-        material.SetFloat("minHeight", 0f);*/
-        //material.SetFloat("maxHeight", 1f * (float)heightScale);
-
 
         return colorMap;
     }
@@ -177,14 +160,16 @@ public class MeshData
     //public Vector2[] UVs;
     public int[] triangles;
     public Vector3[] vertices;
-    //public int zSize;
+    public Vector3[] waterLocations;
+
+    private float waterLevel = 0;
+
 
     public MeshData(Vector3[] vertices, Color[] colors, int[] triangles)
     {
         this.vertices = vertices;
         this.colors = colors;
         this.triangles = triangles;
-        //zSize = inZSize;
     }
 
     public Mesh CreateMesh(bool flatShading)
@@ -195,25 +180,10 @@ public class MeshData
         mesh.triangles = triangles;
         mesh.colors = colors;
         mesh.RecalculateNormals();
-        //mesh.uv = UVs;
 
         return mesh;
     }
 
-
-    private float FetchHeightFromLocation(int x, int z)
-    {
-        float height = -20.0f;
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            if (vertices[i].x == x && vertices[i].z == z)
-            {
-                height = vertices[i].y;
-                break;
-            }
-        }
-        return height;
-    }
 
     void FlatShading()
     {
@@ -228,5 +198,15 @@ public class MeshData
         }
         vertices = flatShadedVertices;
         colors = flatShadedColors;
+    }
+
+    public float getWaterLevel()
+    {
+        return waterLevel;
+    }
+
+    public void setWaterLevel(float waterLevel)
+    {
+        this.waterLevel = waterLevel;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class NoiseMapGenerator 
 {
 
-
+   
 
     public NoiseData CreateNoiseMap(int xSize, int zSize, int seed, float scale, Vector2 offset, int octaves, float persistance, float lucanarity, int biomeIndicator, int polyScale = 1)
     {
@@ -51,9 +51,7 @@ public class NoiseMapGenerator
                            
                 }
 
-                if (x == xSize * polyScale) Debug.Log("x: " + x); 
-
-
+                
 
 
                 vertices[i] = new Vector3(x, y, z);
