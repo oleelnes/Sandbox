@@ -6,7 +6,7 @@ using UnityEngine;
 public class MeleeAttack : MonoBehaviour
 {
     //weapon animation
-    Animator anim;
+    public Animator anim;
     Collider weaponColl;
     public bool disableAnimation = false;
 
