@@ -10,7 +10,6 @@ public class MeleeAttack : MonoBehaviour
     Collider weaponColl;
     public bool disableAnimation = false;
 
-
     [Header("Mouse buttons")]
     public KeyCode mouse0 = KeyCode.Mouse0;
 
@@ -48,6 +47,26 @@ public class MeleeAttack : MonoBehaviour
 
     void attack()
     {
+        if(!disableAnimation)
+        {
+            attack();
+        }
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+
+        if (collision.tag == "Enemy")
+        {
+            if (anim.GetBool("attacking"))
+            {
+                collision.SendMessage("receiveDamage", meleeDamage, SendMessageOptions.DontRequireReceiver);
+            }
+        }
+    }
+
+    void attack()
+    {
         if (Input.GetKeyDown(mouse0))
         {
             //Trigger only when clicked
@@ -64,12 +83,4 @@ public class MeleeAttack : MonoBehaviour
         }
     }
 
-    void checkInventoryStatus() {
-        if(Inventory.inventoryStatus == true){
-            disableAnimation = true;
-        } else {
-            disableAnimation = false;
-        }
-    }
 
-}
