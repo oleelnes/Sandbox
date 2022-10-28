@@ -24,6 +24,28 @@ public class MeleeAttack : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {   
+        checkInventoryStatus();
+        
+        if(!disableAnimation)
+        {
+            attack();
+        }
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+
+        if (collision.tag == "Enemy")
+        {
+            if (anim.GetBool("attacking"))
+            {
+                collision.SendMessage("receiveDamage", meleeDamage, SendMessageOptions.DontRequireReceiver);
+            }
+        }
+    }
+
+    void attack()
     {
         if(!disableAnimation)
         {
@@ -61,4 +83,4 @@ public class MeleeAttack : MonoBehaviour
         }
     }
 
-}
+
