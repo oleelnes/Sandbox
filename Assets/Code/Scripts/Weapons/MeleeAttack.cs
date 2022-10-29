@@ -22,18 +22,18 @@ public class MeleeAttack : MonoBehaviour
         weaponColl = GetComponent<Collider>();
     }
 
-    /*
+    
     // Update is called once per frame
     void Update()
     {
-        checkInventoryStatus();
-
+        //checkInventoryStatus();
+        attack();
         if (!disableAnimation)
         {
-            attack();
+            //attack();
         }
     }
-    */
+    
 
     void OnTriggerEnter(Collider collision)
     {
