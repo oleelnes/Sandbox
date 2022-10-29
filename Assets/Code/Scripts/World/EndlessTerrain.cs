@@ -230,6 +230,7 @@ public class EndlessTerrain : MonoBehaviour
         {
 			if (state)
             {
+				
 				Color[] newColors = meshData.colors;
 				for(int i = 0; i < 40; i++)
                 {

@@ -50,7 +50,11 @@ public class NewMesh : MonoBehaviour
 
 
         //Ordering the vertices of the mesh into triangles
-        triangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize);
+        List<int> waterTriangles = new List<int>();
+        List<int> landTriangles = new List<int>();
+
+        int[] preTriangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize, vertices, waterTriangles, landTriangles);
+        triangles = LandTrianglesOnly(preTriangles, waterTriangles, landTriangles);
 
         MeshData meshData = new MeshData(vertices, colors, triangles);
         meshData.setWaterLevel(globalWaterLevel);
@@ -66,11 +70,6 @@ public class NewMesh : MonoBehaviour
 
         float groundGrassColor = 0.0f;
         float waterIterator = 0.0f;
-        float mountainSideColor = 0.0f;
-        bool firstWater = true;
-        //bool water = false;
-        
-        //Vector2[] UVs = new Vector2[noiseMap.Length];
 
         for (int i = 0; i < noiseMap.Length; i++)
         {
@@ -127,7 +126,7 @@ public class NewMesh : MonoBehaviour
      * Function that returns an integer array consisting of the ordering of the triangles within the noisemap.
      * int size: the size of the noisemap.
      */
-    private int[] CreateTriangles(int size, int chunkSize)
+    private int[] CreateTriangles(int size, int chunkSize, Vector3[] noiseMap, List<int> waterTriangles, List<int> landTriangles)
     {
         int[] triangleArray = new int[size];
         int vert = 0, tris = 0;
@@ -136,17 +135,62 @@ public class NewMesh : MonoBehaviour
             for (int x = 0; x < chunkSize; x++)
             {
                 triangleArray[tris + 0] = vert + 0;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert); 
+                else landTriangles.Add(vert);
+
                 triangleArray[tris + 1] = vert + chunkSize + 1;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + chunkSize + 1);
+                else landTriangles.Add(vert + chunkSize + 1);
+
                 triangleArray[tris + 2] = vert + 1;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + 1);
+                else landTriangles.Add(vert + 1);
 
+                //triangle 2
                 triangleArray[tris + 3] = vert + 1;
-                triangleArray[tris + 4] = vert + chunkSize + 1;
-                triangleArray[tris + 5] = vert + chunkSize + 2;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + 1);
+                else landTriangles.Add(vert + 1);
 
+                triangleArray[tris + 4] = vert + chunkSize + 1;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + chunkSize + 1);
+                else landTriangles.Add(vert + chunkSize + 1);
+               
+                triangleArray[tris + 5] = vert + chunkSize + 2;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + chunkSize + 2);
+                else landTriangles.Add(vert + chunkSize + 2);
+                
                 vert++;
                 tris += 6;
             }
             vert++;
+        }
+        return triangleArray;
+    }
+
+    public int[] LandTrianglesOnly(int[] preTriangles, List<int> waterTriangles, List<int> landTriangles)
+    {
+        int[] triangleArray = new int[preTriangles.Length];
+        //return preTriangles;
+
+        for (int i = 0, j = 0; i < preTriangles.Length; i++)
+        {
+            if(waterTriangles.Contains(preTriangles[i]))
+            {
+                if (i > 0)
+                {
+                    int k = 0;
+                    while (i - k > 0 && waterTriangles.Contains(preTriangles[i - k]) ) {
+                        k--;
+                    }
+                    
+                    triangleArray[i] = preTriangles[i - k];
+                }
+            }
+            else
+            {
+                triangleArray[i] = preTriangles[i];
+
+            }
         }
         return triangleArray;
     }
@@ -176,9 +220,12 @@ public class MeshData
     {
         Mesh mesh = new Mesh();
         if(flatShading) FlatShading();
+
+
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.colors = colors;
+        
         mesh.RecalculateNormals();
 
         return mesh;
@@ -192,6 +239,7 @@ public class MeshData
 
         for (int i = 0; i < triangles.Length; i++)
         {
+           
             flatShadedVertices[i] = vertices[triangles[i]];
             flatShadedColors[i] = colors[triangles[i]];
             triangles[i] = i;
