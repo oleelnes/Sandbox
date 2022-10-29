@@ -332,7 +332,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &374613473
+--- !u!114 &374613476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1407,7 +1407,6 @@ GameObject:
   - component: {fileID: 1124796618}
   - component: {fileID: 1124796617}
   - component: {fileID: 1124796616}
-  - component: {fileID: 1124796615}
   - component: {fileID: 1124796619}
   m_Layer: 0
   m_Name: Enemy
@@ -1416,18 +1415,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1124796615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1124796614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a0ea06cfec654e4d82f3643b38bb607, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1124796616
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1804,23 +1791,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5716681864270162303, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -5716681864270162303, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
       propertyPath: m_Animation
       value: 
       objectReference: {fileID: 7400000, guid: f224942845a72994a8e0ddf74c5d4b20, type: 2}
     - target: {fileID: -4216859302048453862, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.932
+      value: 0.86
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.078
+      value: -0.36
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.362
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
       propertyPath: m_LocalRotation.w
