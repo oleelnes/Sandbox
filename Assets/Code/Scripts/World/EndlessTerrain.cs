@@ -210,22 +210,34 @@ public class EndlessTerrain : MonoBehaviour
 				chunkObjects.worldPopulated = ChunkObjects.WorldPopulated.TRUE;
 				chunkObjects.populateTerrainChunk(true, meshObject, meshData, world, treePopulator);
 			}
-			if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.TRUE)
+			/*if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.TRUE)
             {
 				for (int i = 0; i < chunkObjects.caveEntranceList.Count; i++)
                 {
 					BoxCollider collider = chunkObjects.caveEntranceList[i].GetComponent<BoxCollider>();
 					
                 }
-            }
+            }*/
 			if (count >= 45)
 			{
 				chunkObjects.SetObjectsVisible(position, visibility);
 				count = 0;
+				EnableCorruption(true);
 			}
 		}
 
-		
+		public void EnableCorruption(bool state)
+        {
+			if (state)
+            {
+				Color[] newColors = meshData.colors;
+				for(int i = 0; i < 40; i++)
+                {
+					newColors[i] = new Color(0.1f, 0.1f, 0.1f);
+                }
+				meshFilter.mesh.colors = newColors;
+            }
+        }
 
 		public void SetVisible(bool visible)
 		{
