@@ -54,7 +54,7 @@ public class NewMesh : MonoBehaviour
         List<int> landTriangles = new List<int>();
 
         int[] preTriangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize, vertices, waterTriangles, landTriangles);
-        triangles = LandTrianglesOnly(preTriangles, waterTriangles, landTriangles);
+        triangles = HideWaterTriangles(preTriangles, waterTriangles, landTriangles);
 
         MeshData meshData = new MeshData(vertices, colors, triangles);
         meshData.setWaterLevel(globalWaterLevel);
@@ -135,7 +135,7 @@ public class NewMesh : MonoBehaviour
             for (int x = 0; x < chunkSize; x++)
             {
                 triangleArray[tris + 0] = vert + 0;
-                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert); 
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert);
                 else landTriangles.Add(vert);
 
                 triangleArray[tris + 1] = vert + chunkSize + 1;
@@ -167,29 +167,22 @@ public class NewMesh : MonoBehaviour
         return triangleArray;
     }
 
-    public int[] LandTrianglesOnly(int[] preTriangles, List<int> waterTriangles, List<int> landTriangles)
+    public int[] HideWaterTriangles(int[] preTriangles, List<int> waterTriangles, List<int> landTriangles)
     {
         int[] triangleArray = new int[preTriangles.Length];
-        //return preTriangles;
-
-        for (int i = 0, j = 0; i < preTriangles.Length; i++)
+        Debug.Log("pretriangles length:" + preTriangles.Length);
+        int storedIndex = -1;
+        for (int i = 0; i < preTriangles.Length; i++)
         {
-            if(waterTriangles.Contains(preTriangles[i]))
+            if (waterTriangles.Contains(preTriangles[i]))
             {
-                if (i > 0)
-                {
-                    int k = 0;
-                    while (i - k > 0 && waterTriangles.Contains(preTriangles[i - k]) ) {
-                        k--;
-                    }
-                    
-                    triangleArray[i] = preTriangles[i - k];
-                }
+                if (storedIndex == -1) triangleArray[i] = preTriangles[landTriangles[0]]; //??
+                else triangleArray[i] = preTriangles[storedIndex];
             }
             else
             {
                 triangleArray[i] = preTriangles[i];
-
+                storedIndex = i;
             }
         }
         return triangleArray;
