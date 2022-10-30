@@ -15,7 +15,7 @@ public class MeleeAttack : MonoBehaviour
 
 
     [Header("Damage")]
-    public float meleeDamage;
+    public float meleeDamage = 25f;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -27,10 +27,10 @@ public class MeleeAttack : MonoBehaviour
     void Update()
     {
         //checkInventoryStatus();
-        attack();
+
         if (!disableAnimation)
         {
-            //attack();
+            attack();
         }
     }
     
@@ -52,7 +52,7 @@ public class MeleeAttack : MonoBehaviour
         if (Input.GetKeyDown(mouse0))
         {
             //Trigger only when clicked
-            //weaponColl.isTrigger = true;
+            weaponColl.isTrigger = true;
 
             //initialize animation
             anim.SetBool("attacking", true);
@@ -60,7 +60,7 @@ public class MeleeAttack : MonoBehaviour
         }
         else if (Input.GetKeyUp(mouse0))
         {
-            //weaponColl.isTrigger = false;
+            weaponColl.isTrigger = false;
             anim.SetBool("attacking", false);
         }
     }

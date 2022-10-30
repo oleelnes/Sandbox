@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -7,9 +8,14 @@ public class EnemyManager : MonoBehaviour
 
     EnemyLocomotionManager enemyLocomotionManager;
     EnemyStats enemyStats;
+    //flash when 
+    public float flashTime = 2f;
+    public Color originalColor;
+
 
     private void Awake()
     {
+
         enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
         enemyStats = GetComponent<EnemyStats>();
     }
@@ -55,21 +61,15 @@ public class EnemyManager : MonoBehaviour
 
     public void receiveDamage(float damage)
     {
+/*        StartCoroutine(FlashRed());*/
         enemyStats.currentHP -= damage;
     }
-    /*
-    //Enemy patrol with waypoints  
-    private void Patroling()
-        {
-            waypointDistance = Vector3.Distance(transform.position, waypoints[waypoints_index].position);
-            if (waypointDistance > 8f)
-            {
-                transform.LookAt(waypoints[waypoints_index].position);
-                transform.position = Vector3.MoveTowards(transform.position, waypoints[waypoints_index].position, patrolSpeed * Time.deltaTime);
-            }
-            else
-            {
-                waypoints_index = (waypoints_index + 1) % waypoints.Length;
-            }
-        }*/
+/*
+    public IEnumerator FlashRed()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = Color.green;
+    }*/
+
 }
