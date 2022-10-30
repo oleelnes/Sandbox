@@ -140,7 +140,7 @@ public class EndlessTerrain : MonoBehaviour
 
 		//Ground objects
 		ChunkObjects chunkObjects;
-
+		Corruption corruption;
 
 		BoxCollider caveEntranceCollider;
 		bool trees;
@@ -151,14 +151,14 @@ public class EndlessTerrain : MonoBehaviour
 		int chunkSize;
 
 		int count = 0;
-
+		int corrTest = 0;
 
 		public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, int polyScale, Texture texture, int mapChunkSize, bool flatShading, bool trees)
 		{
 			this.chunkSize = mapChunkSize * polyScale;
 			
 			
-			
+			corruption = FindObjectOfType<Corruption>();
 			world = FindObjectOfType<EndlessTerrain>();
 
 			caveEntranceCollider = FindObjectOfType<BoxCollider>();
@@ -210,35 +210,36 @@ public class EndlessTerrain : MonoBehaviour
 				chunkObjects.worldPopulated = ChunkObjects.WorldPopulated.TRUE;
 				chunkObjects.populateTerrainChunk(true, meshObject, meshData, world, treePopulator);
 			}
-			/*if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.TRUE)
-            {
-				for (int i = 0; i < chunkObjects.caveEntranceList.Count; i++)
-                {
-					BoxCollider collider = chunkObjects.caveEntranceList[i].GetComponent<BoxCollider>();
-					
-                }
-            }*/
 			if (count >= 45)
 			{
+				corrTest++;
 				chunkObjects.SetObjectsVisible(position, visibility);
 				count = 0;
-				EnableCorruption(true);
+				EnableCorruption(corrTest);
 			}
+			
 		}
 
-		public void EnableCorruption(bool state)
+		public void EnableCorruption(int extra)
         {
-			if (state)
+			Debug.Log("colors size: " + meshData.colors.Length + ", triangles size: " + meshData.triangles.Length);
+			RaycastHit hit;
+			float hitHeight = -999.9f;
+			Ray ray = new Ray(new Vector3(1.0f, 100.0f, 1.0f), Vector3.down);
+			Color[] newColors = meshData.colors;
+
+			meshCollider.Raycast(ray, out hit, 150.0f);
+			int triangle = hit.triangleIndex;
+			if (hit.collider != null)
             {
-				
-				Color[] newColors = meshData.colors;
-				for(int i = 0; i < 40; i++)
-                {
-					newColors[i] = new Color(0.1f, 0.1f, 0.1f);
-                }
+				for (int i = 0; i < 100 + extra; i++)
+				{
+
+					newColors[triangle + i] = new Color(0.1f, 0.1f, 0.1f);
+				}
 				meshFilter.mesh.colors = newColors;
-            }
-        }
+			}
+		}
 
 		public void SetVisible(bool visible)
 		{

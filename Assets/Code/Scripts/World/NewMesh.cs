@@ -170,7 +170,6 @@ public class NewMesh : MonoBehaviour
     public int[] HideWaterTriangles(int[] preTriangles, List<int> waterTriangles, List<int> landTriangles)
     {
         int[] triangleArray = new int[preTriangles.Length];
-        Debug.Log("pretriangles length:" + preTriangles.Length);
         int storedIndex = -1;
         for (int i = 0; i < preTriangles.Length; i++)
         {
