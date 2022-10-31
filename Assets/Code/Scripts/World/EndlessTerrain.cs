@@ -152,17 +152,18 @@ public class EndlessTerrain : MonoBehaviour
 
 		int count = 0;
 		int corrTest = 0;
+		List<int> corruptionIndices;
 
 		public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, int polyScale, Texture texture, int mapChunkSize, bool flatShading, bool trees)
 		{
 			this.chunkSize = mapChunkSize * polyScale;
 			
-			
+			corruptionIndices = new List<int>();
 			corruption = FindObjectOfType<Corruption>();
+
 			world = FindObjectOfType<EndlessTerrain>();
 
-			caveEntranceCollider = FindObjectOfType<BoxCollider>();
-			
+			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees);
 			
 			position = coord * size;
 			bounds = new Bounds(position , Vector2.one * size);
@@ -177,7 +178,6 @@ public class EndlessTerrain : MonoBehaviour
 			meshObject.transform.parent = parent;
 			SetVisible(false);
 
-
 			//Requesting mesh data for new terrain chunk
 			meshData = mapGenerator.CreateNewMesh(position, polyScale, mapChunkSize, material);
 
@@ -187,14 +187,12 @@ public class EndlessTerrain : MonoBehaviour
 			//Setting the material of the mesh renderer. This will be done elsewhere in the future.
 			meshRenderer.material = material;
 
-
 			//Adding collision detection to the mesh -- this will be done elsewhere in the future.
 			meshCollider = meshObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
 			meshCollider.sharedMesh = null;
 			meshCollider.sharedMesh = meshFilter.mesh;
 
 			this.trees = trees;
-			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees);
 		}
 
 
