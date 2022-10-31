@@ -26,7 +26,7 @@ public class MeleeAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //checkInventoryStatus();
+        checkInventoryStatus();
 
         if (!disableAnimation)
         {
@@ -64,6 +64,16 @@ public class MeleeAttack : MonoBehaviour
             anim.SetBool("attacking", false);
         }
     }
+
+    void checkInventoryStatus() {
+        if(Inventory.inventoryStatus == true){
+            disableAnimation = true;
+        } else {
+            disableAnimation = false;
+        }
+    }
+
+    
 
 
 }
