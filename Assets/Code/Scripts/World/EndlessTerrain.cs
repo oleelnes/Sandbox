@@ -43,7 +43,6 @@ public class EndlessTerrain : MonoBehaviour
 
 	void Update()
 	{
-		Debug.DrawRay(new Vector3(10f + chunkSize, 20f, 10f), new Vector3(0f, -50f, 0f), Color.blue);
 		viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
 		UpdateVisibleChunks();
 		//Debug.Log("height: " + GetHeight(1000.0f, 1000.0f) + "\n");
@@ -115,7 +114,8 @@ public class EndlessTerrain : MonoBehaviour
 				}
 				else
 				{
-					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, transform, materialTest, polyScale, texture, mapChunkSize , flatshading, trees));
+					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, 
+						transform, materialTest, polyScale, texture, mapChunkSize , flatshading, trees));
 				}
 
 			}
@@ -138,9 +138,11 @@ public class EndlessTerrain : MonoBehaviour
 		MeshRenderer meshRenderer;
 		MeshFilter meshFilter;
 
+		public Vector3[] forest;
+
 		//Ground objects
 		ChunkObjects chunkObjects;
-
+		Corruption corruption;
 
 		BoxCollider caveEntranceCollider;
 		bool trees;
@@ -151,18 +153,18 @@ public class EndlessTerrain : MonoBehaviour
 		int chunkSize;
 
 		int count = 0;
-
+		int corrTest = 0;
+		List<int> corruptionIndices;
 
 		public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, int polyScale, Texture texture, int mapChunkSize, bool flatShading, bool trees)
 		{
 			this.chunkSize = mapChunkSize * polyScale;
 			
-			
-			
+			corruptionIndices = new List<int>();
+			corruption = FindObjectOfType<Corruption>();
+
 			world = FindObjectOfType<EndlessTerrain>();
 
-			caveEntranceCollider = FindObjectOfType<BoxCollider>();
-			
 			
 			position = coord * size;
 			bounds = new Bounds(position , Vector2.one * size);
@@ -177,24 +179,25 @@ public class EndlessTerrain : MonoBehaviour
 			meshObject.transform.parent = parent;
 			SetVisible(false);
 
-
 			//Requesting mesh data for new terrain chunk
 			meshData = mapGenerator.CreateNewMesh(position, polyScale, mapChunkSize, material);
 
 			//Using the mesh data to create a new mesh. 
 			meshFilter.mesh = meshData.CreateMesh(flatShading);
 
+			forest = meshData.forestVertices;
+			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees, Mathf.RoundToInt(coord.x) * 5 + Mathf.RoundToInt(coord.y) * 3, forest);
+
 			//Setting the material of the mesh renderer. This will be done elsewhere in the future.
 			meshRenderer.material = material;
-
 
 			//Adding collision detection to the mesh -- this will be done elsewhere in the future.
 			meshCollider = meshObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
 			meshCollider.sharedMesh = null;
 			meshCollider.sharedMesh = meshFilter.mesh;
+			
 
 			this.trees = trees;
-			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees);
 		}
 
 
@@ -205,31 +208,45 @@ public class EndlessTerrain : MonoBehaviour
 			bool visible = viewerDstFromNearestEdge <= maxViewDst;
 			SetVisible(visible);
 			
-			if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.FALSE)
+			if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.FALSE )
 			{
 				chunkObjects.worldPopulated = ChunkObjects.WorldPopulated.TRUE;
 				chunkObjects.populateTerrainChunk(true, meshObject, meshData, world, treePopulator);
 			}
-			if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.TRUE)
-            {
-				for (int i = 0; i < chunkObjects.caveEntranceList.Count; i++)
-                {
-					BoxCollider collider = chunkObjects.caveEntranceList[i].GetComponent<BoxCollider>();
-					
-                }
-            }
 			if (count >= 45)
 			{
+				corrTest++;
 				chunkObjects.SetObjectsVisible(position, visibility);
 				count = 0;
+				//EnableCorruption(corrTest);
 			}
+			
 		}
 
-		
+		public void EnableCorruption(int extra)
+        {
+			RaycastHit hit;
+			float hitHeight = -999.9f;
+			Ray ray = new Ray(new Vector3(1.0f, 100.0f, 1.0f), Vector3.down);
+			Color[] newColors = meshData.colors;
+
+			meshCollider.Raycast(ray, out hit, 150.0f);
+			int triangle = hit.triangleIndex;
+			if (hit.collider != null)
+            {
+				for (int i = 0; i < 100 + extra; i++)
+				{
+
+					newColors[triangle + i] = new Color(0.1f, 0.1f, 0.1f);
+				}
+				meshFilter.mesh.colors = newColors;
+			}
+		}
 
 		public void SetVisible(bool visible)
 		{
 			meshObject.SetActive(visible);
+			
 		}
 
 
@@ -248,10 +265,13 @@ public class EndlessTerrain : MonoBehaviour
 		public float GetLocalHeight(float x, float z)
 		{
 			RaycastHit hit;
-			float hitHeight = -999.9f;
+			float hitHeight = 100.9f;
 			Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
 
+			SetVisible(true);
+
 			if (!meshCollider.Raycast(ray, out hit, 150.0f)) return hit.point.y;
+			if (meshCollider.Raycast(ray, out hit, 150.0f)) return hit.point.y;
 
 			return hitHeight;
 		}

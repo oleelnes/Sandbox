@@ -50,13 +50,22 @@ public class NewMesh : MonoBehaviour
 
 
         //Ordering the vertices of the mesh into triangles
-        triangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize);
+        List<int> waterTriangles = new List<int>();
+        List<int> landTriangles = new List<int>();
 
-        MeshData meshData = new MeshData(vertices, colors, triangles);
+        int[] preTriangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize, vertices, waterTriangles, landTriangles);
+        triangles = HideWaterTriangles(preTriangles, waterTriangles, landTriangles);
+
+        NoiseData forestNoiseData = noiseMapGenerator.CreateNoiseMap(chunkSize, chunkSize, seedMain + 5, scale, position, 7, 2.8f, 0.5f, (int)position.x / (chunkSize - 1), polyScale);
+        Vector3[] forestVertices = forestNoiseData.noiseMap;
+
+        MeshData meshData = new MeshData(vertices, colors, triangles, forestVertices);
         meshData.setWaterLevel(globalWaterLevel);
         //Creating the instance of the MeshData that will be returned
         return meshData;
     }
+
+  
 
     private Color[] HeightScaleAndColor(Vector3[] noiseMap, float waterLevel, Vector2 position, Material material)
     {
@@ -66,11 +75,6 @@ public class NewMesh : MonoBehaviour
 
         float groundGrassColor = 0.0f;
         float waterIterator = 0.0f;
-        float mountainSideColor = 0.0f;
-        bool firstWater = true;
-        //bool water = false;
-        
-        //Vector2[] UVs = new Vector2[noiseMap.Length];
 
         for (int i = 0; i < noiseMap.Length; i++)
         {
@@ -127,7 +131,7 @@ public class NewMesh : MonoBehaviour
      * Function that returns an integer array consisting of the ordering of the triangles within the noisemap.
      * int size: the size of the noisemap.
      */
-    private int[] CreateTriangles(int size, int chunkSize)
+    private int[] CreateTriangles(int size, int chunkSize, Vector3[] noiseMap, List<int> waterTriangles, List<int> landTriangles)
     {
         int[] triangleArray = new int[size];
         int vert = 0, tris = 0;
@@ -136,17 +140,54 @@ public class NewMesh : MonoBehaviour
             for (int x = 0; x < chunkSize; x++)
             {
                 triangleArray[tris + 0] = vert + 0;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert);
+                else landTriangles.Add(vert);
+
                 triangleArray[tris + 1] = vert + chunkSize + 1;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + chunkSize + 1);
+                else landTriangles.Add(vert + chunkSize + 1);
+
                 triangleArray[tris + 2] = vert + 1;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + 1);
+                else landTriangles.Add(vert + 1);
 
+                //triangle 2
                 triangleArray[tris + 3] = vert + 1;
-                triangleArray[tris + 4] = vert + chunkSize + 1;
-                triangleArray[tris + 5] = vert + chunkSize + 2;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + 1);
+                else landTriangles.Add(vert + 1);
 
+                triangleArray[tris + 4] = vert + chunkSize + 1;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + chunkSize + 1);
+                else landTriangles.Add(vert + chunkSize + 1);
+               
+                triangleArray[tris + 5] = vert + chunkSize + 2;
+                if (noiseMap[vert].y <= globalWaterLevel) waterTriangles.Add(vert + chunkSize + 2);
+                else landTriangles.Add(vert + chunkSize + 2);
+                
                 vert++;
                 tris += 6;
             }
             vert++;
+        }
+        return triangleArray;
+    }
+
+    public int[] HideWaterTriangles(int[] preTriangles, List<int> waterTriangles, List<int> landTriangles)
+    {
+        int[] triangleArray = new int[preTriangles.Length];
+        int storedIndex = -1;
+        for (int i = 0; i < preTriangles.Length; i++)
+        {
+            if (waterTriangles.Contains(preTriangles[i]))
+            {
+                if (storedIndex == -1) triangleArray[i] = preTriangles[landTriangles[0]]; //??
+                else triangleArray[i] = preTriangles[storedIndex];
+            }
+            else
+            {
+                triangleArray[i] = preTriangles[i];
+                storedIndex = i;
+            }
         }
         return triangleArray;
     }
@@ -161,24 +202,30 @@ public class MeshData
     public int[] triangles;
     public Vector3[] vertices;
     public Vector3[] waterLocations;
+    public Vector3[] forestVertices;
 
     private float waterLevel = 0;
 
 
-    public MeshData(Vector3[] vertices, Color[] colors, int[] triangles)
+    public MeshData(Vector3[] vertices, Color[] colors, int[] triangles, Vector3[] forestVertices)
     {
         this.vertices = vertices;
         this.colors = colors;
         this.triangles = triangles;
+        this.forestVertices = forestVertices;
+
     }
 
     public Mesh CreateMesh(bool flatShading)
     {
         Mesh mesh = new Mesh();
         if(flatShading) FlatShading();
+
+
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.colors = colors;
+
         mesh.RecalculateNormals();
 
         return mesh;
@@ -192,6 +239,7 @@ public class MeshData
 
         for (int i = 0; i < triangles.Length; i++)
         {
+           
             flatShadedVertices[i] = vertices[triangles[i]];
             flatShadedColors[i] = colors[triangles[i]];
             triangles[i] = i;

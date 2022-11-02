@@ -9,8 +9,12 @@ public class PopulateWithObjects : MonoBehaviour
     public GameObject treeObjectTwo;
     public GameObject treeObjectThree;
     public GameObject treeObjectFour;
-
     public GameObject dungeonEntranceToClone;
+    public GameObject rockOne;
+    public GameObject rockBigOne;
+    public GameObject grassOne;
+    public GameObject flowerOne;
+    public GameObject mushroomOne;
 
 
     /// <summary>
@@ -23,8 +27,6 @@ public class PopulateWithObjects : MonoBehaviour
     public GameObject createNewObject(Vector3 position, string objectName, float scale, string subType = null)
     {
         GameObject objectToCreate = InstantiateClone(objectName, subType);
-
-        Debug.Log("herhere");
 
         if (objectToCreate == null) return null;
         //child nodes have to be set to inactive in the hierarchy, and then activated here. If not, the position won't  
@@ -47,12 +49,50 @@ public class PopulateWithObjects : MonoBehaviour
                 return GetTreeType(subType);
             case "dungeonentrance":
                 return Instantiate(dungeonEntranceToClone);
-            //case: "rock":
+            case "rock":
+                return GetRockType(subType);
+            case "plant":
+                return GetPlantType(subType);
             default:
                 Debug.Log(objectName + " did not match any of the cases");
                 return null;
         }
     }
+
+    public GameObject GetPlantType(string subType)
+    {
+        if (subType == null) return null;
+        switch (subType.ToLower())
+        {
+            case "grassone":
+                return Instantiate(grassOne);
+            case "flowerone":
+                return Instantiate(flowerOne);
+            case "mushroomone":
+                return Instantiate(mushroomOne);
+            default:
+                Debug.Log(subType + " did not match any of the cases");
+                return null;
+        }
+    }
+
+    public GameObject GetRockType(string subType)
+    {
+        if (subType == null) return null;
+        switch (subType.ToLower())
+        {
+            case "rockone":
+                return Instantiate(rockOne);
+            case "rockbigone":
+                return Instantiate(rockBigOne);
+            default:
+                Debug.Log(subType + " did not match any of the cases");
+                return null;
+        }
+    }
+
+
+
 
     public GameObject GetTreeType(string subType)
     {
@@ -77,4 +117,5 @@ public class PopulateWithObjects : MonoBehaviour
     {
         tree.SetActive(visibility);
     }
+
 }
