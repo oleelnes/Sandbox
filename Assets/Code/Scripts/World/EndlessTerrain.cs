@@ -43,7 +43,6 @@ public class EndlessTerrain : MonoBehaviour
 
 	void Update()
 	{
-		Debug.DrawRay(new Vector3(10f + chunkSize, 20f, 10f), new Vector3(0f, -50f, 0f), Color.blue);
 		viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
 		UpdateVisibleChunks();
 		//Debug.Log("height: " + GetHeight(1000.0f, 1000.0f) + "\n");
@@ -115,7 +114,8 @@ public class EndlessTerrain : MonoBehaviour
 				}
 				else
 				{
-					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, transform, materialTest, polyScale, texture, mapChunkSize , flatshading, trees));
+					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, 
+						transform, materialTest, polyScale, texture, mapChunkSize , flatshading, trees));
 				}
 
 			}
@@ -137,6 +137,8 @@ public class EndlessTerrain : MonoBehaviour
 		GameObject meshObject;
 		MeshRenderer meshRenderer;
 		MeshFilter meshFilter;
+
+		public Vector3[] forest;
 
 		//Ground objects
 		ChunkObjects chunkObjects;
@@ -163,7 +165,6 @@ public class EndlessTerrain : MonoBehaviour
 
 			world = FindObjectOfType<EndlessTerrain>();
 
-			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees);
 			
 			position = coord * size;
 			bounds = new Bounds(position , Vector2.one * size);
@@ -184,6 +185,9 @@ public class EndlessTerrain : MonoBehaviour
 			//Using the mesh data to create a new mesh. 
 			meshFilter.mesh = meshData.CreateMesh(flatShading);
 
+			forest = meshData.forestVertices;
+			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees, Mathf.RoundToInt(coord.x) * 5 + Mathf.RoundToInt(coord.y) * 3, forest);
+
 			//Setting the material of the mesh renderer. This will be done elsewhere in the future.
 			meshRenderer.material = material;
 
@@ -191,6 +195,7 @@ public class EndlessTerrain : MonoBehaviour
 			meshCollider = meshObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
 			meshCollider.sharedMesh = null;
 			meshCollider.sharedMesh = meshFilter.mesh;
+			
 
 			this.trees = trees;
 		}
@@ -203,7 +208,7 @@ public class EndlessTerrain : MonoBehaviour
 			bool visible = viewerDstFromNearestEdge <= maxViewDst;
 			SetVisible(visible);
 			
-			if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.FALSE)
+			if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.FALSE )
 			{
 				chunkObjects.worldPopulated = ChunkObjects.WorldPopulated.TRUE;
 				chunkObjects.populateTerrainChunk(true, meshObject, meshData, world, treePopulator);
@@ -241,6 +246,7 @@ public class EndlessTerrain : MonoBehaviour
 		public void SetVisible(bool visible)
 		{
 			meshObject.SetActive(visible);
+			
 		}
 
 
@@ -259,10 +265,13 @@ public class EndlessTerrain : MonoBehaviour
 		public float GetLocalHeight(float x, float z)
 		{
 			RaycastHit hit;
-			float hitHeight = -999.9f;
+			float hitHeight = 100.9f;
 			Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
 
+			SetVisible(true);
+
 			if (!meshCollider.Raycast(ray, out hit, 150.0f)) return hit.point.y;
+			if (meshCollider.Raycast(ray, out hit, 150.0f)) return hit.point.y;
 
 			return hitHeight;
 		}

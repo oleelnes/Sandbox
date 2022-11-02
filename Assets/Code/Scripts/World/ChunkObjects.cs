@@ -15,18 +15,22 @@ public class ChunkObjects
 	public bool visible;
 	public WorldPopulated worldPopulated;
 
+	private Vector3[] forest;
+
 	MeshCollider meshCollider;
 	GameObject proc = GameObject.FindGameObjectWithTag("MeshGenerator");
 
 	int chunkSize;
 
-	public ChunkObjects(MeshCollider collider, int chunkSize, bool visible)
+	public ChunkObjects(MeshCollider collider, int chunkSize, bool visible, int randomOffset, Vector3[] forest)
     {
 		this.meshCollider = collider;
 		this.chunkSize = chunkSize;	
 		this.visible = visible;
+		this.forest = forest;
 		worldPopulated = WorldPopulated.FALSE;
-		random = new System.Random(123234512);
+		random = new System.Random(1002 + randomOffset);
+
 
 
 		treeList = new List<GameObject>();
@@ -56,14 +60,13 @@ public class ChunkObjects
 
     public void populateTerrainChunk(bool visible, GameObject meshObject, MeshData meshData, EndlessTerrain world, PopulateWithObjects objectPopulator)
     {
-        if (visible)
-        {
-			populateWithCaveEntrances(meshObject, world, objectPopulator);
-            populateWithTrees(20, 20, 50 * 50, meshObject, meshData, world, objectPopulator);
-			populateWithRocks(meshObject, world, objectPopulator, meshData);
-			populateWithPlants(meshObject, world, objectPopulator, meshData);
-        }
-    }
+
+		populateWithCaveEntrances(meshObject, world, objectPopulator);
+		populateWithTrees(20, 20, 50 * 50, meshObject, meshData, world, objectPopulator);
+		populateWithRocks(meshObject, world, objectPopulator, meshData);
+		populateWithPlants(meshObject, world, objectPopulator, meshData);
+
+	}
 
 	private void populateWithRocks(GameObject meshObject, EndlessTerrain world, PopulateWithObjects objectPopulator, MeshData meshData)
     {
@@ -155,33 +158,36 @@ public class ChunkObjects
 	//TODO: move out of this file!
 	void populateWithTrees(int xSize, int zSize, int amount, GameObject meshObject, MeshData meshData, EndlessTerrain world, PopulateWithObjects objectPopulator)
 	{
-		System.Random treePosRandom = new System.Random(121112);
-
-		float density = 1.0f;
-
-		if (!visible) return;
-
-		for (int x = 0; x < 300; x += Mathf.RoundToInt(10 * density))
+		
+		for (int x = 0, i = 0; x < chunkSize; x += 10)
 		{
-			for (int y = 0; y < 300; y += Mathf.RoundToInt(10 * density))
+			for (int y = 0; y < chunkSize; y += 10)
 			{
-				float internalX = x + treePosRandom.Next(-4, 4);
-				float internalY = y + treePosRandom.Next(-4, 4);
-				float placementLocationX = internalX + meshObject.transform.position.x;
-				float placementLocationZ = internalY + meshObject.transform.position.z;
-				float height = world.GetHeight(placementLocationX, placementLocationZ);
+				if(forest[i].y > 0.6f)
+                {
+					int treeInterval = Mathf.RoundToInt(forest[i].y * 12);
+					bool placeTree = false;
+					int randomNumber = random.Next(0, 10);
+					float treeHeight = forest[i].y;
 
-				if (!IsWater(height - 0.2f, meshData) && internalX < chunkSize && internalY < chunkSize)
-				{
-					GenerateNewTree(placementLocationX, height, placementLocationZ, objectPopulator);
+					//The higher the noise value in the forest noisemap, the greater the probability that a tree will appear
+					if(randomNumber + Mathf.RoundToInt(forest[i].y * 10) < 14) placeTree = true;
+					forest[i].y = treeHeight;
+
+					float internalX = (float)x + (float)random.Next(-treeInterval, treeInterval);
+					float internalY = (float)y + (float)random.Next(-treeInterval, treeInterval);
+					float placementLocationX = internalX + meshObject.transform.position.x;
+					float placementLocationZ = internalY + meshObject.transform.position.z;
+					float height = world.GetHeight(placementLocationX, placementLocationZ);
+
+					if (placeTree && !IsWater(height - 0.2f, meshData)/* && internalX < (chunkSize ) && internalY < (chunkSize ) */)
+					{
+						GenerateNewTree(placementLocationX, height, placementLocationZ, objectPopulator);
+					}
 				}
-
-			}
+				i ++;
+			}	
 		}
-		if (treeList.Count > 4) objectPopulator.makeTreeVisible(treeList[2], false);
-
-		//Setting the world populated enum to true.
-
 	}
 
 	void GenerateNewTree(float placementLocationX, float height, float placementLocationZ, PopulateWithObjects objectPopulator)
@@ -237,22 +243,6 @@ public class ChunkObjects
 		TRUE,
 		FALSE,
 		HIDDEN
-	}
-
-	/// <summary>
-	/// Function that gets the height (y coordinate) of a mesh given coordinates x and z.
-	/// </summary>
-	/// <param name="x"></param>
-	/// <param name="z"></param>
-	/// <returns></returns>
-	public float GetLocalHeight(float x, float z)
-	{
-		RaycastHit hit;
-		Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
-
-		if (!meshCollider.Raycast(ray, out hit, 150.0f)) return hit.point.y;
-
-		return -999f;
 	}
 
 	/*public bool IsWater(float x, float z)

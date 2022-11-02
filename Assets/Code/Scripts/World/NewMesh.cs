@@ -56,11 +56,16 @@ public class NewMesh : MonoBehaviour
         int[] preTriangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize, vertices, waterTriangles, landTriangles);
         triangles = HideWaterTriangles(preTriangles, waterTriangles, landTriangles);
 
-        MeshData meshData = new MeshData(vertices, colors, triangles);
+        NoiseData forestNoiseData = noiseMapGenerator.CreateNoiseMap(chunkSize, chunkSize, seedMain + 5, scale, position, 7, 2.8f, 0.5f, (int)position.x / (chunkSize - 1), polyScale);
+        Vector3[] forestVertices = forestNoiseData.noiseMap;
+
+        MeshData meshData = new MeshData(vertices, colors, triangles, forestVertices);
         meshData.setWaterLevel(globalWaterLevel);
         //Creating the instance of the MeshData that will be returned
         return meshData;
     }
+
+  
 
     private Color[] HeightScaleAndColor(Vector3[] noiseMap, float waterLevel, Vector2 position, Material material)
     {
@@ -197,15 +202,18 @@ public class MeshData
     public int[] triangles;
     public Vector3[] vertices;
     public Vector3[] waterLocations;
+    public Vector3[] forestVertices;
 
     private float waterLevel = 0;
 
 
-    public MeshData(Vector3[] vertices, Color[] colors, int[] triangles)
+    public MeshData(Vector3[] vertices, Color[] colors, int[] triangles, Vector3[] forestVertices)
     {
         this.vertices = vertices;
         this.colors = colors;
         this.triangles = triangles;
+        this.forestVertices = forestVertices;
+
     }
 
     public Mesh CreateMesh(bool flatShading)
@@ -217,7 +225,7 @@ public class MeshData
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.colors = colors;
-        
+
         mesh.RecalculateNormals();
 
         return mesh;
