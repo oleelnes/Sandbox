@@ -26,7 +26,7 @@ public class PauseMenu : MonoBehaviour
     /**
     * Resume button, unpauses the game, locks the cursor and makes it invisible.
     **/
-    void Resume()
+    public void Resume()
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
@@ -38,7 +38,7 @@ public class PauseMenu : MonoBehaviour
     /**
     * Brings up the pause menu, sets the timescale to 0, and unlocks the cursor.
     **/
-    void Pause()
+    public void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
@@ -50,7 +50,7 @@ public class PauseMenu : MonoBehaviour
     /**
     * Changes the scene to the main menu scene.
     **/
-    void LoadMenu()
+    public void LoadMenu()
     {
         Debug.Log("Loading Menu");
         Time.timeScale = 1f;
