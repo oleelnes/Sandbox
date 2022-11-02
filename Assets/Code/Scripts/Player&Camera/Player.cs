@@ -18,7 +18,14 @@ public class Player : MonoBehaviour
         }
         else
         {
+            movement = gameObject.GetComponent<PlayerMovement>();
+            stats = gameObject.GetComponent<PlayerStats>();
             instance = this;
         }
+    }
+
+    public Player GetInstance()
+    {
+        return instance;
     }
 }

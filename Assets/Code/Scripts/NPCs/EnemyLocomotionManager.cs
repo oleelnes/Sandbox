@@ -4,25 +4,26 @@ using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class EnemyLocomotionManager : MonoBehaviour
 {
 
-    /* EnemyManager enemyManager;*/
     EnemyAnimationManager enemyAnimationManager;
     public Rigidbody enemyRigidBody;
     public CharacterStats currentTarget;
 
-    //The higher and lower respectively these angles are the greater dectection field of view
     [Header("Detection")]
-    public float maximumDetectionAngle = 50f;
-    public float minimumDetectionAngle = -50f;
+    //The higher (max) and lower (min) respectively these angles are the greater dectection field of view
+    public float maximumDetectionAngle = 70f;
+    public float minimumDetectionAngle = -70f;
     public float distance;
     public float triggerDistance = 20f;
 
     public float stoppingDistance = 2f;
     public float passiveDistance = 30f;
     public float movementSpeed = 3f;
+
 
     private void Awake()
     {
@@ -33,8 +34,7 @@ public class EnemyLocomotionManager : MonoBehaviour
 
     private void Start()
     {
-
-        //Enemy falls down
+        //Enemy falls down (!)
         enemyRigidBody.isKinematic = false;
     }
 
@@ -46,7 +46,6 @@ public class EnemyLocomotionManager : MonoBehaviour
 
     public void HandleDetection()
     {
-       /* enemyAnimationManager.animator.SetBool("Chase State", true);*/
         //NOTE: should be currentTarget if target is not only player
         if (distance <= triggerDistance)
         {
@@ -70,22 +69,52 @@ public class EnemyLocomotionManager : MonoBehaviour
         {
             if (distance > stoppingDistance)
             {
-                enemyAnimationManager.animator.SetBool("Attack State", false);
-                enemyAnimationManager.animator.SetBool("Chase State", true);
-                transform.position = Vector3.MoveTowards(transform.position, Player.instance.transform.position, movementSpeed * Time.deltaTime);
+                Chase();
             }
             else if (distance <= stoppingDistance)
             {
-                //ATTACK CODE HERE
-                enemyAnimationManager.animator.SetBool("Attack State", true);
+                Attack();
             }
 
             //Return to idle state
             if (distance >= passiveDistance)
             {
-                enemyAnimationManager.animator.SetBool("Chase State", false);
-                currentTarget = null;
+                Idle();
             }
         }
     }
+
+    private void Idle()
+    {
+        //IDLE CODE HERE
+        setState("Chase State", false);
+        currentTarget = null;
+
+    }
+
+    private void Chase()
+    {
+        //CHASE CODE HERE
+        setState("Attack State", false);
+        setState("Chase State", true);
+        transform.position = Vector3.MoveTowards(transform.position, Player.instance.transform.position, movementSpeed * Time.deltaTime);
+    }
+
+    private void Attack()
+    {
+        //ATTACK CODE HERE
+        setState("Attack State", true);
+    }
+
+    public void setState(string state, bool active)
+    {
+        enemyAnimationManager.animator.SetBool(state, active);
+    }
+
+    public void playAudio(UnityEvent stateEvent)
+    {
+        stateEvent.Invoke();
+    }
+
+
 }

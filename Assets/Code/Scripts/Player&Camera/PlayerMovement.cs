@@ -7,13 +7,15 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public bool isSprinting;
+    public bool isSuperSprinting;
 
     public float groundDrag;
 
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
-    bool readyToJump;
+    public bool readyToJump;
 
     private float walkSpeed = 7;
     private float sprintSpeed = 14;
@@ -32,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
 
     public Transform orientation;
 
@@ -132,15 +134,18 @@ public class PlayerMovement : MonoBehaviour
     private void Sprint() {
         if (Input.GetKey(sprintKey)) {
             moveSpeed = sprintSpeed;
+            isSprinting = true;
         } 
         else if(Input.GetKey(superSprintKey))
         {
             moveSpeed = superSprintSpeed;
+            isSuperSprinting = true;
         }
         else {
             moveSpeed = walkSpeed;
+            isSprinting = false;
+            isSuperSprinting = false;
         }
-        
     }
 
     private void Crouch() {

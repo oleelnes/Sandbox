@@ -8,10 +8,6 @@ public class EnemyManager : MonoBehaviour
 
     EnemyLocomotionManager enemyLocomotionManager;
     EnemyStats enemyStats;
-    //flash when 
-    public float flashTime = 2f;
-    public Color originalColor;
-
 
     private void Awake()
     {
@@ -61,15 +57,8 @@ public class EnemyManager : MonoBehaviour
 
     public void receiveDamage(float damage)
     {
-/*        StartCoroutine(FlashRed());*/
         enemyStats.currentHP -= damage;
     }
-/*
-    public IEnumerator FlashRed()
-    {
-        spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        spriteRenderer.color = Color.green;
-    }*/
+
 
 }
