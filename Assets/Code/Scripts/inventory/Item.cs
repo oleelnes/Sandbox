@@ -10,6 +10,9 @@ public class Item {
     public Sprite icon; 
     public Dictionary<string, int> stats = new Dictionary<string, int>();
 
+    /**
+    * Constructor for item object
+    */
     public Item(int id, string title, string description, Dictionary<string, int> stats) {
         this.id = id;
         this.title = title;
