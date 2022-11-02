@@ -213,14 +213,13 @@ public class EndlessTerrain : MonoBehaviour
 				corrTest++;
 				chunkObjects.SetObjectsVisible(position, visibility);
 				count = 0;
-				EnableCorruption(corrTest);
+				//EnableCorruption(corrTest);
 			}
 			
 		}
 
 		public void EnableCorruption(int extra)
         {
-			Debug.Log("colors size: " + meshData.colors.Length + ", triangles size: " + meshData.triangles.Length);
 			RaycastHit hit;
 			float hitHeight = -999.9f;
 			Ray ray = new Ray(new Vector3(1.0f, 100.0f, 1.0f), Vector3.down);
