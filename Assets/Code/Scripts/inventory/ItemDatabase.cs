@@ -25,7 +25,7 @@ public class ItemDatabase : MonoBehaviour {
                 {"Power", 15},
                 {"Defence", 10}
             }), 
-            new Item(1, "Diamond Axe", "Axe made with diamonds", new Dictionary<string, int>{
+            new Item(1, "pick_diamond", "Axe made with diamonds", new Dictionary<string, int>{
                 {"Power", 25},
                 {"Defence", 30}
             })

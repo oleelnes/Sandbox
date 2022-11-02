@@ -7,11 +7,13 @@ public class Inventory : MonoBehaviour {
     public List<Item> characterItems = new List<Item>();
     public ItemDatabase itemDatabase;
     public UIInventory inventoryUI;
+    public ABInventory actionBarUI;
 
     public static bool inventoryStatus = false;
 
     private void Start() {
         GiveItem(0);
+        GiveItem(1);
         inventoryUI.gameObject.SetActive(false);
     }
 

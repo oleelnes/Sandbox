@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Level/Scenes/TerrainScene.unity
+    path: Assets/Level/Scenes/InventoryScene.unity
     guid: 70fc6dffd34a93d4fa474f5c684447c9
   - enabled: 1
     path: Assets/Level/Scenes/CaveScene.unity
