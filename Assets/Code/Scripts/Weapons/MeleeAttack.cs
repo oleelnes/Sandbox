@@ -50,6 +50,8 @@ public class MeleeAttack : MonoBehaviour
             if (anim.GetBool("attacking"))
             {
                 collision.SendMessage("receiveDamage", meleeDamage, SendMessageOptions.DontRequireReceiver);
+                //if player attacks enemy but isn't the current target yet
+                collision.SendMessage("setCurrentTargetToPlayer", SendMessageOptions.DontRequireReceiver);
                 enemyHitEvent.Invoke();
             }
         }

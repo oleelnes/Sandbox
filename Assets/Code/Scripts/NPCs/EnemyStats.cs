@@ -8,6 +8,7 @@ public class EnemyStats : CharacterStats
     [Header("Enemy stats")]
     public float maxHP = 100f;
     public float currentHP = 100f;
+    public float damage = 1f;
 
     // Start is called before the first frame update
     void Start()

@@ -56,7 +56,7 @@ public class EnemyLocomotionManager : MonoBehaviour
 
             if (viewableAngle > minimumDetectionAngle && viewableAngle < maximumDetectionAngle)
             {
-                currentTarget = Player.instance.GetComponent<CharacterStats>();
+                setCurrentTargetToPlayer();
             }
         }
 
@@ -112,6 +112,11 @@ public class EnemyLocomotionManager : MonoBehaviour
         enemyAnimationManager.animator.SetBool(state, active);
     }
 
+    public bool getState(string state)
+    {
+       return enemyAnimationManager.animator.GetBool(state);
+    }
+
     public void playAudio(UnityEvent stateEvent)
     {
         stateEvent.Invoke();
@@ -150,6 +155,17 @@ public class EnemyLocomotionManager : MonoBehaviour
             }
 
         }
+    }
+
+    public void setCurrentTargetToPlayer()
+    {
+        currentTarget = Player.instance.GetComponent<CharacterStats>();
+    }
+
+    public void attackDamage(float damage)
+    {
+        if(getState("Attack State"))
+        Player.instance.GetComponent<PlayerHealth>().TakeDamage(damage);
     }
 
 

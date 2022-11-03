@@ -60,5 +60,10 @@ public class EnemyManager : MonoBehaviour
         enemyStats.currentHP -= damage;
     }
 
+    public void attackDamage(float damage)
+    {
+        enemyLocomotionManager.attackDamage(enemyStats.damage);
+    }
+
 
 }
