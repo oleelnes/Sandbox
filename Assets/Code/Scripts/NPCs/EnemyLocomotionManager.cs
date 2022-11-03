@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -23,6 +24,7 @@ public class EnemyLocomotionManager : MonoBehaviour
     public float stoppingDistance = 2f;
     public float passiveDistance = 30f;
     public float movementSpeed = 3f;
+    public float rotationSpeed = 3;
 
 
     private void Awake()
@@ -63,7 +65,7 @@ public class EnemyLocomotionManager : MonoBehaviour
     public void HandleMoveToTarget()
     {
 
-        transform.LookAt(Player.instance.transform.position);
+        enemyRotationAndDirection();
 
         if (currentTarget != null)
         {
@@ -97,7 +99,6 @@ public class EnemyLocomotionManager : MonoBehaviour
         //CHASE CODE HERE
         setState("Attack State", false);
         setState("Chase State", true);
-        transform.position = Vector3.MoveTowards(transform.position, Player.instance.transform.position, movementSpeed * Time.deltaTime);
     }
 
     private void Attack()
@@ -114,6 +115,41 @@ public class EnemyLocomotionManager : MonoBehaviour
     public void playAudio(UnityEvent stateEvent)
     {
         stateEvent.Invoke();
+    }
+
+    public void enemyRotationAndDirection()
+    {
+        //only rotate on x and z axis
+        var targetPos = Player.instance.transform.position;
+        targetPos.y = transform.position.y;
+        var relativePos = targetPos - transform.position;
+
+        var rotation = Quaternion.LookRotation(relativePos);
+        transform.rotation = rotation;
+
+        if(distance > stoppingDistance)
+        {
+            //Look at player and move towards player
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, movementSpeed * Time.deltaTime);
+        }
+
+        //Stay on ground
+        // Create RaycastHit variable.
+        RaycastHit hit;
+
+        // If the ray casted from this object (in your case, the tree) to below it hits something...
+        if ((Physics.Raycast(transform.position, -Vector3.up, out hit, 10f)))
+        {
+
+            // and if the distance between object and hit is larger than 0.3 (I judge it nearly unnoticeable otherwise)
+            if (hit.distance > 0.3f)
+            {
+                // Then bring object down by distance value.
+                transform.position = new Vector3(transform.position.x, transform.position.y - hit.distance, transform.position.z);
+
+            }
+
+        }
     }
 
 

@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class PlayFootstepSound : MonoBehaviour
 {
-/*    [SerializeField]
-    private AudioClip[] walkingSounds;
-
-    AudioClip currentClip;*/
-
     private AudioSource audioSource;
     private bool IsMoving;
 
@@ -24,7 +19,6 @@ public class PlayFootstepSound : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Player.instance.movement.grounded);
         if (Player.instance.movement.grounded)
         {
             playWalkAudio();
@@ -44,8 +38,6 @@ public class PlayFootstepSound : MonoBehaviour
 
         if (IsMoving && !audioSource.isPlaying) 
         {
-/*            currentClip = walkingSounds[Random.Range(0, walkingSounds.Length)];
-            audioSource.clip = currentClip;*/
             audioSource.Play();
         }// if player is moving and audiosource is not playing play it
         if (!IsMoving)
