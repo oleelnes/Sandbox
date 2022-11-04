@@ -62,7 +62,7 @@ public class ChunkObjects
     {
 
 		populateWithCaveEntrances(meshObject, world, objectPopulator);
-		populateWithTrees(20, 20, 50 * 50, meshObject, meshData, world, objectPopulator);
+		populateWithTrees(meshObject, meshData, world, objectPopulator);
 		populateWithRocks(meshObject, world, objectPopulator, meshData);
 		populateWithPlants(meshObject, world, objectPopulator, meshData);
 
@@ -164,25 +164,21 @@ public class ChunkObjects
 	}
 
 
-
-	//TODO: move out of this file!
-	void populateWithTrees(int xSize, int zSize, int amount, GameObject meshObject, MeshData meshData, EndlessTerrain world, PopulateWithObjects objectPopulator)
+	void populateWithTrees(GameObject meshObject, MeshData meshData, EndlessTerrain world, PopulateWithObjects objectPopulator)
 	{
 		
 		for (int x = 0, i = 0; x < chunkSize; x += 10)
 		{
 			for (int y = 0; y < chunkSize; y += 10)
 			{
-				if(forest[i].y > 0.6f)
+				//Addition of the random makes the edges of the forests have wider spacing
+				if(forest[i].y > 0.6f + ((float)random.NextDouble() % 0.15))
                 {
 					int treeInterval = Mathf.RoundToInt(forest[i].y * 12);
-					bool placeTree = false;
 					int randomNumber = random.Next(0, 10);
-					float treeHeight = forest[i].y;
 
 					//The higher the noise value in the forest noisemap, the greater the probability that a tree will appear
-					if(randomNumber + Mathf.RoundToInt(forest[i].y * 10) < 14) placeTree = true;
-					forest[i].y = treeHeight;
+					bool placeTree = randomNumber + Mathf.RoundToInt(forest[i].y * 10) < 14;
 
 					float internalX = (float)x + (float)random.Next(-treeInterval, treeInterval);
 					float internalY = (float)y + (float)random.Next(-treeInterval, treeInterval);
@@ -190,9 +186,9 @@ public class ChunkObjects
 					float placementLocationZ = internalY + meshObject.transform.position.z;
 					float height = world.GetHeight(placementLocationX, placementLocationZ);
 
-					if (placeTree && !IsWater(height - 0.2f, meshData)/* && internalX < (chunkSize ) && internalY < (chunkSize ) */)
+					if (/*placeTree &&*/ !IsWater(height - 0.6f, meshData) && internalX < (chunkSize ) && internalY < (chunkSize ) )
 					{
-						GenerateNewTree(placementLocationX, height, placementLocationZ, objectPopulator);
+						GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, objectPopulator);
 					}
 				}
 				i ++;
