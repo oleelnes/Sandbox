@@ -26,8 +26,9 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode superSprintKey = KeyCode.Q;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
-    
-    
+
+    Ray ray;
+    RaycastHit hit;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -61,6 +62,10 @@ public class PlayerMovement : MonoBehaviour
         Sprint();
         Crouch();
 
+        //Destroying/interacting with objects
+        checkHit();
+       
+
         // handle drag
         if (grounded)
             rb.drag = groundDrag;
@@ -72,6 +77,27 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
     }
+
+    private void checkHit()
+    {
+        PlayerCam pC = FindObjectOfType<PlayerCam>();
+        pC.GetComponent<Camera>();
+        ray = pC.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        if(Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit))
+        {
+            MoveCamera moveCamScript = FindObjectOfType<MoveCamera>();
+            GameObject hitObject = hit.collider.gameObject;
+            if(Vector3.Distance(moveCamScript.getCameraPosition(), hitObject.transform.position) > 10.0f)
+            {
+                GameObject pop = GameObject.FindGameObjectWithTag("tree");
+                if(hit.collider.tag == "tree")
+                {
+                    hitObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                }
+            }
+        }
+    }
+
 
     private void MyInput()
     {
