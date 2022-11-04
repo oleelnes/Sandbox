@@ -19,19 +19,19 @@ public class ChunkObjects
 
 	MeshCollider meshCollider;
 	GameObject proc = GameObject.FindGameObjectWithTag("MeshGenerator");
+	EndlessTerrain world;
 
 	int chunkSize;
 
-	public ChunkObjects(MeshCollider collider, int chunkSize, bool visible, int randomOffset, Vector3[] forest)
+	public ChunkObjects(MeshCollider collider, int chunkSize, bool visible, int randomOffset, Vector3[] forest, EndlessTerrain world)
     {
 		this.meshCollider = collider;
 		this.chunkSize = chunkSize;	
 		this.visible = visible;
 		this.forest = forest;
+		this.world = world;
 		worldPopulated = WorldPopulated.FALSE;
 		random = new System.Random(1002 + randomOffset);
-
-
 
 		treeList = new List<GameObject>();
 		caveEntranceList = new List<GameObject>();
@@ -141,6 +141,7 @@ public class ChunkObjects
 	{
 		for (int i = 0; i < list.Count; i++)
 		{
+			
 			Vector3 vec3 = new Vector3(position.x, 0.0f, position.y);
 			if (list[i].activeSelf && Vector3.Distance(vec3, list[i].transform.position) > distance)
 			{
@@ -150,7 +151,16 @@ public class ChunkObjects
 			{
 				list[i].SetActive(true);
 			}
+			if (list[i].tag == "deleteTree" || list[i] == null)
+			{
+				list[i].SetActive(false);
+				world.toDelete.Add(list[i]);
+				list.RemoveAt(i);
+
+			}
+
 		}
+
 	}
 
 

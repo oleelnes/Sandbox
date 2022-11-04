@@ -3788,6 +3788,7 @@ MonoBehaviour:
   trees: 1
   flatshading: 1
   polyScale: 5
+  toDelete: []
 --- !u!114 &2140568062
 MonoBehaviour:
   m_ObjectHideFlags: 0

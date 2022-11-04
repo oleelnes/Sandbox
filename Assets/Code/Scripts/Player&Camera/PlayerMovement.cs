@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode superSprintKey = KeyCode.Q;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
-
     Ray ray;
     RaycastHit hit;
 
@@ -48,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        
         readyToJump = true;
     }
 
@@ -89,10 +87,13 @@ public class PlayerMovement : MonoBehaviour
             GameObject hitObject = hit.collider.gameObject;
             if(Vector3.Distance(moveCamScript.getCameraPosition(), hitObject.transform.position) > 10.0f)
             {
-                GameObject pop = GameObject.FindGameObjectWithTag("tree");
                 if(hit.collider.tag == "tree")
                 {
-                    hitObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                    //Shrinking the object. Will be changed later.
+                    //hitObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                    
+                    Debug.Log("hit a tree");
+                    hitObject.tag = "deleteTree";
                 }
             }
         }

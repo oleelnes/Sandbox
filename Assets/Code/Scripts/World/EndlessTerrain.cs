@@ -18,6 +18,7 @@ public class EndlessTerrain : MonoBehaviour
 	public bool flatshading = false;
 
 	public int polyScale = 1;
+	public List<GameObject> toDelete = new List<GameObject>();
 
 	///public Material mapMaterial;
 
@@ -35,7 +36,6 @@ public class EndlessTerrain : MonoBehaviour
 	{
 		mapGenerator = FindObjectOfType<NewMesh>();
 		treePopulator = FindObjectOfType<PopulateWithObjects>();
-
 		chunkSize = ((mapChunkSize) * polyScale);// + eller - 1, originalt -;
 		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / (chunkSize ));
 		
@@ -46,6 +46,11 @@ public class EndlessTerrain : MonoBehaviour
 		viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
 		UpdateVisibleChunks();
 		//Debug.Log("height: " + GetHeight(1000.0f, 1000.0f) + "\n");
+
+		for(int i = 0; i < toDelete.Count; i++)
+        {
+			Destroy(toDelete[i]);
+		}
 	}
 
 	/// <summary> 
@@ -186,7 +191,7 @@ public class EndlessTerrain : MonoBehaviour
 			meshFilter.mesh = meshData.CreateMesh(flatShading);
 
 			forest = meshData.forestVertices;
-			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees, Mathf.RoundToInt(coord.x) * 5 + Mathf.RoundToInt(coord.y) * 3, forest);
+			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees, Mathf.RoundToInt(coord.x) * 5 + Mathf.RoundToInt(coord.y) * 3, forest, world);
 
 			//Setting the material of the mesh renderer. This will be done elsewhere in the future.
 			meshRenderer.material = material;
