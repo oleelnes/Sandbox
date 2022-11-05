@@ -13,6 +13,7 @@ public class EnemyLocomotionManager : MonoBehaviour
     EnemyAnimationManager enemyAnimationManager;
     public Rigidbody enemyRigidBody;
     public CharacterStats currentTarget;
+    public EnemyStats enemyStats;
 
     [Header("Detection")]
     //The higher (max) and lower (min) respectively these angles are the greater dectection field of view
@@ -23,8 +24,9 @@ public class EnemyLocomotionManager : MonoBehaviour
 
     public float stoppingDistance = 2f;
     public float passiveDistance = 30f;
+    public float attackDistance = 4f;
     public float movementSpeed = 3f;
-    public float rotationSpeed = 3;
+    public float rotationSpeed = 3f;
 
 
     private void Awake()
@@ -32,6 +34,7 @@ public class EnemyLocomotionManager : MonoBehaviour
         /* enemyManager = GetComponent<EnemyManager>();*/
         enemyAnimationManager = GetComponentInChildren<EnemyAnimationManager>();
         enemyRigidBody = GetComponent<Rigidbody>();
+        enemyStats = GetComponent<EnemyStats>();
     }
 
     private void Start()
@@ -114,7 +117,7 @@ public class EnemyLocomotionManager : MonoBehaviour
 
     public bool getState(string state)
     {
-       return enemyAnimationManager.animator.GetBool(state);
+        return enemyAnimationManager.animator.GetBool(state);
     }
 
     public void playAudio(UnityEvent stateEvent)
@@ -132,7 +135,7 @@ public class EnemyLocomotionManager : MonoBehaviour
         var rotation = Quaternion.LookRotation(relativePos);
         transform.rotation = rotation;
 
-        if(distance > stoppingDistance)
+        if (distance > stoppingDistance)
         {
             //Look at player and move towards player
             transform.position = Vector3.MoveTowards(transform.position, targetPos, movementSpeed * Time.deltaTime);
@@ -162,10 +165,12 @@ public class EnemyLocomotionManager : MonoBehaviour
         currentTarget = Player.instance.GetComponent<CharacterStats>();
     }
 
-    public void attackDamage(float damage)
+    public void EnemyAttackDamage()
     {
-        if(getState("Attack State"))
-        Player.instance.GetComponent<PlayerHealth>().TakeDamage(damage);
+        if(distance < attackDistance)
+        {
+            Player.instance.GetComponent<PlayerHealth>().TakeDamage(enemyStats.damage);
+        }
     }
 
 
