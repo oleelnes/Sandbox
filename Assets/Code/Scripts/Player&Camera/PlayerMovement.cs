@@ -28,6 +28,11 @@ public class PlayerMovement : MonoBehaviour
 
     Ray ray;
     RaycastHit hit;
+    bool hitting = false;
+    float startTime = 0.0f;
+    float hitDuration = 0.0f;
+    int trees = 0;
+    float progress = 0;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -81,28 +86,50 @@ public class PlayerMovement : MonoBehaviour
         PlayerCam pC = FindObjectOfType<PlayerCam>();
         pC.GetComponent<Camera>();
         ray = pC.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-        if(Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit))
+        
+        if(Input.GetMouseButton(0) && Physics.Raycast(ray, out hit))
         {
             MoveCamera moveCamScript = FindObjectOfType<MoveCamera>();
             GameObject hitObject = hit.collider.gameObject;
-            if(Vector3.Distance(moveCamScript.getCameraPosition(), hitObject.transform.position) > 10.0f)
+            if(Vector3.Distance(moveCamScript.getCameraPosition(), hitObject.transform.position) < 4.0f)
             {
-                if(hit.collider.tag == "tree")
+                if(hit.collider.tag == "tree" && !hitting)
                 {
                     //Shrinking the object. Will be changed later.
                     //hitObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                    
-                    Debug.Log("hit a tree");
-                    hitObject.tag = "deleteTree";
+
+                    startTime = Time.time;
+                    hitting = true;
+                    Debug.Log("hit an object");
                 }
             }
+            if (hitting)
+            {
+                if (((Time.time - startTime) % 10) + 1 >= progress + 1)
+                {
+                    progress += 1;
+                    Debug.Log("hitting an object, progress: " + progress * 10 + "%");
+
+                }
+                if (Time.time - startTime > 10)
+                {
+                    trees++;
+                    Debug.Log("you have " + trees + " trees.");
+                    hitObject.tag = "deleteTree";
+                    hitting = false;
+                }
+            }
+        }
+        else if (hitting && !Input.GetMouseButtonDown(0) && !Physics.Raycast(ray, out hit))
+        {
+            Debug.Log("stopped hitting");
+            hitting = false;
         }
     }
 
 
     private void MyInput()
     {
-
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
