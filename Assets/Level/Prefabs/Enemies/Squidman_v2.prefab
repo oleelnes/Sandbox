@@ -2012,8 +2012,8 @@ GameObject:
   - component: {fileID: 4268321020659467849}
   - component: {fileID: 4268321020659467854}
   - component: {fileID: 4268321020659467855}
-  - component: {fileID: 3035451039345429902}
   - component: {fileID: 3035451039345429889}
+  - component: {fileID: 3035451039345429902}
   m_Layer: 0
   m_Name: Squidman_v2
   m_TagString: Enemy
@@ -2182,11 +2182,11 @@ MonoBehaviour:
   enemyRigidBody: {fileID: 0}
   currentTarget: {fileID: 0}
   enemyStats: {fileID: 0}
-  maximumDetectionAngle: 50
-  minimumDetectionAngle: -50
+  maximumDetectionAngle: 80
+  minimumDetectionAngle: -80
   distance: 0
   triggerDistance: 20
-  stoppingDistance: 2
+  stoppingDistance: 2.5
   passiveDistance: 30
   attackDistance: 4
   rotationSpeed: 3
@@ -2204,23 +2204,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: {fileID: 4268321022331791278}
   animator: {fileID: 0}
---- !u!114 &3035451039345429902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4034511181286798249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39189add7f225014aa1bd8e0c3e32112, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idle_audioClip: {fileID: 0}
-  scream_audioClip: {fileID: 8300000, guid: a201554c6e5ccfb4f987cb8fd5dfa896, type: 3}
-  chase_audioClip: {fileID: 8300000, guid: 1baae998eed2a98449abe0476effa81e, type: 3}
-  attack_audioClip: {fileID: 8300000, guid: 855bd96fd2641f04bbe5ca0707c9ac8a, type: 3}
-  audioSource: {fileID: 3035451039345429889}
 --- !u!82 &3035451039345429889
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2242,9 +2225,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 20
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -2261,7 +2244,16 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
+      time: 0.7227783
+      value: 0.2579651
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9229996
       value: 0
       inSlope: 0
       outSlope: 0
@@ -2277,7 +2269,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2317,6 +2309,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3035451039345429902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4034511181286798249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39189add7f225014aa1bd8e0c3e32112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idle_audioClip: {fileID: 8300000, guid: 36eb828a00a58204fa6522830222eadb, type: 3}
+  scream_audioClip: {fileID: 8300000, guid: fda132192f7f90042b7bac389db48d37, type: 3}
+  chase_audioClip: {fileID: 8300000, guid: 1baae998eed2a98449abe0476effa81e, type: 3}
+  attack_audioClip: {fileID: 8300000, guid: 855bd96fd2641f04bbe5ca0707c9ac8a, type: 3}
+  idleVolume: 0.2
+  audioSource: {fileID: 3035451039345429889}
 --- !u!1 &4128115721330205184
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ public class AnimationAudioTrigger : MonoBehaviour
     public AudioClip chase_audioClip;
     public AudioClip attack_audioClip;
 
+    public float idleVolume = 0.5f;
+
     [SerializeField]
     private AudioSource audioSource;
     // Start is called before the first frame update
@@ -21,7 +23,7 @@ public class AnimationAudioTrigger : MonoBehaviour
     public void IdleEvent()
     {
         audioSource.clip = idle_audioClip;
-        audioSource.PlayOneShot(audioSource.clip);
+        audioSource.PlayOneShot(audioSource.clip, idleVolume);
     }
 
     public void ScreamEvent()

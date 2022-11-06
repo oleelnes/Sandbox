@@ -4813,10 +4813,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HPMultiplier: 1
-  maxHP: 80
-  currentHP: 80
+  maxHP: 100
+  currentHP: 100
   movementSpeed: 4
-  damage: 1.5
+  damage: 1
   healthbarUI: {fileID: 5844521086644395916}
   healthSlider: {fileID: 7335008149095819041}
 --- !u!114 &8599075461973392100
@@ -4846,11 +4846,11 @@ MonoBehaviour:
   enemyRigidBody: {fileID: 0}
   currentTarget: {fileID: 0}
   enemyStats: {fileID: 0}
-  maximumDetectionAngle: 100
-  minimumDetectionAngle: -100
+  maximumDetectionAngle: 120
+  minimumDetectionAngle: -120
   distance: 0
-  triggerDistance: 20
-  stoppingDistance: 2
+  triggerDistance: 30
+  stoppingDistance: 2.5
   passiveDistance: 30
   attackDistance: 4
   rotationSpeed: 3
@@ -4888,10 +4888,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 0
+  MaxDistance: 40
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -4908,7 +4908,16 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
+      time: 0.79867554
+      value: 0.1508789
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.98238343
       value: 0
       inSlope: 0
       outSlope: 0
@@ -4924,7 +4933,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4976,10 +4985,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39189add7f225014aa1bd8e0c3e32112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idle_audioClip: {fileID: 0}
+  idle_audioClip: {fileID: 8300000, guid: 35f6298b919061c4ea1b3c7f26543d83, type: 3}
   scream_audioClip: {fileID: 8300000, guid: 291aafbd4f5273d43a5e00c691448977, type: 3}
   chase_audioClip: {fileID: 8300000, guid: 1baae998eed2a98449abe0476effa81e, type: 3}
   attack_audioClip: {fileID: 8300000, guid: 855bd96fd2641f04bbe5ca0707c9ac8a, type: 3}
+  idleVolume: 0.2
   audioSource: {fileID: 8599075461973392097}
 --- !u!1001 &8599075462226527780
 PrefabInstance:
