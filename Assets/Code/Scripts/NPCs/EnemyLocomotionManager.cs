@@ -25,7 +25,6 @@ public class EnemyLocomotionManager : MonoBehaviour
     public float stoppingDistance = 2f;
     public float passiveDistance = 30f;
     public float attackDistance = 4f;
-    public float movementSpeed = 3f;
     public float rotationSpeed = 3f;
 
 
@@ -138,7 +137,7 @@ public class EnemyLocomotionManager : MonoBehaviour
         if (distance > stoppingDistance)
         {
             //Look at player and move towards player
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, movementSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, enemyStats.movementSpeed * Time.deltaTime);
         }
 
         //Stay on ground

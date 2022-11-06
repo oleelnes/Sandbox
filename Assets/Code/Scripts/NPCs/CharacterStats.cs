@@ -5,11 +5,14 @@ using UnityEngine;
 public class CharacterStats : MonoBehaviour
 {
 
-    public int healthLevel = 10;
-    public int maxHealth;
-    public int currentHealth;
+    public float HPMultiplier = 1;
+    public float maxHP;
+    public float currentHP;
+    public float movementSpeed = 3f;
+    public float damage = 1f;
 
-    public int staminaLevel = 10;
-    public int maxStamina;
-    public int currentStamina;
+    public float getMaxHealthWithMultiplier()
+    {
+        return maxHP * HPMultiplier;
+    }
 }

@@ -20,7 +20,7 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         enemyLocomotionManager.enemyRigidBody.velocity = Vector3.zero;
-        handleHealth();
+        enemyStats.handleHealth();
 
     }
 
@@ -38,20 +38,6 @@ public class EnemyManager : MonoBehaviour
         else
         {
             enemyLocomotionManager.HandleMoveToTarget();
-        }
-    }
-
-    private void handleHealth()
-    {
-        //Destroy enemy when health is zero
-        if (enemyStats.currentHP < 0)
-        {
-            enemyStats.currentHP = 0;
-        }
-        if (enemyStats.currentHP == 0)
-        {
-            //ENEMY DEATH CODE HERE
-            Destroy(gameObject);
         }
     }
 
