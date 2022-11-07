@@ -15,7 +15,7 @@ public class DestructionProgress : MonoBehaviour
     void Start()
     {
         ProgressImage = GetComponent<Image>();
-        GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 75);
+        GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 75);
         /*ProgressImage.SetNativeSize();
         ProgressImage.transform.position = new Vector3(0, 75, 0);
         ProgressImage.sprite = ProgressTen;*/
@@ -27,6 +27,9 @@ public class DestructionProgress : MonoBehaviour
     {
         switch(progress)
         {
+            case ProgressStatus.NotHitting:
+                ProgressImage.sprite = ProgressTen;
+                break;
             case ProgressStatus.Ten:
                 ProgressImage.sprite = ProgressTen;
                 break;
@@ -34,31 +37,35 @@ public class DestructionProgress : MonoBehaviour
                 ProgressImage.sprite = ProgressTwenty;
                 break;
             case ProgressStatus.Thirty:
-                ProgressImage.sprite = ProgressTen;
+                ProgressImage.sprite = ProgressThirty;
                 break;
             case ProgressStatus.Fourty:
-                ProgressImage.sprite = ProgressTwenty;
+                ProgressImage.sprite = ProgressFourty;
                 break;
             case ProgressStatus.Fifty:
-                ProgressImage.sprite = ProgressTen;
+                ProgressImage.sprite = ProgressFifty;
                 break;
             case ProgressStatus.Sixty:
-                ProgressImage.sprite = ProgressTwenty;
+                ProgressImage.sprite = ProgressSixty;
                 break;
             case ProgressStatus.Seventy:
-                ProgressImage.sprite = ProgressTen;
+                ProgressImage.sprite = ProgressSeventy;
+                break;
+            case ProgressStatus.Eighty:
+                ProgressImage.sprite = ProgressEighty;
                 break;
             case ProgressStatus.Ninety:
-                ProgressImage.sprite = ProgressTwenty;
+                ProgressImage.sprite = ProgressNinety;
                 break;
             case ProgressStatus.Hundred:
-                ProgressImage.sprite = ProgressTen;
+                ProgressImage.sprite = ProgressHundred;
                 break;
         }   
     }
     
     public enum ProgressStatus
     {
+        NotHitting = 0,
         Ten = 10,
         Twenty = 20,
         Thirty = 30,
@@ -68,7 +75,7 @@ public class DestructionProgress : MonoBehaviour
         Seventy = 70,
         Eighty = 80,
         Ninety = 90,
-        Hundred = 100
+        Hundred = 100,
     }
 
 }

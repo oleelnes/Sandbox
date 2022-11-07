@@ -20,19 +20,22 @@ public class DestructionBar : MonoBehaviour
 
     public void UpdateProgressBar(DestructionProgress.ProgressStatus progress)
     {
-        desProg.SetProgressImage(progress);
+        if (progress == DestructionProgress.ProgressStatus.NotHitting)
+            destructionBar.SetActive(false);
+        else
+        {
+            destructionBar.SetActive(true);
+            desProg.SetProgressImage(progress);
+        }
     }
    
     private void DrawBar()
     {
         destructionBar = Instantiate(destructionBarPrefab);
         destructionBar.transform.SetParent(transform);
-        //destructionBar.transform.SetPositionAndRotation(new Vector3(0, 75, 0), new Quaternion(0, 0, 0, 0));
-        destructionBar.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        //destructionBar.GetComponent<RectTransform>().localPosition = new Vector3(0, 75, 0);
-
 
         desProg = destructionBar.GetComponent<DestructionProgress>();
+        UpdateProgressBar(DestructionProgress.ProgressStatus.NotHitting);
     }
 
 }
