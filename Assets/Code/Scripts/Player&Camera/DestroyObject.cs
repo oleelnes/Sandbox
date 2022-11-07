@@ -5,7 +5,7 @@ using UnityEngine;
 public class DestroyObject : MonoBehaviour
 {
 
-
+    private PlayerCam playerCam;
     private Ray ray;
     private RaycastHit hit;
     private bool hitting = false;
@@ -14,70 +14,110 @@ public class DestroyObject : MonoBehaviour
     private int trees = 0;
     private int progress = 0;
     private DestructionBar dBar;
+    private string currentTag = "";
+    float interval = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
         dBar = FindObjectOfType<DestructionBar>();
-        
-       
-        
+        PlayerCam pC = FindObjectOfType<PlayerCam>();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkHit();
+        HitManager();
     }
 
-    private void checkHit()
+    private void HitManager()
     {
-        PlayerCam pC = FindObjectOfType<PlayerCam>();
-        pC.GetComponent<Camera>();
-        ray = pC.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        
+        ray = playerCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
 
-        if (Input.GetMouseButton(0) && Physics.Raycast(ray, out hit))
+        if (CheckHit())
         {
             MoveCamera moveCamScript = FindObjectOfType<MoveCamera>();
             GameObject hitObject = hit.collider.gameObject;
-            if (Vector3.Distance(moveCamScript.getCameraPosition(), hitObject.transform.position) < 4.0f)
-            {
-                if (hit.collider.tag == "tree" && !hitting)
-                {
-                    //Shrinking the object. Will be changed later.
-                    //hitObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-                    startTime = Time.time;
-                    hitting = true;
-                    Debug.Log("hit an object");
-                }
-            }
-            if (hitting)
-            {
-                if (((Time.time - startTime) % 10) + 1 >= progress + 1)
-                {
-                    progress += 1;
-                    Debug.Log("hitting an object, progress: " + progress * 10 + "%");
-                    dBar.UpdateProgressBar(GetProgress(progress * 10));
-                }
-                if (Time.time - startTime > 10)
-                {
-                    trees++;
-                    Debug.Log("you have " + trees + " trees.");
-                    hitObject.tag = "deleteTree";
-                    progress = 0;
-                    hitting = false;
-                    dBar.UpdateProgressBar(DestructionProgress.ProgressStatus.NotHitting);
-                }
-            }
+            if (CheckDistance(moveCamScript, hitObject, 4.0f)) InitialHitAction();
+            
+            if (hitting) HitAction(hitObject);
+            
         }
-        else if (hitting && !Input.GetMouseButtonDown(0) || hitting && !Physics.Raycast(ray, out hit))
+        else if (CheckQuitHitting())
         {
-            Debug.Log("stopped hitting");
             progress = 0;
             hitting = false;
             dBar.UpdateProgressBar(DestructionProgress.ProgressStatus.NotHitting);
         }
+    }
+
+    private void InitialHitAction()
+    {
+        if (checkColliderTag(hit.collider.tag) && !hitting)
+        {
+            startTime = Time.time;
+            hitting = true;
+        }
+    }
+
+    private void HitAction(GameObject hitObject)
+    {
+        if (((Time.time - startTime)) >= progress * interval)
+            dBar.UpdateProgressBar(GetProgress(++progress * 10));
+
+        if (progress > 10)
+        {
+            trees++;
+            Debug.Log("you have " + trees + " " + currentTag + ".");
+            hitObject.tag = "deleteTree";
+            progress = 0;
+            hitting = false;
+            dBar.UpdateProgressBar(DestructionProgress.ProgressStatus.NotHitting);
+            //TODO: add to inventory
+        }
+    }
+
+    /// <summary>
+    /// Checks if player has quit hitting an object, either by letting go of the mouse or not 
+    /// hitting the hitBox of the object anymore.
+    /// </summary>
+    /// <returns> Returns false if player is still hitting; true if player has quit hitting. </returns>
+    private bool CheckQuitHitting()
+    {
+        return hitting && !Input.GetMouseButtonDown(0) || hitting && hit.collider.tag != currentTag;
+    }
+
+    private bool checkColliderTag(string tag)
+    {
+        switch(tag)
+        {
+            case "tree":
+                currentTag = "tree";
+                return true;
+            default: return false;
+        }
+    }
+
+
+    private bool CheckDistance(MoveCamera moveCamScript, GameObject hitObject, float distance)
+    {
+        return Vector3.Distance(moveCamScript.getCameraPosition(), hitObject.transform.position) < distance;
+    }
+
+    
+
+    private void SetInterval(string weapon, string hitObjectType)
+    {
+
+    }
+
+    private bool CheckHit()
+    {
+        return Input.GetMouseButton(0) && Physics.Raycast(ray, out hit);
     }
 
     private DestructionProgress.ProgressStatus GetProgress(int progress)
@@ -97,4 +137,12 @@ public class DestroyObject : MonoBehaviour
             default: return DestructionProgress.ProgressStatus.NotHitting;
         }
     }
+
+    private enum Weapon {
+        AXE,
+        SWORD,
+        PICKAXE, 
+
+    }
+
 }
