@@ -7,6 +7,10 @@ public class WeaponSwitching : MonoBehaviour
 {
 
     public int selectedWeapon = 0;
+    public float weaponHolder_x = 0.86f;
+    public float weaponHolder_y = -0.36f;
+    public float weaponHolder_z = 0.65f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -101,7 +105,6 @@ public class WeaponSwitching : MonoBehaviour
         {
 
             weapon.gameObject.SetActive(i == selectedWeapon);
-
             i++;
         }
     }
