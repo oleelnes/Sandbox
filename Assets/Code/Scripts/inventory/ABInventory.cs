@@ -19,6 +19,12 @@ public class ABInventory : MonoBehaviour {
         }
     }
 
+    public void Update() {
+        if(Input.GetKeyDown(KeyCode.Alpha1)) {
+            Debug.Log(ABItems[1]);
+        }
+    }
+
     public void UpdateSlot(int slot, Item item) {
         ABItems[slot].UpdateItem(item);
     }

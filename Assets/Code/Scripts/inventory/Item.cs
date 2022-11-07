@@ -8,17 +8,15 @@ public class Item {
     public string title;
     public string description; 
     public Sprite icon; 
-    public Dictionary<string, int> stats = new Dictionary<string, int>();
 
     /**
     * Constructor for item object
     */
-    public Item(int id, string title, string description, Dictionary<string, int> stats) {
+    public Item(int id, string title, string description) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.icon = Resources.Load<Sprite>("Sprites/Items/" + title); 
-        this.stats = stats;
     }
 
     public Item(Item item) {
@@ -26,6 +24,5 @@ public class Item {
         this.title = item.title;
         this.description = item.description;
         this.icon = Resources.Load<Sprite>("Sprites/Items/" + item.title); 
-        this.stats = item.stats;
     }
 }
