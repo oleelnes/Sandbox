@@ -19,12 +19,31 @@ public class ItemPickUp : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        var inventory = other.transform.GetComponent<InventoryHolder>(); 
+        Debug.Log("hit the ball");
+        Player player = FindObjectOfType<Player>();
+        var inventory = player.transform.GetComponent<InventoryHolder>();
 
-        if(!inventory) return;
+        if (!inventory)
+        {
+            Debug.Log("inventory doesn't exist!");
+            return;
+        }
 
         if(inventory.InventorySystem.AddToInventory(ItemData, 1)) {
             Destroy(this.gameObject);
+        }
+    }
+
+    public void AddToInventory(GameObject objectToAdd)
+    {
+        Player player = FindObjectOfType<Player>();
+        var inventory = player.transform.GetComponent<InventoryHolder>();
+
+        if (!inventory) return;
+
+        if (inventory.InventorySystem.AddToInventory(ItemData, 1))
+        {
+            //Destroy(this.gameObject);
         }
     }
 }
