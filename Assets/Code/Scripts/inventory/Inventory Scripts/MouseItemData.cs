@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using TMPro;
 
@@ -12,7 +11,6 @@ public class MouseItemData : MonoBehaviour
     public TextMeshProUGUI ItemCount;
     public InventorySlot AssignedInventorySlot;
     public KeyCode mouse0 = KeyCode.Mouse0;
-
 
     void Awake() {
         ItemSprite.color = Color.clear;
@@ -28,10 +26,7 @@ public class MouseItemData : MonoBehaviour
 
     private void Update() {
         if(AssignedInventorySlot.ItemData != null) {
-
-            //transform.position = Mouse.current.position.ReadValue(); 
             transform.position = Input.mousePosition; 
-            // Mouse.current.leftButton.wasPressedThisFrame
 
             if(Input.GetKeyDown(mouse0) && !IsPointerOverUIObject()) {
                 ClearSlot();
