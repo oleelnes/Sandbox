@@ -5,7 +5,6 @@ using UnityEngine;
 public class DestroyObject : MonoBehaviour
 {
 
-    private PlayerCam playerCam;
     private Ray ray;
     private RaycastHit hit;
     private bool hitting = false;
@@ -21,7 +20,7 @@ public class DestroyObject : MonoBehaviour
     void Start()
     {
         dBar = FindObjectOfType<DestructionBar>();
-        PlayerCam pC = FindObjectOfType<PlayerCam>();
+        //playerCam = FindObjectOfType<PlayerCam>();
 
 
     }
@@ -34,7 +33,9 @@ public class DestroyObject : MonoBehaviour
 
     private void HitManager()
     {
-        
+        PlayerCam playerCam = FindObjectOfType<PlayerCam>();
+
+
         ray = playerCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
 
         if (CheckHit())
@@ -43,16 +44,12 @@ public class DestroyObject : MonoBehaviour
             GameObject hitObject = hit.collider.gameObject;
 
             if (CheckDistance(moveCamScript, hitObject, 4.0f)) InitialHitAction();
-            
+            else QuitHitting();
+
             if (hitting) HitAction(hitObject);
             
         }
-        else if (CheckQuitHitting())
-        {
-            progress = 0;
-            hitting = false;
-            dBar.UpdateProgressBar(DestructionProgress.ProgressStatus.NotHitting);
-        }
+        else if (CheckQuitHitting()) QuitHitting();
     }
 
     private void InitialHitAction()
@@ -81,6 +78,13 @@ public class DestroyObject : MonoBehaviour
         }
     }
 
+    private void QuitHitting()
+    {
+        progress = 0;
+        hitting = false;
+        dBar.UpdateProgressBar(DestructionProgress.ProgressStatus.NotHitting);
+    }
+
     /// <summary>
     /// Checks if player has quit hitting an object, either by letting go of the mouse or not 
     /// hitting the hitBox of the object anymore.
@@ -88,7 +92,7 @@ public class DestroyObject : MonoBehaviour
     /// <returns> Returns false if player is still hitting; true if player has quit hitting. </returns>
     private bool CheckQuitHitting()
     {
-        return hitting && !Input.GetMouseButtonDown(0) || hitting && hit.collider.tag != currentTag;
+        return hitting && !Input.GetMouseButtonDown(0) || hitting && hit.collider.tag != currentTag || !hitting;
     }
 
     private bool checkColliderTag(string tag)
