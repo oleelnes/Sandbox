@@ -227,11 +227,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4201455878151688, guid: 2aac377f4e1169d4d8a9b4f429327f9d, type: 3}
   m_PrefabInstance: {fileID: 79803031}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &79803033 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1148624134241714, guid: 2aac377f4e1169d4d8a9b4f429327f9d, type: 3}
-  m_PrefabInstance: {fileID: 79803031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &100358993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1115,7 +1110,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 383870172}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1123,7 +1118,7 @@ RectTransform:
   - {fileID: 1358199385}
   - {fileID: 1757981269}
   m_Father: {fileID: 1040509279}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1147,6 +1142,7 @@ MonoBehaviour:
   AssignedInventorySlot:
     itemData: {fileID: 0}
     stackSize: -1
+  mouse0: 323
 --- !u!1 &411025661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1310,11 +1306,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4129944272498866, guid: d3b497db883149045a9c1218adca475a, type: 3}
   m_PrefabInstance: {fileID: 423664040}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &423664042 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1361614101361290, guid: d3b497db883149045a9c1218adca475a, type: 3}
-  m_PrefabInstance: {fileID: 423664040}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &605695035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,11 +1422,11 @@ MonoBehaviour:
   treeObjectThree: {fileID: 362506340}
   treeObjectFour: {fileID: 792315678}
   dungeonEntranceToClone: {fileID: 878677199}
-  rockOne: {fileID: 1128302561}
-  rockBigOne: {fileID: 1251787027}
-  grassOne: {fileID: 967585132}
-  flowerOne: {fileID: 79803033}
-  mushroomOne: {fileID: 423664042}
+  rockOne: {fileID: 0}
+  rockBigOne: {fileID: 0}
+  grassOne: {fileID: 0}
+  flowerOne: {fileID: 0}
+  mushroomOne: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2174,11 +2165,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4082468324179482, guid: f6a0cd899fb3b8c449a40e5fb69e258d, type: 3}
   m_PrefabInstance: {fileID: 967585130}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &967585132 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1923026048575658, guid: f6a0cd899fb3b8c449a40e5fb69e258d, type: 3}
-  m_PrefabInstance: {fileID: 967585130}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &979142408
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,8 +2422,8 @@ RectTransform:
   m_Children:
   - {fileID: 1627964215}
   - {fileID: 979142409}
-  - {fileID: 383870173}
   - {fileID: 1386565503}
+  - {fileID: 383870173}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2711,11 +2697,6 @@ PrefabInstance:
 --- !u!4 &1128302560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4436398586865190, guid: 9d911d3db44ad56488c3c28cb9e9e5ab, type: 3}
-  m_PrefabInstance: {fileID: 1128302559}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1128302561 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1616784548102220, guid: 9d911d3db44ad56488c3c28cb9e9e5ab, type: 3}
   m_PrefabInstance: {fileID: 1128302559}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1180588390
@@ -3017,11 +2998,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4727892468099654, guid: d15996e92cb4c6b47bbc09309fe0ab5a, type: 3}
   m_PrefabInstance: {fileID: 1251787025}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1251787027 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1491004259460544, guid: d15996e92cb4c6b47bbc09309fe0ab5a, type: 3}
-  m_PrefabInstance: {fileID: 1251787025}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1274437108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3308,7 +3284,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 25, y: -25}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1358199386
@@ -3325,7 +3301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3393,7 +3369,7 @@ RectTransform:
   - {fileID: 294339220}
   - {fileID: 756297334}
   m_Father: {fileID: 1040509279}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -4456,7 +4432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.3, y: -16.25}
+  m_AnchoredPosition: {x: 37.6, y: -41.25}
   m_SizeDelta: {x: 21, y: 17.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1757981270
@@ -4473,7 +4449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5324,5 +5300,13 @@ PrefabInstance:
       propertyPath: itemCount
       value: 
       objectReference: {fileID: 52997755}
+    - target: {fileID: 7126427662999348019, guid: 0c922ad55d99e114599f6ba283b02cf1, type: 3}
+      propertyPath: assignedInventorySlot.itemData
+      value: 
+      objectReference: {fileID: 11400000, guid: 1bea03ad4f88a658cb50f3d5550a6c01, type: 2}
+    - target: {fileID: 7126427662999348019, guid: 0c922ad55d99e114599f6ba283b02cf1, type: 3}
+      propertyPath: assignedInventorySlot.stackSize
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c922ad55d99e114599f6ba283b02cf1, type: 3}

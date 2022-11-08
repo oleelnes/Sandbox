@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using TMPro;
 
@@ -11,6 +11,8 @@ public class MouseItemData : MonoBehaviour
     public Image ItemSprite;
     public TextMeshProUGUI ItemCount;
     public InventorySlot AssignedInventorySlot;
+    public KeyCode mouse0 = KeyCode.Mouse0;
+
 
     void Awake() {
         ItemSprite.color = Color.clear;
@@ -26,9 +28,12 @@ public class MouseItemData : MonoBehaviour
 
     private void Update() {
         if(AssignedInventorySlot.ItemData != null) {
-            transform.position = Mouse.current.position.ReadValue(); 
 
-            if(Mouse.current.leftButton.wasPressedThisFrame && !IsPointerOverUIObject()) {
+            //transform.position = Mouse.current.position.ReadValue(); 
+            transform.position = Input.mousePosition; 
+            // Mouse.current.leftButton.wasPressedThisFrame
+
+            if(Input.GetKeyDown(mouse0) && !IsPointerOverUIObject()) {
                 ClearSlot();
             }
         }
@@ -43,7 +48,7 @@ public class MouseItemData : MonoBehaviour
 
     public static bool IsPointerOverUIObject() {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current); 
-        eventDataCurrentPosition.position = Mouse.current.position.ReadValue(); 
+        eventDataCurrentPosition.position = Input.mousePosition; 
         List<RaycastResult> results = new List<RaycastResult>(); 
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0; 
