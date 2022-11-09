@@ -12,8 +12,6 @@ public class PlayerCam : MonoBehaviour
     float xRotation;
     float yRotation;
 
-    public DynamicInventoryDisplay backpackPanel; 
-    public PlayerInventoryHolder abc; 
     public static bool isBackpackOpen = false; 
 
 

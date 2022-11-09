@@ -9,6 +9,7 @@ public class ChunkObjects
     public List<GameObject> caveEntranceList;
 	public List<GameObject> rockList;
 	public List<GameObject> plantList;
+	public List<GameObject> chestList; 
 
 	public List<Vector3> objectPositions; //not in use yet. TODO!
 
@@ -39,6 +40,7 @@ public class ChunkObjects
 		caveEntranceList = new List<GameObject>();
 		rockList = new List<GameObject>();	
 		plantList = new List<GameObject>();
+		chestList = new List<GameObject>(); 
 		
 	}
 
@@ -67,7 +69,16 @@ public class ChunkObjects
 		populateWithTrees(meshObject, meshData, world, objectPopulator);
 		populateWithRocks(meshObject, world, objectPopulator, meshData);
 		populateWithPlants(meshObject, world, objectPopulator, meshData);
+		populateWithChest(meshObject, world, objectPopulator, meshData); 
 
+	}
+
+	private void populateWithChest(GameObject meshObject, EndlessTerrain world, PopulateWithObjects objectPopulator, MeshData meshData) {
+		float x = 0f + meshObject.transform.position.x + (float)random.Next(0, chunkSize);
+		float z = 0f + meshObject.transform.position.z + (float)random.Next(0, chunkSize);
+		float height = world.GetHeight(x, z); 
+
+		if(!IsWater(height, meshData)) chestList.Add(objectPopulator.createNewObject(new Vector3(x, height, z), "chest", 1.0f));
 	}
 
 	private void populateWithRocks(GameObject meshObject, EndlessTerrain world, PopulateWithObjects objectPopulator, MeshData meshData)
@@ -139,6 +150,7 @@ public class ChunkObjects
 		VisibleObjectsInList(position, distance, caveEntranceList);
 		VisibleObjectsInList(position, distance, rockList);
 		VisibleObjectsInList(position, distance, plantList);
+		VisibleObjectsInList(position, distance, chestList);
 	}
 
 	/// <summary>

@@ -15,6 +15,7 @@ public class PopulateWithObjects : MonoBehaviour
     public GameObject grassOne;
     public GameObject flowerOne;
     public GameObject mushroomOne;
+    public GameObject chest; 
 
 
     /// <summary>
@@ -53,6 +54,8 @@ public class PopulateWithObjects : MonoBehaviour
                 return GetRockType(subType);
             case "plant":
                 return GetPlantType(subType);
+            case "chest": 
+                return Instantiate(chest);
             default:
                 Debug.Log(objectName + " did not match any of the cases");
                 return null;
