@@ -26,9 +26,7 @@ public abstract class InventoryDisplay : MonoBehaviour
         }
     }
 
-    public void SlotClicked(InventorySlot_UI clickedUISlot) {
-     //   bool isShiftPressed = Input.GetKeyDown(KeyCode.LeftShift); 
-
+    public void SlotClicked(InventorySlot_UI clickedUISlot) {  
         if(clickedUISlot.AssignedInventorySlot.ItemData != null && mouseInventoryItem.AssignedInventorySlot.ItemData == null) {
             if(Input.GetKey(KeyCode.LeftShift) && clickedUISlot.AssignedInventorySlot.SplitStack(out InventorySlot halfStackSlot)) {
                 mouseInventoryItem.UpdateMouseSlot(halfStackSlot);
