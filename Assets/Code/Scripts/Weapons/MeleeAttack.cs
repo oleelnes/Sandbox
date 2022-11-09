@@ -36,6 +36,8 @@ public class MeleeAttack : MonoBehaviour
     {
         checkInventoryStatus();
         
+        checkInventoryStatus();
+        
         if (!disableAnimation)
         {
             attack();
