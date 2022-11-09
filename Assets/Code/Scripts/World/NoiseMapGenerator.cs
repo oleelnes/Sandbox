@@ -12,7 +12,6 @@ public class NoiseMapGenerator
 
        if (polyScale < 1) polyScale = 1;  
        
-        Debug.Log("biomeIndicator: " + biomeIndicator);
 
         //Offsetting the noise value and adding different layers of random numbers to the noise 
         System.Random r = new System.Random(seed);
