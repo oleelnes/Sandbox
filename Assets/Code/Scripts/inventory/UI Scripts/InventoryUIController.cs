@@ -31,6 +31,7 @@ public class InventoryUIController : MonoBehaviour
 
         if(backpackPanel.gameObject.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape)) {
         backpackPanel.gameObject.SetActive(false);
+        PlayerCam.isBackpackOpen = false; 
        }
     }
 

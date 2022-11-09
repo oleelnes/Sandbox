@@ -1198,6 +1198,8 @@ MonoBehaviour:
   sensX: 400
   sensY: 400
   orientation: {fileID: 51064631}
+  backpackPanel: {fileID: 0}
+  abc: {fileID: 0}
 --- !u!81 &411025664
 AudioListener:
   m_ObjectHideFlags: 0
@@ -5410,6 +5412,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1970281507}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1970904220 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
+  m_PrefabInstance: {fileID: 1415859157}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1970904223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970904220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c8bec010194e44ab8de86652d4360e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  disableAnimation: 0
+  mouse0: 323
+  meleeDamage: 25
 --- !u!1 &2012779460
 GameObject:
   m_ObjectHideFlags: 0
