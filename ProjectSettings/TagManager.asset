@@ -7,6 +7,7 @@ TagManager:
   - MeshGenerator
   - Melee
   - Enemy
+  - EnemyHealthbar
   layers:
   - Default
   - TransparentFX
