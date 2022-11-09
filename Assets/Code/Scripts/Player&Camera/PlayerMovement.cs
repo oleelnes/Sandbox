@@ -28,8 +28,6 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode superSprintKey = KeyCode.Q;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
-    
-    
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -50,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        
         readyToJump = true;
     }
 
@@ -64,6 +61,8 @@ public class PlayerMovement : MonoBehaviour
         Sprint();
         Crouch();
 
+        //Destroying/interacting with objects       
+
         // handle drag
         if (grounded)
             rb.drag = groundDrag;
@@ -76,9 +75,11 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
+    
+
+
     private void MyInput()
     {
-
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
