@@ -15,6 +15,7 @@ public class DestroyObject : MonoBehaviour
     private DestructionBar dBar;
     private string currentTag = "";
     float interval = 0.5f;
+    public InventoryItemData treeItemData;
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +75,16 @@ public class DestroyObject : MonoBehaviour
             progress = 0;
             hitting = false;
             dBar.UpdateProgressBar(DestructionProgress.ProgressStatus.NotHitting);
+
+            Player player = FindObjectOfType<Player>();
+            var inventory = player.transform.GetComponent<InventoryHolder>();
+
+            if (!inventory) return;
+
+            if (inventory.InventorySystem.AddToInventory(treeItemData, 1))
+            {
+
+            }
             //TODO: add to inventory
         }
     }
