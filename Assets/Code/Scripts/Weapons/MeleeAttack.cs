@@ -16,6 +16,7 @@ public class MeleeAttack : MonoBehaviour
 
     [Header("Damage")]
     public float meleeDamage = 25f;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -26,8 +27,8 @@ public class MeleeAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //checkInventoryStatus();
-
+        checkInventoryStatus();
+        
         if (!disableAnimation)
         {
             attack();
@@ -62,6 +63,14 @@ public class MeleeAttack : MonoBehaviour
         {
             weaponColl.isTrigger = false;
             anim.SetBool("attacking", false);
+        }
+    }
+
+    public void checkInventoryStatus() {
+        if(PlayerCam.isBackpackOpen) {
+            disableAnimation = true;
+        } else {
+            disableAnimation = false; 
         }
     }
 
