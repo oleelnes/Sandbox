@@ -16,6 +16,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        Debug.Log("Player gets hurt: " + amount);
         health -= amount;
         OnPlayerDamaged?.Invoke();
 
