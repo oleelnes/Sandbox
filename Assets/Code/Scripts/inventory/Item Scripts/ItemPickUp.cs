@@ -21,7 +21,7 @@ public class ItemPickUp : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         Debug.Log("hit the ball");
         Player player = FindObjectOfType<Player>();
-        var inventory = player.transform.GetComponent<InventoryHolder>();
+        var inventory = player.transform.GetComponent<PlayerInventoryHolder>();
 
         if (!inventory)
         {
@@ -29,7 +29,7 @@ public class ItemPickUp : MonoBehaviour
             return;
         }
 
-        if(inventory.InventorySystem.AddToInventory(ItemData, 1)) {
+        if(inventory.AddToInventory(ItemData, 1)) {
             Destroy(this.gameObject);
         }
     }
