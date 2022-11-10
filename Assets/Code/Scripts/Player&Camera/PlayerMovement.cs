@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float walkSpeed = 7;
     private float sprintSpeed = 14;
-    private float superSprintSpeed = 50;
+    private float superSprintSpeed = 7;
 
     
     [Header("Keybinds")]

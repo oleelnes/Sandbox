@@ -40,12 +40,14 @@ public class EnemyLocomotionManager : MonoBehaviour
     {
         //Enemy falls down (!)
         enemyRigidBody.isKinematic = false;
+        setCurrentTargetToPlayer();
     }
 
     private void Update()
     {
         //calculate distance between enemy and player
         distance = Vector3.Distance(transform.position, Player.instance.transform.position);
+        setCurrentTargetToPlayer();
     }
 
     public void HandleDetection()
