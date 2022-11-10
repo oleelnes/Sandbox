@@ -26,6 +26,7 @@ public class EnemyLocomotionManager : MonoBehaviour
     public float passiveDistance = 30f;
     public float attackDistance = 4f;
     public float rotationSpeed = 3f;
+    public bool isGrounded;
 
 
     private void Awake()
@@ -38,16 +39,15 @@ public class EnemyLocomotionManager : MonoBehaviour
 
     private void Start()
     {
-        //Enemy falls down (!)
         enemyRigidBody.isKinematic = false;
-        setCurrentTargetToPlayer();
     }
 
     private void Update()
     {
         //calculate distance between enemy and player
         distance = Vector3.Distance(transform.position, Player.instance.transform.position);
-        setCurrentTargetToPlayer();
+        //Enemy falls down (!)
+        enemyRigidBody.AddForce(Vector3.down * 1000f);
     }
 
     public void HandleDetection()
@@ -149,6 +149,7 @@ public class EnemyLocomotionManager : MonoBehaviour
         // If the ray casted from this object (in your case, the tree) to below it hits something...
         if ((Physics.Raycast(transform.position, -Vector3.up, out hit, 10f)))
         {
+            isGrounded = true;
 
             // and if the distance between object and hit is larger than 0.3 (I judge it nearly unnoticeable otherwise)
             if (hit.distance > 0.3f)
@@ -158,6 +159,10 @@ public class EnemyLocomotionManager : MonoBehaviour
 
             }
 
+        }
+        else
+        {
+            isGrounded = false;
         }
     }
 
