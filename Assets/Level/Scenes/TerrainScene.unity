@@ -2244,7 +2244,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 5284765011432073124, guid: aa981da5db8625548a761da4d23f1e4f, type: 3}
+=======
+    - target: {fileID: 1823287720207536, guid: c4c6332c6f8e62348870c38bf0f4a575, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281802443385458, guid: c4c6332c6f8e62348870c38bf0f4a575, type: 3}
+>>>>>>> 6e6924fa2df04ba5c9b17a7c5eafa5f171c9469f
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
@@ -3776,6 +3784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1213150602}
+  - component: {fileID: 1213150603}
   m_Layer: 0
   m_Name: dungeonEntrance
   m_TagString: Untagged
@@ -3799,6 +3808,18 @@ Transform:
   m_Father: {fileID: 686492840}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1213150603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213150601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e293a38ddc0db374e9db5ea7139eb0fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1215983866
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,6 +8,6 @@ public class ChangeScene : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene("CaveScenePillars");
+        SceneManager.LoadScene(2);
     }
 }
