@@ -48,7 +48,7 @@ public class DestroyObject : MonoBehaviour
             else QuitHitting();
 
             if (hitting) HitAction(hitObject);
-            
+
         }
         else if (CheckQuitHitting()) QuitHitting();
     }
@@ -108,7 +108,7 @@ public class DestroyObject : MonoBehaviour
 
     private bool checkColliderTag(string tag)
     {
-        switch(tag)
+        switch (tag)
         {
             case "tree":
                 currentTag = "tree";
@@ -123,7 +123,7 @@ public class DestroyObject : MonoBehaviour
         return Vector3.Distance(moveCamScript.getCameraPosition(), hitObject.transform.position) < distance;
     }
 
-    
+
 
     private void SetInterval(string weapon, string hitObjectType)
     {
@@ -137,7 +137,7 @@ public class DestroyObject : MonoBehaviour
 
     private DestructionProgress.ProgressStatus GetProgress(int progress)
     {
-        switch(progress)
+        switch (progress)
         {
             case 10: return DestructionProgress.ProgressStatus.Ten;
             case 20: return DestructionProgress.ProgressStatus.Twenty;
@@ -153,10 +153,11 @@ public class DestroyObject : MonoBehaviour
         }
     }
 
-    private enum Weapon {
+    private enum Weapon
+    {
         AXE,
         SWORD,
-        PICKAXE, 
+        PICKAXE,
 
     }
 
