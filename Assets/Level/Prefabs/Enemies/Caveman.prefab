@@ -2702,7 +2702,7 @@ MonoBehaviour:
   scream_audioClip: {fileID: 8300000, guid: b6aff99667f2a364ebdc07944562f360, type: 3}
   chase_audioClip: {fileID: 8300000, guid: 1baae998eed2a98449abe0476effa81e, type: 3}
   attack_audioClip: {fileID: 8300000, guid: 855bd96fd2641f04bbe5ca0707c9ac8a, type: 3}
-  idleVolume: 0.2
+  idleVolume: 0.5
   audioSource: {fileID: 4999844843515279137}
 --- !u!1 &5362057316411773302
 GameObject:

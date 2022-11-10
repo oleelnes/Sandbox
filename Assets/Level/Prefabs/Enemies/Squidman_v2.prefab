@@ -2224,7 +2224,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 25
+  MaxDistance: 40
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -2243,8 +2243,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7227783
-      value: 0.2579651
+      time: 0.65423584
+      value: 0.27357483
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2324,7 +2324,7 @@ MonoBehaviour:
   scream_audioClip: {fileID: 8300000, guid: fda132192f7f90042b7bac389db48d37, type: 3}
   chase_audioClip: {fileID: 8300000, guid: 1baae998eed2a98449abe0476effa81e, type: 3}
   attack_audioClip: {fileID: 8300000, guid: 855bd96fd2641f04bbe5ca0707c9ac8a, type: 3}
-  idleVolume: 0.2
+  idleVolume: 0.5
   audioSource: {fileID: 3035451039345429889}
 --- !u!1 &4128115721330205184
 GameObject:

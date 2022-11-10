@@ -4989,7 +4989,7 @@ MonoBehaviour:
   scream_audioClip: {fileID: 8300000, guid: 291aafbd4f5273d43a5e00c691448977, type: 3}
   chase_audioClip: {fileID: 8300000, guid: 1baae998eed2a98449abe0476effa81e, type: 3}
   attack_audioClip: {fileID: 8300000, guid: 855bd96fd2641f04bbe5ca0707c9ac8a, type: 3}
-  idleVolume: 0.2
+  idleVolume: 0.5
   audioSource: {fileID: 8599075461973392097}
 --- !u!1001 &8599075462226527780
 PrefabInstance:
