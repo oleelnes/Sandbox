@@ -21503,6 +21503,7 @@ GameObject:
   - component: {fileID: 1113009762}
   - component: {fileID: 1113009763}
   - component: {fileID: 1113009764}
+  - component: {fileID: 1113009765}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -21665,6 +21666,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8599cf587ab4da48969ece018fb51a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1113009765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113009755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beda9d025e616034fbb6ebca81c94d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doBob: 1
+  bobStrength: 0.02
+  bobSpeed: 8
+  cameraTransform: {fileID: 411025662}
+  cameraHolderTransform: {fileID: 751960422}
+  bobbingSpeedTreshold: 3
+  playerMovementScript: {fileID: 1113009757}
+  playerRigidbody: {fileID: 1113009758}
+  affectedBySpeed: 0
+  maxVelocity: 10
 --- !u!4 &1114038623 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4374866777427978515, guid: e14e052f6bc574641b40d2d27850193a, type: 3}
