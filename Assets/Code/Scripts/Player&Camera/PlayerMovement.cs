@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
+    public bool isGrounded(){ return grounded; }
 
     public Transform orientation;
 
