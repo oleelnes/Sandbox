@@ -36,7 +36,9 @@ public class PlayerCam : MonoBehaviour
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
+            // Applying rotation to object this script is attached to (camera)
             transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            // Applying rotation to given transform (Empty CameraPos object under Player)
             orientation.rotation = Quaternion.Euler(0, yRotation, 0);
 
             Cursor.lockState = CursorLockMode.Locked;
@@ -48,4 +50,7 @@ public class PlayerCam : MonoBehaviour
 
 
     }
+    
+    
+    
 }
