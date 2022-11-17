@@ -12,8 +12,6 @@ public class PlayerCam : MonoBehaviour
     float xRotation;
     float yRotation;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +29,13 @@ public class PlayerCam : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
+        // Applying rotation to object this script is attached to (camera)
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        // Applying rotation to given transform
+        //  Intent: Apply it to empty CameraPos object under Player
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
+    
+    
+    
 }
