@@ -7,6 +7,9 @@ TagManager:
   - MeshGenerator
   - Melee
   - Enemy
+  - tree
+  - deleteTree
+  - EnemyHealthbar
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Interactable
   - 
   - 
   - Character

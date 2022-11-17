@@ -49,6 +49,12 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.2d.spriteshape": {
       "version": "7.0.4",
       "depth": 1,
@@ -78,12 +84,6 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
-    },
-    "com.unity.2d.sprite": {
-      "version": "1.0.0",
-      "depth": 0,
-      "source": "builtin",
-      "dependencies": {}
     },
     "com.unity.burst": {
       "version": "1.6.5",

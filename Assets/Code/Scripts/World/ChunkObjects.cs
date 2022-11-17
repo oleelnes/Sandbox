@@ -10,6 +10,8 @@ public class ChunkObjects
 	public List<GameObject> rockList;
 	public List<GameObject> plantList;
 
+	public List<Vector3> objectPositions; //not in use yet. TODO!
+
 	System.Random random;
 
 	public bool visible;
@@ -19,19 +21,19 @@ public class ChunkObjects
 
 	MeshCollider meshCollider;
 	GameObject proc = GameObject.FindGameObjectWithTag("MeshGenerator");
+	EndlessTerrain world;
 
 	int chunkSize;
 
-	public ChunkObjects(MeshCollider collider, int chunkSize, bool visible, int randomOffset, Vector3[] forest)
+	public ChunkObjects(MeshCollider collider, int chunkSize, bool visible, int randomOffset, Vector3[] forest, EndlessTerrain world)
     {
 		this.meshCollider = collider;
 		this.chunkSize = chunkSize;	
 		this.visible = visible;
 		this.forest = forest;
+		this.world = world;
 		worldPopulated = WorldPopulated.FALSE;
 		random = new System.Random(1002 + randomOffset);
-
-
 
 		treeList = new List<GameObject>();
 		caveEntranceList = new List<GameObject>();
@@ -62,7 +64,7 @@ public class ChunkObjects
     {
 
 		populateWithCaveEntrances(meshObject, world, objectPopulator);
-		populateWithTrees(20, 20, 50 * 50, meshObject, meshData, world, objectPopulator);
+		populateWithTrees(meshObject, meshData, world, objectPopulator);
 		populateWithRocks(meshObject, world, objectPopulator, meshData);
 		populateWithPlants(meshObject, world, objectPopulator, meshData);
 
@@ -126,9 +128,11 @@ public class ChunkObjects
 
 
 	/// <summary>
-	/// Function that changes the visibility of objects that are populated in the world.
+	/// Calls a function that sets the visibility of each object in a given list depending on the distance between
+	/// the player and the object.
 	/// </summary>
-	/// <param name="visible">The visibility of the objects.</param>
+	/// <param name="position">The position of the player.</param>
+	/// <param name="distance">The render distance.</param>
 	void ObjectsVisible(Vector2 position, float distance)
 	{
 		VisibleObjectsInList(position, distance, treeList);
@@ -137,10 +141,18 @@ public class ChunkObjects
 		VisibleObjectsInList(position, distance, plantList);
 	}
 
+	/// <summary>
+	/// Iterates through all the objects in a list and sets the visibility of objects within the render distance to
+	/// true.
+	/// </summary>
+	/// <param name="position">The position of the player.</param>
+	/// <param name="distance">The render distance.</param>
+	/// <param name="list">The list through which the function will iterate.</param>
 	void VisibleObjectsInList(Vector2 position, float distance, List<GameObject> list)
 	{
 		for (int i = 0; i < list.Count; i++)
 		{
+			
 			Vector3 vec3 = new Vector3(position.x, 0.0f, position.y);
 			if (list[i].activeSelf && Vector3.Distance(vec3, list[i].transform.position) > distance)
 			{
@@ -150,29 +162,41 @@ public class ChunkObjects
 			{
 				list[i].SetActive(true);
 			}
+			if (list[i].tag == "deleteTree" || list[i] == null)
+			{
+				list[i].SetActive(false);
+				world.toDelete.Add(list[i]);
+				list.RemoveAt(i);
+
+			}
+
 		}
+
 	}
 
-
-
-	//TODO: move out of this file!
-	void populateWithTrees(int xSize, int zSize, int amount, GameObject meshObject, MeshData meshData, EndlessTerrain world, PopulateWithObjects objectPopulator)
+	/// <summary>
+	/// Function that fills the treeList with trees depending on the noise map generated for the forest, along
+	/// with some element of random. It will not place a tree in water.
+	/// </summary>
+	/// <param name="meshObject"></param>
+	/// <param name="meshData"></param>
+	/// <param name="world"></param>
+	/// <param name="objectPopulator"></param>
+	void populateWithTrees(GameObject meshObject, MeshData meshData, EndlessTerrain world, PopulateWithObjects objectPopulator)
 	{
 		
 		for (int x = 0, i = 0; x < chunkSize; x += 10)
 		{
 			for (int y = 0; y < chunkSize; y += 10)
 			{
-				if(forest[i].y > 0.6f)
+				//Addition of the random makes the edges of the forests have wider spacing
+				if(forest[i].y > 0.6f + ((float)random.NextDouble() % 0.15))
                 {
 					int treeInterval = Mathf.RoundToInt(forest[i].y * 12);
-					bool placeTree = false;
 					int randomNumber = random.Next(0, 10);
-					float treeHeight = forest[i].y;
 
 					//The higher the noise value in the forest noisemap, the greater the probability that a tree will appear
-					if(randomNumber + Mathf.RoundToInt(forest[i].y * 10) < 14) placeTree = true;
-					forest[i].y = treeHeight;
+					bool placeTree = randomNumber + Mathf.RoundToInt(forest[i].y * 10) < 14;
 
 					float internalX = (float)x + (float)random.Next(-treeInterval, treeInterval);
 					float internalY = (float)y + (float)random.Next(-treeInterval, treeInterval);
@@ -180,9 +204,9 @@ public class ChunkObjects
 					float placementLocationZ = internalY + meshObject.transform.position.z;
 					float height = world.GetHeight(placementLocationX, placementLocationZ);
 
-					if (placeTree && !IsWater(height - 0.2f, meshData)/* && internalX < (chunkSize ) && internalY < (chunkSize ) */)
+					if (/*placeTree &&*/ !IsWater(height - 0.6f, meshData) && internalX < (chunkSize ) && internalY < (chunkSize ) )
 					{
-						GenerateNewTree(placementLocationX, height, placementLocationZ, objectPopulator);
+						GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, objectPopulator);
 					}
 				}
 				i ++;
@@ -190,6 +214,13 @@ public class ChunkObjects
 		}
 	}
 
+	/// <summary>
+	/// Generates a single tree of a random type, and adds it to the treeList.
+	/// </summary>
+	/// <param name="placementLocationX"></param>
+	/// <param name="height"></param>
+	/// <param name="placementLocationZ"></param>
+	/// <param name="objectPopulator"></param>
 	void GenerateNewTree(float placementLocationX, float height, float placementLocationZ, PopulateWithObjects objectPopulator)
 	{
 		
@@ -226,6 +257,13 @@ public class ChunkObjects
 		if (newTree != null) treeList.Add(newTree);
 	}
 
+	/// <summary>
+	/// TODO: update function.
+	/// This function populates the world with cave entrances.
+	/// </summary>
+	/// <param name="meshObject"></param>
+	/// <param name="world"></param>
+	/// <param name="objectPopulator"></param>
 	public void populateWithCaveEntrances(GameObject meshObject, EndlessTerrain world, PopulateWithObjects objectPopulator)
 	{
 		float height = world.GetHeight((float)(200) + meshObject.transform.position.x, (float)(200) + meshObject.transform.position.z);
@@ -236,7 +274,7 @@ public class ChunkObjects
 
 
 	/// <summary>
-	/// Handles the state of the world population.
+	/// Handles the state of the world population. Hidden state is depracated but I have not dared to delete it yet.
 	/// </summary>
 	public enum WorldPopulated
 	{

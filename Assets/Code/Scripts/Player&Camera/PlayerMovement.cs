@@ -7,17 +7,19 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public bool isSprinting;
+    public bool isSuperSprinting;
 
     public float groundDrag;
 
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
-    bool readyToJump;
+    public bool readyToJump;
 
     private float walkSpeed = 7;
     private float sprintSpeed = 14;
-    private float superSprintSpeed = 50;
+    private float superSprintSpeed = 7;
 
     
     [Header("Keybinds")]
@@ -26,13 +28,11 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode superSprintKey = KeyCode.Q;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
-    
-    
 
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
     public bool isGrounded(){ return grounded; }
 
     public Transform orientation;
@@ -44,11 +44,11 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        
         readyToJump = true;
     }
 
@@ -62,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
         Sprint();
         Crouch();
 
+        //Destroying/interacting with objects       
+
         // handle drag
         if (grounded)
             rb.drag = groundDrag;
@@ -74,9 +76,11 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
+    
+
+
     private void MyInput()
     {
-
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -102,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
         // in air
         else if(!grounded)
+            
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
     }
 
@@ -133,15 +138,18 @@ public class PlayerMovement : MonoBehaviour
     private void Sprint() {
         if (Input.GetKey(sprintKey)) {
             moveSpeed = sprintSpeed;
+            isSprinting = true;
         } 
         else if(Input.GetKey(superSprintKey))
         {
             moveSpeed = superSprintSpeed;
+            isSuperSprinting = true;
         }
         else {
             moveSpeed = walkSpeed;
+            isSprinting = false;
+            isSuperSprinting = false;
         }
-        
     }
 
     private void Crouch() {

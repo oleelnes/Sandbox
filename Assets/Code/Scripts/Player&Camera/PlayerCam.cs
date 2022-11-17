@@ -12,6 +12,12 @@ public class PlayerCam : MonoBehaviour
     float xRotation;
     float yRotation;
 
+    public DynamicInventoryDisplay backpackPanel; 
+    public PlayerInventoryHolder abc; 
+    public static bool isBackpackOpen = false; 
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,18 +28,27 @@ public class PlayerCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        if(!isBackpackOpen) {
+            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-        yRotation += mouseX;
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            yRotation += mouseX;
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        // Applying rotation to object this script is attached to (camera)
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        // Applying rotation to given transform
-        //  Intent: Apply it to empty CameraPos object under Player
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+            // Applying rotation to object this script is attached to (camera)
+            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            // Applying rotation to given transform (Empty CameraPos object under Player)
+            orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        } else {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+
     }
     
     

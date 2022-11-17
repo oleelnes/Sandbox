@@ -1,40 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class EnemyLocomotionManager : MonoBehaviour
 {
 
-    /* EnemyManager enemyManager;*/
     EnemyAnimationManager enemyAnimationManager;
     public Rigidbody enemyRigidBody;
     public CharacterStats currentTarget;
+    public EnemyStats enemyStats;
 
-    //The higher and lower respectively these angles are the greater dectection field of view
     [Header("Detection")]
-    public float maximumDetectionAngle = 50f;
-    public float minimumDetectionAngle = -50f;
+    //The higher (max) and lower (min) respectively these angles are the greater dectection field of view
+    public float maximumDetectionAngle = 70f;
+    public float minimumDetectionAngle = -70f;
     public float distance;
     public float triggerDistance = 20f;
 
     public float stoppingDistance = 2f;
     public float passiveDistance = 30f;
-    public float movementSpeed = 3f;
+    public float attackDistance = 4f;
+    public float rotationSpeed = 3f;
+    public bool isGrounded;
+
 
     private void Awake()
     {
         /* enemyManager = GetComponent<EnemyManager>();*/
         enemyAnimationManager = GetComponentInChildren<EnemyAnimationManager>();
         enemyRigidBody = GetComponent<Rigidbody>();
+        enemyStats = GetComponent<EnemyStats>();
     }
 
     private void Start()
     {
-
-        //Enemy falls down
         enemyRigidBody.isKinematic = false;
     }
 
@@ -42,11 +46,12 @@ public class EnemyLocomotionManager : MonoBehaviour
     {
         //calculate distance between enemy and player
         distance = Vector3.Distance(transform.position, Player.instance.transform.position);
+        //Enemy falls down (!)
+        enemyRigidBody.AddForce(Vector3.down * 1000f);
     }
 
     public void HandleDetection()
     {
-       /* enemyAnimationManager.animator.SetBool("Chase State", true);*/
         //NOTE: should be currentTarget if target is not only player
         if (distance <= triggerDistance)
         {
@@ -55,7 +60,7 @@ public class EnemyLocomotionManager : MonoBehaviour
 
             if (viewableAngle > minimumDetectionAngle && viewableAngle < maximumDetectionAngle)
             {
-                currentTarget = Player.instance.GetComponent<CharacterStats>();
+                setCurrentTargetToPlayer();
             }
         }
 
@@ -64,28 +69,115 @@ public class EnemyLocomotionManager : MonoBehaviour
     public void HandleMoveToTarget()
     {
 
-        transform.LookAt(Player.instance.transform.position);
+        enemyRotationAndDirection();
 
         if (currentTarget != null)
         {
             if (distance > stoppingDistance)
             {
-                enemyAnimationManager.animator.SetBool("Attack State", false);
-                enemyAnimationManager.animator.SetBool("Chase State", true);
-                transform.position = Vector3.MoveTowards(transform.position, Player.instance.transform.position, movementSpeed * Time.deltaTime);
+                Chase();
             }
             else if (distance <= stoppingDistance)
             {
-                //ATTACK CODE HERE
-                enemyAnimationManager.animator.SetBool("Attack State", true);
+                Attack();
             }
 
             //Return to idle state
             if (distance >= passiveDistance)
             {
-                enemyAnimationManager.animator.SetBool("Chase State", false);
-                currentTarget = null;
+                Idle();
             }
         }
     }
+
+    private void Idle()
+    {
+        //IDLE CODE HERE
+        setState("Chase State", false);
+        currentTarget = null;
+
+    }
+
+    private void Chase()
+    {
+        //CHASE CODE HERE
+        setState("Attack State", false);
+        setState("Chase State", true);
+    }
+
+    private void Attack()
+    {
+        //ATTACK CODE HERE
+        setState("Attack State", true);
+    }
+
+    public void setState(string state, bool active)
+    {
+        enemyAnimationManager.animator.SetBool(state, active);
+    }
+
+    public bool getState(string state)
+    {
+        return enemyAnimationManager.animator.GetBool(state);
+    }
+
+    public void playAudio(UnityEvent stateEvent)
+    {
+        stateEvent.Invoke();
+    }
+
+    public void enemyRotationAndDirection()
+    {
+        //only rotate on x and z axis
+        var targetPos = Player.instance.transform.position;
+        targetPos.y = transform.position.y;
+        var relativePos = targetPos - transform.position;
+
+        var rotation = Quaternion.LookRotation(relativePos);
+        transform.rotation = rotation;
+
+        if (distance > stoppingDistance)
+        {
+            //Look at player and move towards player
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, enemyStats.movementSpeed * Time.deltaTime);
+        }
+
+        //Stay on ground
+        // Create RaycastHit variable.
+        RaycastHit hit;
+
+        // If the ray casted from this object (in your case, the tree) to below it hits something...
+        if ((Physics.Raycast(transform.position, -Vector3.up, out hit, 10f)))
+        {
+            isGrounded = true;
+
+            // and if the distance between object and hit is larger than 0.3 (I judge it nearly unnoticeable otherwise)
+            if (hit.distance > 0.3f)
+            {
+                // Then bring object down by distance value.
+                transform.position = new Vector3(transform.position.x, transform.position.y - hit.distance, transform.position.z);
+
+            }
+
+        }
+        else
+        {
+            isGrounded = false;
+        }
+    }
+
+    public void setCurrentTargetToPlayer()
+    {
+        currentTarget = Player.instance.GetComponent<CharacterStats>();
+    }
+
+    public void EnemyAttackDamage()
+    {
+        if(distance < attackDistance)
+        {
+            Player.instance.GetComponent<PlayerHealth>().TakeDamage(enemyStats.damage);
+        }
+    }
+
+
 }
