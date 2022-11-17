@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
     float horizontalInput;
     float verticalInput;
+    bool spawned;
+    EndlessTerrain world;
 
     Vector3 moveDirection;
 
@@ -49,10 +51,15 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+        spawned = false;
+        world = FindObjectOfType<EndlessTerrain>();
+        
     }
 
     private void Update()
     {
+
+        
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
 
@@ -60,14 +67,15 @@ public class PlayerMovement : MonoBehaviour
         SpeedControl();
         Sprint();
         Crouch();
-
-        //Destroying/interacting with objects       
+  
 
         // handle drag
         if (grounded)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+        SpawnPlayer();
     }
 
     private void FixedUpdate()
@@ -75,6 +83,14 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
+    private void SpawnPlayer()
+    {
+        if (!spawned && world.GetHeight(10, 10) > -5)
+        {
+            transform.position = new Vector3(10, world.GetHeight(10, 10), 10);
+            spawned = true;
+        }
+    }
     
 
 
