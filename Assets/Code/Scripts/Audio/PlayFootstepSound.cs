@@ -33,7 +33,8 @@ public class PlayFootstepSound : MonoBehaviour
 
     private void playWalkAudio()
     {
-        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) IsMoving = true; // better use != 0 here for both directions
+        // if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) IsMoving = true; // better use != 0 here for both directions
+        if (Player.instance.movement.rb.velocity.magnitude > 1.0f) IsMoving = true;
         else IsMoving = false;
 
         if (IsMoving && !audioSource.isPlaying) 

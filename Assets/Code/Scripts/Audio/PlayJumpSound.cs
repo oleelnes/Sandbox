@@ -24,26 +24,18 @@ public class PlayJumpSound : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playJumpAudio();
-    }
-
-    public void playJumpAudio()
-    {
-        if (Input.GetKey(Player.instance.movement.jumpKey) && Player.instance.movement.readyToJump && Player.instance.movement.grounded)
-        {
-            jumpAudioSource.PlayOneShot(jump_start[Random.Range(0, jump_start.Length)], jumpVolume);
-        }
-        /*        if(Player.instance.movement.grounded)
-                {
-                    
-                }*/
-/*        onPlatform = Physics2D.OverlapCircle(platformChecker.position, platformCheckRadius, whatIsPlatform);*/
         if (Player.instance.movement.grounded == true && onPlatformLastFrame == false)
         {
             jumpAudioSource.PlayOneShot(jump_end[Random.Range(0, jump_end.Length)], jumpVolume);
         }
         onPlatformLastFrame = Player.instance.movement.grounded;
+        
+    }
 
+    public void playJumpAudio()
+    {
+        // onPlatform = Physics2D.OverlapCircle(platformChecker.position, platformCheckRadius, whatIsPlatform);*/
 
+        jumpAudioSource.PlayOneShot(jump_start[Random.Range(0, jump_start.Length)], jumpVolume);   
     }
 }
