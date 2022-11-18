@@ -16,9 +16,6 @@ public class DestructionProgress : MonoBehaviour
     {
         ProgressImage = GetComponent<Image>();
         GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 75);
-        /*ProgressImage.SetNativeSize();
-        ProgressImage.transform.position = new Vector3(0, 75, 0);
-        ProgressImage.sprite = ProgressTen;*/
     }
 
    
