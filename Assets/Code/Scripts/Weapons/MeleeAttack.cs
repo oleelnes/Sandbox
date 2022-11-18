@@ -36,12 +36,8 @@ public class MeleeAttack : MonoBehaviour
     {
         checkInventoryStatus();
         
-        checkInventoryStatus();
+        // checkInventoryStatus(); // TODO uncomment? This is called twice for some reason, maybe it was important        
         
-        if (!disableAnimation)
-        {
-            attack();
-        }
     }
     
 
@@ -59,28 +55,23 @@ public class MeleeAttack : MonoBehaviour
             }
         }
     }
+    
+    public void DoAttack(){
+        //audio
+        nonHitEvent.Invoke();
+        //Trigger only when clicked
+        weaponColl.isTrigger = true;
 
-    void attack()
-    {
-        if (Input.GetKeyDown(mouse0))
-        {
-            //audio
-            nonHitEvent.Invoke();
-            //Trigger only when clicked
-            weaponColl.isTrigger = true;
-
-            //initialize animation
-            anim.SetBool("attacking", true);
-
-        }
-        else if (Input.GetKeyUp(mouse0))
-        {
-            weaponColl.isTrigger = false;
-            anim.SetBool("attacking", false);
-        }
+        //initialize animation
+        if(!disableAnimation) anim.SetBool("attacking", true);
+    }
+    
+    public void ReleaseAttack(){
+        weaponColl.isTrigger = false;
+        if(!disableAnimation) anim.SetBool("attacking", false);
     }
 
-    public void checkInventoryStatus() {
+    public void checkInventoryStatus() { // TODO Disable action map when opening inventory and deprecate this
         if(PlayerCam.isBackpackOpen) {
             disableAnimation = true;
         } else {
