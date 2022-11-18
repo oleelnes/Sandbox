@@ -5,9 +5,13 @@ using UnityEngine;
 public class SpawnEnemies : MonoBehaviour
 {
 
+    [SerializeField]
     public GameObject caveMan;
+    [SerializeField]
     public GameObject houndMan;
-    public GameObject globlin;
+    [SerializeField]
+    public GameObject goblin;
+    [SerializeField]
     public GameObject squidMan;
 
     private List<GameObject> enemyList;
@@ -70,7 +74,8 @@ public class SpawnEnemies : MonoBehaviour
         switch (objectName.ToLower())
         {
             case "cavemanobject":
-                return Instantiate(caveMan);
+                if(caveMan == null) return null;
+                else  return Instantiate(caveMan);
             default:
                 Debug.Log(objectName + " did not match any of the cases");
                 return null;
