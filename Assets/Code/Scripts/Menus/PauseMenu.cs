@@ -34,6 +34,7 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        PlayerCam.isBackpackOpen = false;
     }
 
     /**
@@ -46,6 +47,7 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        PlayerCam.isBackpackOpen = true;
     }
 
     /**
