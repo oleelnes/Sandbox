@@ -35,12 +35,15 @@ public class PlayerMovement : MonoBehaviour {
     public float playerHeight;
     public LayerMask whatIsGround; // baby don't hurt me
     public bool grounded;
+    public bool isGrounded(){ return grounded; }
 
 
     public Transform orientation;
 
     float horizontalInput;
     float verticalInput;
+    bool spawned;
+    EndlessTerrain world;
 
     Vector3 moveDirection;
 
@@ -65,10 +68,14 @@ public class PlayerMovement : MonoBehaviour {
         rb.freezeRotation = true;
         readyToJump = true;
         moveSpeed = walkSpeed;
+        spawned = false;
+        world = FindObjectOfType<EndlessTerrain>();
     }
 
     private void Update()
     {
+
+        
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
 
@@ -81,6 +88,8 @@ public class PlayerMovement : MonoBehaviour {
         } else {   
             rb.drag = 0;
         }
+
+        SpawnPlayer();
     }
 
 
@@ -89,6 +98,14 @@ public class PlayerMovement : MonoBehaviour {
         MovePlayer();
     }
 
+    private void SpawnPlayer()
+    {
+        if (!spawned && world.GetHeight(10, 10) > -5)
+        {
+            transform.position = new Vector3(10, world.GetHeight(10, 10) + 2, 10);
+            spawned = true;
+        }
+    }
     
 
 

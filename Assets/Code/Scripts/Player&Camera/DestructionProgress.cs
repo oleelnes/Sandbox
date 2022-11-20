@@ -14,18 +14,15 @@ public class DestructionProgress : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ProgressImage = GetComponent<Image>();
         GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 75);
-        /*ProgressImage.SetNativeSize();
-        ProgressImage.transform.position = new Vector3(0, 75, 0);
-        ProgressImage.sprite = ProgressTen;*/
     }
 
    
 
     public void SetProgressImage(ProgressStatus progress)
     {
-        switch(progress)
+        ProgressImage = GetComponent<Image>();
+        switch (progress)
         {
             case ProgressStatus.NotHitting:
                 ProgressImage.sprite = ProgressTen;

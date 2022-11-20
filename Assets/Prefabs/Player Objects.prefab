@@ -1662,7 +1662,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694999140084227552}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1947,8 +1947,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694999140143431602}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 92.82983, y: -202.91885, z: 191.99641}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -12.5, y: -50, z: -12.5}
+  m_LocalScale: {x: 1.25, y: 1, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3694999140319736514}
@@ -3634,6 +3634,7 @@ GameObject:
   - component: {fileID: 3694999140853474248}
   - component: {fileID: 3694999140853474254}
   - component: {fileID: 3694999140853474249}
+  - component: {fileID: 1532026414759462571}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -3796,6 +3797,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8599cf587ab4da48969ece018fb51a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1532026414759462571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694999140853474251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beda9d025e616034fbb6ebca81c94d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doBob: 1
+  bobStrength: 0.0289
+  bobSpeed: 15.8
+  cameraTransform: {fileID: 3694999140319736514}
+  cameraHolderTransform: {fileID: 3694999140143431603}
+  bobbingSpeedTreshold: 3
+  playerMovementScript: {fileID: 3694999140853474242}
+  playerRigidbody: {fileID: 3694999140853474243}
+  affectedBySpeed: 1
+  maxVelocity: 12
 --- !u!1 &3694999140872907387
 GameObject:
   m_ObjectHideFlags: 0
