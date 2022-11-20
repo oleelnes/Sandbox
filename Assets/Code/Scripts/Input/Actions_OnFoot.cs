@@ -64,7 +64,9 @@ public class Actions_OnFoot : MonoBehaviour
     /********************\
     | Input action asset |
     \********************/
-    private PlayerInputActionsClass inputActions; // Local instance of input action asset, from ActionMapManager's instance if possible
+    private PlayerInputActionsClass inputActions; // Local instance of input action asset, from ActionMapManager's instance if possible 
+    // (Note: ActionMapManager not committed due to it not being fully implemented yet, the idea is that it contains an instance of each input action class, 
+    //        and that in order to rebind inputs, it will change the properties of this class during runtime)
 
 
 
@@ -75,7 +77,7 @@ public class Actions_OnFoot : MonoBehaviour
         // Could check if the variables are changed before updating, but I think calculating the magnitude of a vector is more performance intensive than just updating a variable
         playerMovementScript.UpdateInput_Movement(input_movement);
         playerCameraScript  .UpdateInput_Camera(  input_cameraDelta  );
-       // Updating input in player movement script (because this script calls the player movement script, not the other way around)
+        // Updating input in player movement script (because this script calls the player movement script, not the other way around)
     }
     
 
