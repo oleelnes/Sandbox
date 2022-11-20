@@ -37,9 +37,8 @@ public class BobController : MonoBehaviour
 
     // Called at object initialization
     void Awake(){
-        
+        // Get neutral camera position
         cameraNeutralPosition = cameraTransform.localPosition;
-        
     }
 
 
@@ -60,8 +59,7 @@ public class BobController : MonoBehaviour
     
     
     /**
-     * Move camera smoothly to its neutral position  
-     *  
+     * @brief Move camera smoothly to its neutral position  
      **/
     void ResetBob() {
         // If not in neutral position        
@@ -73,22 +71,20 @@ public class BobController : MonoBehaviour
     
     
     /**
-     * Get a bobbing vector based on current time 
-     *
+     * @brief Create a bobbing-offset vector, based on current time 
      **/
     private Vector3 BobMotion_Walking(){
         float bobMultiplier = ( affectedBySpeed ? 1+velocity/maxVelocity : 1 );
-        Vector3 result = new Vector3(
-            Mathf.Cos( Time.time * bobSpeed/2 ) * bobStrength * 2  * bobMultiplier, 
-            Mathf.Sin( Time.time * bobSpeed   ) * bobStrength      * bobMultiplier, 
-            0.0f);
+        float x = Mathf.Cos( Time.time * bobSpeed/2 ) * bobStrength * 2  * bobMultiplier; 
+        float y = Mathf.Sin( Time.time * bobSpeed   ) * bobStrength      * bobMultiplier;
+        Vector3 result = new Vector3(x, y, 0.0f);
         return result;
     }
 
 
     /**
-     * Check conditions for head bobbing and apply appropriate headbob 
-     *  (Headbob for jumping or falling can be implemented too)
+     * @brief Check conditions for head bobbing and apply appropriate headbob 
+     *   (Headbob for jumping or falling can be implemented too)
      **/
     private void BobIfShouldBob(){
         // Get horizontal movement speed
@@ -122,7 +118,12 @@ public class BobController : MonoBehaviour
         }*/
     }
     
-    // Yoinked from https://unitynotebook.blogspot.com/2018/07/unity-calculate-360-angle-between-2.html
+    
+    
+    /**
+     * @brief Calculates the angle between two points, like Vector3.Angle but keeping the polarity sign
+     * Yoinked from https://unitynotebook.blogspot.com/2018/07/unity-calculate-360-angle-between-2.html
+     */
     public static float AngleFromToPoint(Vector3 fromPoint, 
                                          Vector3 toPoint, 
                                          Vector3 zeroDirection)
@@ -134,8 +135,10 @@ public class BobController : MonoBehaviour
 
 
     /**
-     * Move camera to an offset of its neutral position
-     *
+     * @brief Move camera to an offset of its neutral position
+     * @param offset {Vector3} - The offset to apply to the camera
+     * @note Currently contains a lot of unused code for left-and-right bobbing, I tried to rotate a 2d plane
+     *       so that the left&right offset would align with the direction of the camera.
      **/
     private void ApplyOffsetFromNeutral(Vector3 offset){
         
