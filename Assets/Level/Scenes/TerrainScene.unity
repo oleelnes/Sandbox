@@ -2045,6 +2045,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1547830491 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3694999140319736514, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
+  m_PrefabInstance: {fileID: 896174507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1575661302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2505,7 +2510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dccfe24af707ea4fa6a961f8bade8e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewer: {fileID: 0}
+  viewer: {fileID: 1547830491}
   materialTest: {fileID: 2100000, guid: e6cc1e94673bcdc4a9ad6513bcb0a495, type: 2}
   texture: {fileID: 2800000, guid: 3cf543484d2fb7347b203b934a632fa6, type: 3}
   mapChunkSize: 80
