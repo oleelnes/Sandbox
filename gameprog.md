@@ -35,17 +35,18 @@ If you claim you did “All” of a part of code no one else can claim “Most�
 If you claim you did “Most” then others cannot claim “All”, “Most”, or “Half” but up to half the group (N/2) can claim “Some” work.
 If you claim “Half” then others cannot claim “All” or “Most”, but one (1) other can claim “Half” and any number of the group (N) can claim “Some” or “Touched” Others
 
-| | # claim |Others| All	| Most | Half | Some | Touched |
-|----|----|-|----|----|----|----|----|
-| All	| 1 || 0 | 0 | 0 | 0 | N |
-| Most | 1 || 0 | 0 | 0 | N | N |
-| Half | 2 || 0 | 0 | 1 | N | N |
-| Some | N || 0 | 1 | 1 | N | N |
-| Touched | N || 1 | 1 | 2 | N | N |
+| | # claim | Others | All	| Most | Half | Some | Touched |
+|------|------|--------|----|-----|-----|-----|-----|
+| All	| 1 |        | 0      | 0 | 0 | 0 | N |
+| Most | 1 |        | 0      | 0 | 0 | N | N |
+| Half | 2 |        | 0      | 0 | 1 | N | N |
+| Some | N |        | 0      | 1 | 1 | N | N |
+| Touched | N |        | 1      | 1 | 2 | N | N |
 
 An example of doing this individually:
 
-|File|Claim|
+| File | Claim |
+|-----|-----|
 |file.cs|All|
 |prefab.prefab|Most|
 |file2.cs|Most|
@@ -54,11 +55,12 @@ An example of doing this individually:
 
 Or we could have one table for everyone, like this:
 
-| File | Ola Nordmann | Jane Doe | Kari Nordmann |
-| file1.cs | Most | Some | Touched |
-| Prefab.prefab | Touched | All | - |
-| file2.cs | Half | Half | Touched |
-| file2.cs | - | Most | Some |
+| File | Ola Nordmann   | Jane Doe   | Kari Nordmann  |
+|------|----------------|------------|----------------|
+| file1.cs | Most           | Some       | Touched        |
+| Prefab.prefab | Touched        | All        | -              |
+| file2.cs | Half           | Half       | Touched        |
+| file2.cs | -              | Most       | Some           |
 
 
 
