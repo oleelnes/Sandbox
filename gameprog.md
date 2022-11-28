@@ -54,11 +54,11 @@ An example of doing this individually:
 
 Or we could have one table for everyone, like this:
 
-|File|Ola Nordmann|Jane Doe|Kari Nordmann|
-|file1.cs|Most|Some|Touched|
-|Prefab.prefab|Touched|All|-|
-|file2.cs|Half|Half|Touched|
-|file2.cs|-|Most|Some|
+| File | Ola Nordmann | Jane Doe | Kari Nordmann |
+| file1.cs | Most | Some | Touched |
+| Prefab.prefab | Touched | All | - |
+| file2.cs | Half | Half | Touched |
+| file2.cs | - | Most | Some |
 
 
 
