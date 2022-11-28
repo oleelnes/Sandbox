@@ -22,17 +22,19 @@ public class InventoryUIController : MonoBehaviour
         InventoryHolder.OnDynamicInventoryDisplayRequested -= DisplayInventory;
         PlayerInventoryHolder.OnPlayerBackpackDisplayRequested -= DisplayPlayerBackpack; 
     }
-
-    void Update()
-    {
-       if(chestPanel.gameObject.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape)) {
-        chestPanel.gameObject.SetActive(false);
-       }
-
-        if(backpackPanel.gameObject.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape)) {
+    
+    // Event triggered by input script
+    public void CancelButtonPressed(){
+        /* if(PlayerCam.isBackpackOpen && backpackPanel.gameObject.activeInHierarchy) { CloseBackpack(); } // Handled by PlayerInventoryHolder. */
+        
+        if(chestPanel.gameObject.activeInHierarchy) {
+            chestPanel.gameObject.SetActive(false);
+        }
+    }
+    
+    public void CloseBackpack(){
         backpackPanel.gameObject.SetActive(false);
         PlayerCam.isBackpackOpen = false; 
-       }
     }
 
     void DisplayInventory(InventorySystem invToDisplay) {
@@ -40,7 +42,7 @@ public class InventoryUIController : MonoBehaviour
         chestPanel.RefreshDynamicInventory(invToDisplay);
     }
 
-    void DisplayPlayerBackpack(InventorySystem invToDisplay) {
+    public void DisplayPlayerBackpack(InventorySystem invToDisplay) {
     backpackPanel.gameObject.SetActive(true); 
     backpackPanel.RefreshDynamicInventory(invToDisplay);
     }

@@ -13,16 +13,16 @@ public class PlayCrouchSound : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        PlayCrouchAudio();
-    }
+    // void Update()
+    // {
+    //     PlayCrouchAudio();
+    // }
 
-    private void PlayCrouchAudio()
+    public void PlayCrouchAudio()
     {
-        if (Input.GetKeyDown(Player.instance.movement.crouchKey))
-        {
-            crouchAudioSource.Play();
-        }
+        // if (Input.GetKeyDown(Player.instance.movement.crouchKey))
+        // {
+        crouchAudioSource.Play();
+        // }
     }
 }

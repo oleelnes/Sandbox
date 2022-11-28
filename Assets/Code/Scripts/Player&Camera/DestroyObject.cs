@@ -37,7 +37,11 @@ public class DestroyObject : MonoBehaviour
         PlayerCam playerCam = FindObjectOfType<PlayerCam>();
 
 
-        ray = playerCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+
+        // ray = playerCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        Vector3 centerScreen = new Vector3(Screen.width/2, Screen.height/2, 0);
+        ray = playerCam.GetComponent<Camera>().ScreenPointToRay(centerScreen);
+
 
         if (CheckHit())
         {
@@ -96,6 +100,12 @@ public class DestroyObject : MonoBehaviour
         dBar.UpdateProgressBar(DestructionProgress.ProgressStatus.NotHitting);
     }
 
+
+    private bool leftMouseDown = false;
+    // Called by Actions_OnFoot
+    private void DoAttack(){  leftMouseDown = true; }
+    // Called by Actions_OnFoot
+    private void ReleaseAttack(){ leftMouseDown = false; }
     /// <summary>
     /// Checks if player has quit hitting an object, either by letting go of the mouse or not 
     /// hitting the hitBox of the object anymore.
@@ -103,7 +113,7 @@ public class DestroyObject : MonoBehaviour
     /// <returns> Returns false if player is still hitting; true if player has quit hitting. </returns>
     private bool CheckQuitHitting()
     {
-        return hitting && !Input.GetMouseButtonDown(0) || hitting && hit.collider.tag != currentTag || !hitting;
+        return hitting && !leftMouseDown || hitting && hit.collider.tag != currentTag || !hitting;
     }
 
     private bool checkColliderTag(string tag)
@@ -132,7 +142,7 @@ public class DestroyObject : MonoBehaviour
 
     private bool CheckHit()
     {
-        return Input.GetMouseButton(0) && Physics.Raycast(ray, out hit);
+        return leftMouseDown && Physics.Raycast(ray, out hit);
     }
 
     private DestructionProgress.ProgressStatus GetProgress(int progress)

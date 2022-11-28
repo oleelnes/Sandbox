@@ -16,6 +16,12 @@ public class PlayerCam : MonoBehaviour
     public PlayerInventoryHolder abc; 
     public static bool isBackpackOpen = false; 
 
+    
+    private Vector2 input_CameraVec;
+    public void UpdateInput_Camera(Vector2 delta){
+        input_CameraVec = delta;
+    }
+
 
 
     // Start is called before the first frame update
@@ -29,8 +35,8 @@ public class PlayerCam : MonoBehaviour
     void Update()
     {
         if(!isBackpackOpen) {
-            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+            float mouseX = input_CameraVec.x * Time.deltaTime * sensX;
+            float mouseY = input_CameraVec.y * Time.deltaTime * sensY;
 
             yRotation += mouseX;
             xRotation -= mouseY;

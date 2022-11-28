@@ -9,20 +9,6 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (GameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
-    }
 
     /**
     * Resume button, unpauses the game, locks the cursor and makes it invisible.
@@ -33,6 +19,18 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         PlayerCam.isBackpackOpen = false;
+    }
+
+    public void TogglePause(){
+        Debug.Log("TogglePause called");
+        if (GameIsPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
+        }
     }
 
     /**
