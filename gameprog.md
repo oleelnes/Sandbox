@@ -43,6 +43,23 @@ If you claim “Half” then others cannot claim “All” or “Most”, but on
 | Some | N || 0 | 1 | 1 | N | N |
 | Touched | N || 1 | 1 | 2 | N | N |
 
+An example of doing this individually:
+
+|File|Claim|
+|file.cs|All|
+|prefab.prefab|Most|
+|file2.cs|Most|
+|file3.cs|Half|
+|file3.cs|Touched|
+
+Or we could have one table for everyone, like this:
+
+|File|Ola Nordmann|Jane Doe|Kari Nordmann|
+|file1.cs|Most|Some|Touched|
+|Prefab.prefab|Touched|All|-|
+|file2.cs|Half|Half|Touched|
+|file2.cs|-|Most|Some|
+
 
 
 ### Mateusz
