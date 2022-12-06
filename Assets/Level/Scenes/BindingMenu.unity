@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &69613357 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7762902970186409880, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+  m_PrefabInstance: {fileID: 451924775}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &97678034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -160,11 +171,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411159386541010506, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Text
-      value: LS
+      value: W/A/S/D
       objectReference: {fileID: 0}
     - target: {fileID: 4613695819848582284, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_text
-      value: LS
+      value: W/A/S/D
       objectReference: {fileID: 0}
     - target: {fileID: 5294407888125826415, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Pivot.x
@@ -283,16 +294,28 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: selectedBindingIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBinding.m_Action
       value: Movement
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Id
-      value: 78b86440-2d34-41a9-8628-8e90e9e114cd
+      value: f1143a7f-d0d3-433c-a461-f02e17164159
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: inputBindingInfo.m_Name
+      value: WASD
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Path
-      value: <Gamepad>/leftStick
+      value: 2DVector
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: inputBindingInfo.m_Flags
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Action
@@ -552,11 +575,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411159386541010506, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Text
-      value: Share
+      value: I
       objectReference: {fileID: 0}
     - target: {fileID: 4613695819848582284, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_text
-      value: Share
+      value: I
       objectReference: {fileID: 0}
     - target: {fileID: 5294407888125826415, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Pivot.x
@@ -663,16 +686,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7885807358898282198, guid: c8c0ea70c3a7a0643a6ce723f965988f, type: 3}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: selectedBindingIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBinding.m_Action
       value: Inventory
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Id
-      value: b97206ed-47b7-4e59-b9c0-e4030edd6b90
+      value: 76dd3776-941d-4e91-89a5-6cab1649a54d
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Path
-      value: <Gamepad>/select
+      value: <Keyboard>/i
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Action
@@ -682,6 +709,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7762902970186409880, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7762902970186409880, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c70998d517fe6ae8894024cce0b311ac, type: 3}
+    - target: {fileID: 8284400340818704481, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 69613357}
     - target: {fileID: 8301454269939761437, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -746,11 +785,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411159386541010506, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Text
-      value: Triangle
+      value: Mellomrom
       objectReference: {fileID: 0}
     - target: {fileID: 4613695819848582284, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_text
-      value: Triangle
+      value: Mellomrom
       objectReference: {fileID: 0}
     - target: {fileID: 5294407888125826415, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Pivot.x
@@ -857,16 +896,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1499420342895363657, guid: c8c0ea70c3a7a0643a6ce723f965988f, type: 3}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: selectedBindingIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBinding.m_Action
       value: Jump
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Id
-      value: dd393f89-e16a-4376-af12-0df142af7261
+      value: 03ba6c0c-d77d-4bce-b8bd-ce1f6a2009da
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Path
-      value: <Gamepad>/buttonNorth
+      value: <Keyboard>/space
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Action
@@ -990,11 +1033,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411159386541010506, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Text
-      value: R2
+      value: LMB
       objectReference: {fileID: 0}
     - target: {fileID: 4613695819848582284, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_text
-      value: R2
+      value: LMB
       objectReference: {fileID: 0}
     - target: {fileID: 5294407888125826415, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Pivot.x
@@ -1101,6 +1144,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7136554284657234607, guid: c8c0ea70c3a7a0643a6ce723f965988f, type: 3}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: selectedBindingIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBinding.m_Action
       value: Attack
       objectReference: {fileID: 0}
@@ -1110,11 +1157,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Id
-      value: 07023b98-8a99-4a2e-af31-493461c607ba
+      value: 6f76a3bd-e87d-48ba-af2e-45b2cccbff73
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Path
-      value: <Gamepad>/rightTrigger
+      value: <Mouse>/leftButton
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Action
@@ -1188,11 +1235,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411159386541010506, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Text
-      value: LS Down
+      value: Control
       objectReference: {fileID: 0}
     - target: {fileID: 4613695819848582284, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_text
-      value: LS Down
+      value: Control
       objectReference: {fileID: 0}
     - target: {fileID: 5294407888125826415, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Pivot.x
@@ -1299,16 +1346,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -4599409082667411383, guid: c8c0ea70c3a7a0643a6ce723f965988f, type: 3}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: selectedBindingIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBinding.m_Action
       value: Crouch
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Id
-      value: 1d900d4c-4754-47e8-ab57-b01be6957f2b
+      value: 92d4bf45-7e27-4a77-b43c-4c4b67b4a136
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Path
-      value: <Gamepad>/leftStick/down
+      value: <Keyboard>/ctrl
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Action
@@ -1732,8 +1783,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.3018868, g: 0.2777414, b: 0.21189035, a: 1}
-  m_Intensity: 92.4
-  m_Range: 140.7
+  m_Intensity: 50.1
+  m_Range: 154.7
   m_SpotAngle: 114
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -1906,11 +1957,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411159386541010506, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Text
-      value: RS
+      value: Delta
       objectReference: {fileID: 0}
     - target: {fileID: 4613695819848582284, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_text
-      value: RS
+      value: Delta
       objectReference: {fileID: 0}
     - target: {fileID: 5294407888125826415, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: m_Pivot.x
@@ -2029,16 +2080,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6174871740153059191, guid: c8c0ea70c3a7a0643a6ce723f965988f, type: 3}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
+      propertyPath: selectedBindingIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBinding.m_Action
       value: Camera
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Id
-      value: 76a2bc50-3673-4939-848e-57aff22181e7
+      value: b4e0c0db-e4d3-498b-9db4-a48a37a0046f
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Path
-      value: <Gamepad>/rightStick
+      value: <Mouse>/delta
       objectReference: {fileID: 0}
     - target: {fileID: 6697681196116724306, guid: d35f5f79105d7514e9dc8eac845a6389, type: 3}
       propertyPath: inputBindingInfo.m_Action
