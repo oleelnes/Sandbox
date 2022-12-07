@@ -95,32 +95,6 @@ public class Actions_OnFoot : MonoBehaviour
         
         if (doPrint) Debug.Log("[Actions OnFoot> \tOnEnable called");
 
-        // if (inventoryUIController == null)   inventoryUIController = new InventoryUIController();
-        // if (inventorySystem == null)         inventorySystem = new InventorySystem(inventorySize);
-
-        // Check if inputActions not initialized yet
-        // if (InputBindingManager.playerInputActionsClass != null  &&  inputActions == null)  {
-        //     if(doPrint) Debug.Log("[Actions OnFoot> \tFound playerInputActionsClass in InputBindingManager at first try");
-        //     // Initialize user input actions
-        //     inputActions = InputBindingManager.playerInputActionsClass;    
-        //     inputActionsHasBeenInitialized = true;
-        //     // Enable action map
-        //     Enable();
-        // } else {
-        //     // Wait for it to be initialized
-        //     if(doPrintVerbose) Debug.Log("[Actions OnFoot> \tInputBindingManager.playerInputActionsClass not initialized, waiting with enabling");
-        //     inputActionsHasBeenInitialized = false;
-        // }
-        // else 
-        // if (inputActions == null) {                  
-        //     Debug.Log("kgjri");
-        //     // Create local input actions if no InputBindingManager 
-        //     inputActions = new PlayerInputActionsClass();
-        //     Enable();   // Enable action map 
-        // } else {
-        //     Debug.Log("[Actions OnFoot> \tOnEnable, input actions already initialized locally at time of enabling.");
-        // }
-        
     }
 
     private void Update(){
