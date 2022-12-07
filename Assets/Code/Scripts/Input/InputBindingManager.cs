@@ -41,6 +41,17 @@ public class InputBindingManager : MonoBehaviour
 
 
 
+    /**
+    * Start rebinding the given binding for given input action, asking the player to press a new button
+	*	
+	* @see DoRebind is the method this method uses to rebind
+    * @see Official rebinding example
+    *   
+    * @param actionName			Name  of chosen action
+    * @param bindingIndex		Index of chosen binding for this action
+    * @param bindingText		Text object to give the player instructions in
+    * @param bindingText_tmp	TMP version of said text object
+    */
     public static void StartRebind(string actionName, int bindingIndex, Text bindingText, TMPro.TMP_Text bindingText_tmp) {
         // Try to find input action from given name
         InputAction inputAction = playerInputActionsClass.asset.FindAction(actionName); 
@@ -72,6 +83,16 @@ public class InputBindingManager : MonoBehaviour
     }
     
 
+
+    /**
+     * Re-bind an action with built Input System in rebinding method
+     * 
+     * @param   actionToRebind      The action to affect
+     * @param   bindingIndex        The index of the binding
+     * @param   bindingText     	Text object to change to instruct the user to press a button 
+     * @param   bindingText_tmp     Same as above but textmesh pro
+     * @param   isComposite   		If the binding is part of a composite
+     **/
     private static void DoRebind(InputAction actionToRebind, int bindingIndex, Text bindingText, TMPro.TMP_Text bindingText_tmp, bool isComposite) 
     {
 		
@@ -133,6 +154,12 @@ public class InputBindingManager : MonoBehaviour
 
 
 	
+    /**
+     * Revert a given binding to the default set in the inupt action asset  
+     * 
+     * @param   actionName      The name of the action for which this is a binding
+     * @param   bindingIndex    The index of the binding within this action
+     **/
     public static void ResetBinding(string actionName, int bindingIndex)
     {
 		// Get action asset by name
@@ -167,6 +194,11 @@ public class InputBindingManager : MonoBehaviour
 
 
 
+    /**
+     * Save the current bindings for an action into memory (playerprefs)
+     * 
+     * @param action The name of the action to save the binding for
+     **/
     private static void SaveCustomBinding(InputAction action) 
 	{
         // Loop over bindings
@@ -182,6 +214,11 @@ public class InputBindingManager : MonoBehaviour
 
 
 
+    /** 
+     * Get the custom binding for given action from memory, and apply it if its found.
+     * 
+     * @param actionName The name of the action to load the binding for, from memory
+     **/
     public static void ApplySavedCustomBinding(string actionName)
     {
         InitializeInputActionClass();
@@ -199,6 +236,12 @@ public class InputBindingManager : MonoBehaviour
         }
     }
 
+
+
+    /**
+     * Apply rebind settings from memory
+	 * 	Loops through every action map and action, and loads binding override if it exists
+     **/
     public static void ApplyAllSavedCustomBindings() {
 		InitializeInputActionClass();
         // Loop through action maps
