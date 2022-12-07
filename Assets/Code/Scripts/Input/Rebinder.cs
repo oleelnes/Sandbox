@@ -18,12 +18,12 @@ public class Rebinder : MonoBehaviour
 	// 		Should create a button to switch the index of every rebinding prefab to either keyb/mouse or controller
 	
     [Header("UI objects (Text objects using TextMesh Pro plugin)")]
-    [SerializeField] private Button         button_Reset;
-    [SerializeField] private Button         button_Rebind;
-    [SerializeField] private TMPro.TMP_Text text_ActionName;
-    [SerializeField] private TMPro.TMP_Text text_BindingName;
-	[SerializeField] private Text 			text_BindingName_NonTMP;
-	[SerializeField] private bool 			doUseNonTMPText = false;
+    [SerializeField] private Button         button_Reset;				///< Button element that triggers the reset
+    [SerializeField] private Button         button_Rebind;				///< Button element that triggers this rebinding
+    [SerializeField] private TMPro.TMP_Text text_ActionName;			///< Text element which will show the name of this action
+    [SerializeField] private TMPro.TMP_Text text_BindingName;			///< Text element which will show the current binding
+	[SerializeField] private Text 			text_BindingName_NonTMP;	///< Alternative non-tmp text element to show current binding
+	[SerializeField] private bool 			doUseNonTMPText = false;	///< Whether to use the alternative non-tmp text element
     
 
 
@@ -39,7 +39,7 @@ public class Rebinder : MonoBehaviour
     private int bindingIndex;	///< Index for currently selected binding
     
 
-
+	// Bind methods and events, and load previously saved binding if one exists
     private void OnEnable() {
 
 		// Bind methods to buttons
