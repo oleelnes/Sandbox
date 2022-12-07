@@ -8,13 +8,15 @@ using UnityEngine.UI;
 public class Actions_OnFoot : MonoBehaviour
 {
 
+	[SerializeField] private bool disable = false;
+	
     /*************************************\
     | Pointers to scripts called by input |
     \*************************************/
     [SerializeField] private PlayerMovement playerMovementScript; ///< Player movement script to call when actions are taken
-    [SerializeField] private PlayerCam playerCameraScript;
-    [SerializeField] private MeleeAttack playerMeleeAttackScript;
-    [SerializeField] private PauseMenu pauseMenu; ///< Reference to relevant instance of pauseMenu script in scene (Could alternatively just search for it, but this is more robust)
+    [SerializeField] private PlayerCam      playerCameraScript;
+    [SerializeField] private MeleeAttack    playerMeleeAttackScript;
+    [SerializeField] private PauseMenu      pauseMenu; ///< Reference to relevant instance of pauseMenu script in scene (Could alternatively just search for it, but this is more robust)
     //[SerializeField] private InventoryUIController inventoryUIController; ///< Reference to relevant inventoryUIController script, makes one if null.
     [SerializeField] private PlayerInventoryHolder playerInventoryHolder;
     [SerializeField] private InventoryUIController playerInventoryUIController;
@@ -33,9 +35,8 @@ public class Actions_OnFoot : MonoBehaviour
 
 
     // [SerializeField]
-    // private ActionMapManager actionMapManager;
+    // private InputBindingManager InputBindingManager;
 
-    private bool debugVerbose = false;
     
     // Polling input directly
     public Vector2 input_movement {
@@ -54,18 +55,19 @@ public class Actions_OnFoot : MonoBehaviour
     | Helper values |
     \***************/
     private bool hasBeenEnabled = false;
+    private bool inputActionsHasBeenInitialized = false;
     [SerializeField]
-    private bool debug = false;
+    private bool doPrint = false;
     [SerializeField]
-    private bool verboseDebug = false;
+    private bool doPrintVerbose = false;
 
 
 
     /********************\
     | Input action asset |
     \********************/
-    private PlayerInputActionsClass inputActions; // Local instance of input action asset, from ActionMapManager's instance if possible 
-    // (Note: ActionMapManager not committed due to it not being fully implemented yet, the idea is that it contains an instance of each input action class, 
+    private PlayerInputActionsClass inputActions; // Local instance of input action asset, from InputBindingManager's instance if possible 
+    // (Note: InputBindingManager not committed due to it not being fully implemented yet, the idea is that it contains an instance of each input action class, 
     //        and that in order to rebind inputs, it will change the properties of this class during runtime)
 
 
@@ -74,10 +76,12 @@ public class Actions_OnFoot : MonoBehaviour
     | Updating polled values |
     \************************/    
     private void FixedUpdate(){
-        // Could check if the variables are changed before updating, but I think calculating the magnitude of a vector is more performance intensive than just updating a variable
-        playerMovementScript.UpdateInput_Movement(input_movement);
-        playerCameraScript  .UpdateInput_Camera(  input_cameraDelta  );
-        // Updating input in player movement script (because this script calls the player movement script, not the other way around)
+        if(inputActions != null && !disable){
+            // Could check if the variables are changed before updating, but I think calculating the magnitude of a vector is more performance intensive than just updating a variable
+            playerMovementScript.UpdateInput_Movement(input_movement);
+            playerCameraScript  .UpdateInput_Camera(  input_cameraDelta  );
+            // Updating input in player movement script (because this script calls the player movement script, not the other way around)
+        } 
     }
     
 
@@ -89,28 +93,22 @@ public class Actions_OnFoot : MonoBehaviour
     private void OnEnable()
     {
         
-        if (debug) Debug.Log("<Actions OnFoot> \tOnEnable called");
+        if (doPrint) Debug.Log("[Actions OnFoot> \tOnEnable called");
 
-        // if (inventoryUIController == null)   inventoryUIController = new InventoryUIController();
-        // if (inventorySystem == null)         inventorySystem = new InventorySystem(inventorySize);
+    }
 
-        // Check if inputActions not initialized yet
-        // if (ActionMapManager.inputActions != null  &&  inputActions == null)  {
-        //     // Get input actions from parent ActionMapManager if possible
-        //     inputActions = ActionMapManager.inputActions;   // Initialize user input actions
-        //     Enable();                                       // Enable action map 
-        // } else 
-        if (inputActions == null) {                  
-            // Create local input actions if no ActionMapManager 
-            inputActions = new PlayerInputActionsClass();
-            Enable();   // Enable action map 
-        } else {
-            Debug.Log("<Actions OnFoot> \tOnEnable, input actions already initialized locally at time of enabling.");
+    private void Update(){
+        
+        if( inputActionsHasBeenInitialized == false 
+        &&  InputBindingManager.playerInputActionsClass != null) {
+            if(doPrint) Debug.Log("[Actions OnFoot> \tFound InputBindingManager.playerInputActionsClass");
+            inputActions = InputBindingManager.playerInputActionsClass;
+            inputActionsHasBeenInitialized = true;
+            if(!disable) Enable();
         }
         
     }
-
-
+    
 
     /**
      * Enables and binds action inputs
@@ -118,7 +116,7 @@ public class Actions_OnFoot : MonoBehaviour
     private void Enable()
     {
         hasBeenEnabled = true;
-        if (debug) Debug.Log("<Actions OnFoot> \tEnable() called");
+        if (doPrint) Debug.Log("[Actions OnFoot> \tEnable() called");
 
 
         // Subscribing actions to functions
@@ -168,7 +166,7 @@ public class Actions_OnFoot : MonoBehaviour
      * Called when object is disabled.
      **/
     private void OnDisable() {
-        if (debugVerbose) Debug.Log("<Actions OnFoot> \tOnDisable called");
+        if (doPrintVerbose) Debug.Log("[Actions OnFoot> \tOnDisable called");
         Disable();
     }
     
@@ -177,7 +175,7 @@ public class Actions_OnFoot : MonoBehaviour
      * Disables all input actions.
      **/
     private void Disable() {
-        if (debug) Debug.Log("<Actions OnFoot> \nDisable called");
+        if (doPrint) Debug.Log("[Actions OnFoot> \nDisable called");
         // Disabling the action inputs, so they won't call
         inputActions.OnFoot.Jump         .Disable();
         inputActions.OnFoot.Sprint       .Disable();

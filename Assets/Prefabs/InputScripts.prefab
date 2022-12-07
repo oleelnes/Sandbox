@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4366408173095620917}
+  - component: {fileID: 8002346531706428626}
+  - component: {fileID: 4366408173095620918}
   - component: {fileID: 4366408173095620912}
   - component: {fileID: 4366408173095620919}
-  - component: {fileID: 4366408173095620918}
   m_Layer: 0
   m_Name: InputScripts
   m_TagString: Untagged
@@ -34,6 +35,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8002346531706428626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4366408173095620916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbfa94d428d043a4a8ca4274885e6515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4366408173095620918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4366408173095620916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f11b2c66406ce148aff82cd509e842f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovementScript: {fileID: 0}
+  playerCameraScript: {fileID: 0}
+  playerMeleeAttackScript: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  playerInventoryHolder: {fileID: 0}
+  playerInventoryUIController: {fileID: 0}
+  movementInputSensitivity: 0.001
+  cameraInputSensitivity: 0.05
+  doPrint: 1
+  doPrintVerbose: 1
 --- !u!114 &4366408173095620912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,25 +112,3 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
---- !u!114 &4366408173095620918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4366408173095620916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f11b2c66406ce148aff82cd509e842f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovementScript: {fileID: 0}
-  playerCameraScript: {fileID: 0}
-  playerMeleeAttackScript: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  playerInventoryHolder: {fileID: 0}
-  playerInventoryUIController: {fileID: 0}
-  movementInputSensitivity: 0.001
-  cameraInputSensitivity: 0.05
-  debug: 1
-  verboseDebug: 1
