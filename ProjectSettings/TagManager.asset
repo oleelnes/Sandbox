@@ -44,6 +44,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Clickable
+    uniqueID: 176601819
+    locked: 0
+  - name: Foreground
+    uniqueID: 1309497811
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1633849707
     locked: 0
