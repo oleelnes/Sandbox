@@ -94,7 +94,6 @@ public class EndlessTerrain : MonoBehaviour
 	/// </summary>
 	void UpdateVisibleChunks()
 	{
-		
 		for (int i = 0; i < terrainChunksVisibleLastUpdate.Count; i++)
 		{
 			terrainChunksVisibleLastUpdate[i].SetVisible(false);
@@ -152,7 +151,6 @@ public class EndlessTerrain : MonoBehaviour
 		ChunkObjects chunkObjects;
 		Corruption corruption;
 
-		BoxCollider caveEntranceCollider;
 		bool trees;
 
 		//Positions
@@ -284,7 +282,7 @@ public class EndlessTerrain : MonoBehaviour
 		public float GetLocalHeight(float x, float z)
 		{
 			RaycastHit hit;
-			float hitHeight = 100.9f;
+			float hitHeight = -100.9f;
 			Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
 
 			SetVisible(true);

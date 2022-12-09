@@ -83,7 +83,7 @@ public class NewMesh : MonoBehaviour
             noiseMap[i].y = meshHeightCurve.Evaluate(noiseMap[i].y);// * heightScale;
             if (noiseMap[i].y < waterLevel + 0.02f + (float)rand.NextDouble() % 0.014f)
             {
-                if (noiseMap[i].y < waterLevel) water = true;
+                if (noiseMap[i].y <= waterLevel) water = true;
                 //noiseMap[i].y = waterLevel;
                 colorMap[i] = new Color(0.5f + (lakeBottomColorIncrementer / 2.5f), 0.25f + (lakeBottomColorIncrementer / 2.5f), 0.05f + lakeBottomColorIncrementer);
                 lakeBottomColorIncrementer = (float)rand.NextDouble() % 0.25f;
@@ -206,7 +206,7 @@ public class MeshData
     public Vector3[] waterLocations;
     public Vector3[] forestVertices;
 
-    private float waterLevel = 0;
+    private float waterLevel = 1;
 
 
     public MeshData(Vector3[] vertices, Color[] colors, int[] triangles, Vector3[] forestVertices)
