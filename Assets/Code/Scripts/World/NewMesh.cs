@@ -71,7 +71,7 @@ public class NewMesh : MonoBehaviour
     {
         Color[] colorMap = new Color[noiseMap.Length];
 
-        System.Random colorRandomizer = new System.Random(123123);
+        System.Random rand = new System.Random(123123);
 
         float groundGrassColor = 0.0f;
         float lakeBottomColorIncrementer = 0.0f;
@@ -81,12 +81,12 @@ public class NewMesh : MonoBehaviour
             bool water = false;
             //Using the heightMapCurve (AnimationCurve) to evaluate the height value of the mesh!
             noiseMap[i].y = meshHeightCurve.Evaluate(noiseMap[i].y);// * heightScale;
-            if (noiseMap[i].y < waterLevel + 0.02f)
+            if (noiseMap[i].y < waterLevel + 0.02f + (float)rand.NextDouble() % 0.014f)
             {
                 if (noiseMap[i].y < waterLevel) water = true;
                 //noiseMap[i].y = waterLevel;
                 colorMap[i] = new Color(0.5f + (lakeBottomColorIncrementer / 2.5f), 0.25f + (lakeBottomColorIncrementer / 2.5f), 0.05f + lakeBottomColorIncrementer);
-                lakeBottomColorIncrementer = (float)colorRandomizer.NextDouble() % 0.25f;
+                lakeBottomColorIncrementer = (float)rand.NextDouble() % 0.25f;
             }
             else if (noiseMap[i].y > waterLevel && noiseMap[i].y < 0.6f)
             {
