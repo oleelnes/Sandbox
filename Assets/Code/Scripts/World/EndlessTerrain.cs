@@ -144,6 +144,8 @@ public class EndlessTerrain : MonoBehaviour
 		MeshRenderer meshRenderer;
 		MeshFilter meshFilter;
 
+		GameObject lake;
+
 		public Vector3[] forest;
 
 		//Ground objects
@@ -192,7 +194,7 @@ public class EndlessTerrain : MonoBehaviour
 			//Using the mesh data to create a new mesh. 
 			meshFilter.mesh = meshData.CreateMesh(flatShading);
 
-			GameObject lake = meshData.CreateWaterMesh();
+			lake = meshData.CreateWaterMesh();
 			lake.transform.position = new Vector3(position.x, meshData.getWaterLevel(), position.y);
 			lake.transform.rotation = Quaternion.Euler(0, 0, 0);
 
@@ -263,7 +265,7 @@ public class EndlessTerrain : MonoBehaviour
 		public void SetVisible(bool visible)
 		{
 			meshObject.SetActive(visible);
-			
+			//lake.SetActive(visible);
 		}
 
 
