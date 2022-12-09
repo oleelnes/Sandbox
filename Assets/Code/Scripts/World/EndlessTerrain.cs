@@ -8,6 +8,7 @@ public class EndlessTerrain : MonoBehaviour
 	public Transform viewer;
 
 	public Material materialTest;
+	public Material waterMaterial;
 	public Texture texture;
 
 	public int mapChunkSize = 241;
@@ -119,8 +120,8 @@ public class EndlessTerrain : MonoBehaviour
 				}
 				else
 				{
-					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, 
-						transform, materialTest, polyScale, texture, mapChunkSize , flatshading, trees));
+					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize,
+						transform, materialTest, waterMaterial, polyScale, texture, mapChunkSize, flatshading, trees)) ;
 				}
 
 			}
@@ -161,7 +162,8 @@ public class EndlessTerrain : MonoBehaviour
 		int corrTest = 0;
 		List<int> corruptionIndices;
 
-		public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, int polyScale, Texture texture, int mapChunkSize, bool flatShading, bool trees)
+		public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, Material waterMaterial, 
+			int polyScale, Texture texture, int mapChunkSize, bool flatShading, bool trees)
 		{
 			this.chunkSize = mapChunkSize * polyScale;
 			
@@ -189,6 +191,16 @@ public class EndlessTerrain : MonoBehaviour
 
 			//Using the mesh data to create a new mesh. 
 			meshFilter.mesh = meshData.CreateMesh(flatShading);
+
+			GameObject lake = meshData.CreateWaterMesh();
+			lake.transform.position = new Vector3(position.x, meshData.getWaterLevel(), position.y);
+			lake.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+			// Scale the plane to the desired size
+			lake.transform.localScale = new Vector3(chunkSize, 1, chunkSize);
+			lake.GetComponent<Renderer>().material = waterMaterial;
+			//lake.GetComponent<Renderer>().material.color = Color.blue;
+
 
 			forest = meshData.forestVertices;
 			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees, Mathf.RoundToInt(coord.x) * 5 + Mathf.RoundToInt(coord.y) * 3, forest, world);

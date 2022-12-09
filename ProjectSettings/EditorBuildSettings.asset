@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Level/Scenes/MainMenu.unity
     guid: ae0a74aa103632949a9eaf38114e0dca
   - enabled: 1
-    path: Assets/Level/Scenes/TerrainScene.unity
+    path: Assets/Level/Scenes/LakesTerrainScene.unity
     guid: 7c61e65340c520a44a0bfb31668abfe9
   - enabled: 1
     path: Assets/Level/Scenes/CaveScenePillars.unity
