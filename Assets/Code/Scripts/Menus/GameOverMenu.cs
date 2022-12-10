@@ -20,6 +20,8 @@ public class GameOverMenu : MonoBehaviour
     public void EnableGameOverMenu()
     {
         gameOverMenu.SetActive(true);
+        Time.timeScale = 0f;
+        PlayerCam.isBackpackOpen = true;
     }
 
     public void RestartLevel()

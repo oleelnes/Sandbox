@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Level/Scenes/BindingMenu.unity
     guid: 10e5ab04d51e6464898c5bbb4c781e38
+  - enabled: 1
+    path: Assets/Level/Scenes/TerrainScene.unity
+    guid: 2c5b37b3bfed75b4289f9ee61423587c
   m_configObjects: {}
