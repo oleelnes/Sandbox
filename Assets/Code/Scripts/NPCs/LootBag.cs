@@ -8,7 +8,7 @@ public class LootBag : MonoBehaviour
 
     Loot GetDroppedItem()
     {
-        int randomNumber = randomNumber.Range(1, 101);
+        int randomNumber = Random.Range(1, 101);
         List<Loot> possibleItems = new List<Loot>();
         foreach (Loot item in lootList)
         {
@@ -31,7 +31,7 @@ public class LootBag : MonoBehaviour
         Loot droppedItem = GetDroppedItem();
         if (droppedItem != null)
         {
-            GameObject lootGameObject = Instantiate(droppedItem, spawnPosition, Quaternion.identity);
+            GameObject lootGameObject = Instantiate(droppedItem.lootGameObject, spawnPosition, Quaternion.identity);
         }
     }
 
