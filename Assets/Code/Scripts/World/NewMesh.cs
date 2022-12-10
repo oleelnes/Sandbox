@@ -54,12 +54,12 @@ public class NewMesh : MonoBehaviour
         List<int> landTriangles = new List<int>();
 
         int[] preTriangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize, vertices, waterTriangles, landTriangles);
-        triangles = HideWaterTriangles(preTriangles, waterTriangles, landTriangles);
+        //triangles = HideWaterTriangles(preTriangles, waterTriangles, landTriangles);
 
         NoiseData forestNoiseData = noiseMapGenerator.CreateNoiseMap(chunkSize, chunkSize, seedMain + 5, scale, position, 7, 2.8f, 0.5f, (int)position.x / (chunkSize - 1), polyScale);
         Vector3[] forestVertices = forestNoiseData.noiseMap;
 
-        MeshData meshData = new MeshData(vertices, colors, triangles, forestVertices);
+        MeshData meshData = new MeshData(vertices, colors, preTriangles, forestVertices);
         meshData.setWaterLevel(globalWaterLevel);
         //Creating the instance of the MeshData that will be returned
         return meshData;
@@ -71,22 +71,22 @@ public class NewMesh : MonoBehaviour
     {
         Color[] colorMap = new Color[noiseMap.Length];
 
-        System.Random colorRandomizer = new System.Random(123123);
+        System.Random rand = new System.Random(123123);
 
         float groundGrassColor = 0.0f;
-        float waterIterator = 0.0f;
+        float lakeBottomColorIncrementer = 0.0f;
 
         for (int i = 0; i < noiseMap.Length; i++)
         {
             bool water = false;
             //Using the heightMapCurve (AnimationCurve) to evaluate the height value of the mesh!
             noiseMap[i].y = meshHeightCurve.Evaluate(noiseMap[i].y);// * heightScale;
-            if (noiseMap[i].y < waterLevel)
+            if (noiseMap[i].y < waterLevel + 0.02f + (float)rand.NextDouble() % 0.014f)
             {
-                water = true;
-                noiseMap[i].y = waterLevel;
-                colorMap[i] = new Color(0.1f + (waterIterator / 2.5f), 0.1f + (waterIterator / 2.5f), 0.3f + waterIterator);
-                waterIterator = (float)colorRandomizer.NextDouble() % 0.25f;
+                if (noiseMap[i].y <= waterLevel) water = true;
+                //noiseMap[i].y = waterLevel;
+                colorMap[i] = new Color(0.5f + (lakeBottomColorIncrementer / 2.5f), 0.25f + (lakeBottomColorIncrementer / 2.5f), 0.05f + lakeBottomColorIncrementer);
+                lakeBottomColorIncrementer = (float)rand.NextDouble() % 0.25f;
             }
             else if (noiseMap[i].y > waterLevel && noiseMap[i].y < 0.6f)
             {
@@ -195,6 +195,8 @@ public class NewMesh : MonoBehaviour
 
 
 
+
+
 public class MeshData
 {
     public Color[] colors;
@@ -204,7 +206,7 @@ public class MeshData
     public Vector3[] waterLocations;
     public Vector3[] forestVertices;
 
-    private float waterLevel = 0;
+    private float waterLevel = 1;
 
 
     public MeshData(Vector3[] vertices, Color[] colors, int[] triangles, Vector3[] forestVertices)
@@ -229,6 +231,13 @@ public class MeshData
         mesh.RecalculateNormals();
 
         return mesh;
+    }
+
+    public GameObject CreateWaterMesh()
+    {
+        GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+
+        return plane;
     }
 
 

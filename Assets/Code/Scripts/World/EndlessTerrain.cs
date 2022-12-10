@@ -8,6 +8,7 @@ public class EndlessTerrain : MonoBehaviour
 	public Transform viewer;
 
 	public Material materialTest;
+	public Material waterMaterial;
 	public Texture texture;
 
 	public int mapChunkSize = 241;
@@ -93,7 +94,6 @@ public class EndlessTerrain : MonoBehaviour
 	/// </summary>
 	void UpdateVisibleChunks()
 	{
-		
 		for (int i = 0; i < terrainChunksVisibleLastUpdate.Count; i++)
 		{
 			terrainChunksVisibleLastUpdate[i].SetVisible(false);
@@ -119,8 +119,8 @@ public class EndlessTerrain : MonoBehaviour
 				}
 				else
 				{
-					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, 
-						transform, materialTest, polyScale, texture, mapChunkSize , flatshading, trees));
+					terrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize,
+						transform, materialTest, waterMaterial, polyScale, texture, mapChunkSize, flatshading, trees)) ;
 				}
 
 			}
@@ -143,13 +143,14 @@ public class EndlessTerrain : MonoBehaviour
 		MeshRenderer meshRenderer;
 		MeshFilter meshFilter;
 
+		GameObject lake;
+
 		public Vector3[] forest;
 
 		//Ground objects
 		ChunkObjects chunkObjects;
 		Corruption corruption;
 
-		BoxCollider caveEntranceCollider;
 		bool trees;
 
 		//Positions
@@ -161,7 +162,8 @@ public class EndlessTerrain : MonoBehaviour
 		int corrTest = 0;
 		List<int> corruptionIndices;
 
-		public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, int polyScale, Texture texture, int mapChunkSize, bool flatShading, bool trees)
+		public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, Material waterMaterial, 
+			int polyScale, Texture texture, int mapChunkSize, bool flatShading, bool trees)
 		{
 			this.chunkSize = mapChunkSize * polyScale;
 			
@@ -189,6 +191,16 @@ public class EndlessTerrain : MonoBehaviour
 
 			//Using the mesh data to create a new mesh. 
 			meshFilter.mesh = meshData.CreateMesh(flatShading);
+
+			lake = meshData.CreateWaterMesh();
+			lake.transform.position = new Vector3(position.x, meshData.getWaterLevel(), position.y);
+			lake.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+			// Scale the plane to the desired size
+			lake.transform.localScale = new Vector3(chunkSize, 1, chunkSize);
+			lake.GetComponent<Renderer>().material = waterMaterial;
+			//lake.GetComponent<Renderer>().material.color = Color.blue;
+
 
 			forest = meshData.forestVertices;
 			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees, Mathf.RoundToInt(coord.x) * 5 + Mathf.RoundToInt(coord.y) * 3, forest, world);
@@ -251,7 +263,7 @@ public class EndlessTerrain : MonoBehaviour
 		public void SetVisible(bool visible)
 		{
 			meshObject.SetActive(visible);
-			
+			//lake.SetActive(visible);
 		}
 
 
@@ -270,7 +282,7 @@ public class EndlessTerrain : MonoBehaviour
 		public float GetLocalHeight(float x, float z)
 		{
 			RaycastHit hit;
-			float hitHeight = 100.9f;
+			float hitHeight = -100.9f;
 			Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
 
 			SetVisible(true);

@@ -204,9 +204,10 @@ public class ChunkObjects
 					float placementLocationZ = internalY + meshObject.transform.position.z;
 					float height = world.GetHeight(placementLocationX, placementLocationZ);
 
-					if (/*placeTree &&*/ !IsWater(height - 0.6f, meshData) && internalX < (chunkSize ) && internalY < (chunkSize ) )
+					if (placeTree && !IsWater(height - 0.6f, meshData) && internalX < (chunkSize ) && internalY < (chunkSize ) )
 					{
-						GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, objectPopulator);
+						//hacky solution; !IsWater -- and by extension, getHeight -- doesn't work correctly all the time.
+						if(height > 0 + 0.5f) GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, objectPopulator);
 					}
 				}
 				i ++;
@@ -289,6 +290,12 @@ public class ChunkObjects
 		return true;
 	}*/
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="height"></param>
+	/// <param name="meshData"></param>
+	/// <returns></returns>
 	public bool IsWater(float height, MeshData meshData)
 	{
 		if (height > meshData.getWaterLevel()) return false;
