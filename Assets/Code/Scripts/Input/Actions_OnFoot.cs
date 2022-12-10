@@ -16,6 +16,7 @@ public class Actions_OnFoot : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovementScript; ///< Player movement script to call when actions are taken
     [SerializeField] private PlayerCam      playerCameraScript;
     [SerializeField] private MeleeAttack    playerMeleeAttackScript;
+    [SerializeField] private DestroyObject  destroyObjectScript;
     [SerializeField] private PauseMenu      pauseMenu; ///< Reference to relevant instance of pauseMenu script in scene (Could alternatively just search for it, but this is more robust)
     //[SerializeField] private InventoryUIController inventoryUIController; ///< Reference to relevant inventoryUIController script, makes one if null.
     [SerializeField] private PlayerInventoryHolder playerInventoryHolder;
@@ -135,6 +136,8 @@ public class Actions_OnFoot : MonoBehaviour
         /*\ Attack action \*/
         inputActions.OnFoot.Attack      .started     += context => playerMeleeAttackScript.DoAttack();
         inputActions.OnFoot.Attack      .canceled    += context => playerMeleeAttackScript.ReleaseAttack();
+        inputActions.OnFoot.Attack      .started     += context => destroyObjectScript.DoAttack();
+        inputActions.OnFoot.Attack      .canceled    += context => destroyObjectScript.ReleaseAttack();
         
         /*\ Interact action \*/
         inputActions.OnFoot.Interact    .performed   += context => playerMovementScript.DoInteract();

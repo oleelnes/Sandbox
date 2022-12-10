@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f11b2c66406ce148aff82cd509e842f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disable: 0
   playerMovementScript: {fileID: 0}
   playerCameraScript: {fileID: 0}
   playerMeleeAttackScript: {fileID: 0}

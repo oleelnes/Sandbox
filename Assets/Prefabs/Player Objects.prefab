@@ -3797,6 +3797,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8599cf587ab4da48969ece018fb51a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  respawnPoint: {fileID: 0}
 --- !u!114 &1532026414759462571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6869,6 +6871,10 @@ PrefabInstance:
       propertyPath: playerCameraScript
       value: 
       objectReference: {fileID: 3694999140319736513}
+    - target: {fileID: 4366408173095620918, guid: 972d6dcfcea9b90458c380ad9b955b5f, type: 3}
+      propertyPath: destroyObjectScript
+      value: 
+      objectReference: {fileID: 3694999140853474254}
     - target: {fileID: 4366408173095620918, guid: 972d6dcfcea9b90458c380ad9b955b5f, type: 3}
       propertyPath: playerMovementScript
       value: 

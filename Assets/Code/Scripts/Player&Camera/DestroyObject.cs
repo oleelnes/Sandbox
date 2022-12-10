@@ -103,9 +103,13 @@ public class DestroyObject : MonoBehaviour
 
     private bool leftMouseDown = false;
     // Called by Actions_OnFoot
-    private void DoAttack(){  leftMouseDown = true; }
+    public void DoAttack()		{  
+		Debug.Log("FGJHFDSGTYUIKYJGFHDFFJKYIKGFJGHYKIJF\ngfdcxfsegrfthgjyhkuljkømjiubhgyv\ngfdhfjioihuigcytfyuiy8hgyhjv");
+		leftMouseDown = true; }
     // Called by Actions_OnFoot
-    private void ReleaseAttack(){ leftMouseDown = false; }
+    public void ReleaseAttack(){ 
+				Debug.Log("____________--------------______________------------________-");
+leftMouseDown = false; }
     /// <summary>
     /// Checks if player has quit hitting an object, either by letting go of the mouse or not 
     /// hitting the hitBox of the object anymore.
