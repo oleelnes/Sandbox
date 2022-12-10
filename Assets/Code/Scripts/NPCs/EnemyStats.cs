@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public class EnemyStats : CharacterStats
 {
 
-/*    [Header("Enemy stats")]
-    public float maxHP = 100f;
-    public float currentHP = 100f;
-    public float damage = 1f;*/
+    /*    [Header("Enemy stats")]
+        public float maxHP = 100f;
+        public float currentHP = 100f;
+        public float damage = 1f;*/
 
     [Header("HealthbarUI")]
     public GameObject healthbarUI;
@@ -20,8 +20,8 @@ public class EnemyStats : CharacterStats
     // Start is called before the first frame update
     void Start()
     {
-/*        //get the child object Slider
-        healthSlider = GameObject.FindGameObjectWithTag("EnemyHealthbar").GetComponent<Slider>();*/
+        /*        //get the child object Slider
+                healthSlider = GameObject.FindGameObjectWithTag("EnemyHealthbar").GetComponent<Slider>();*/
 
         maxHP = getMaxHealthWithMultiplier();
         currentHP = maxHP;
@@ -42,9 +42,11 @@ public class EnemyStats : CharacterStats
         if (currentHP == 0)
         {
             //ENEMY DEATH CODE HERE
+            GetComponent<LootBag>().InstantiateLoot(transform.position);
             Destroy(gameObject);
+
         }
-        if(currentHP > maxHP)
+        if (currentHP > maxHP)
         {
             currentHP = maxHP;
         }

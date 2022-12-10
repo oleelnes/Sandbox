@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c0b5cf672400940a63e1d6a6acc903, type: 3}
   m_Name: LootGem
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 1710180603594776170, guid: 2627ade88acee4444ac8c66443013981, type: 3}
+  lootGameObject: {fileID: 3207063559697457005, guid: 9302589f1ced9fd4ab48f634043be154, type: 3}
   lootName: Gem
   dropChance: 100

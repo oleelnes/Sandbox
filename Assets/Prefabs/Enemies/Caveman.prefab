@@ -2392,6 +2392,7 @@ GameObject:
   - component: {fileID: 4999844843515279136}
   - component: {fileID: 4999844843515279137}
   - component: {fileID: 5949193027843305453}
+  - component: {fileID: 1825110140}
   m_Layer: 0
   m_Name: Caveman
   m_TagString: Enemy
@@ -2408,7 +2409,7 @@ Transform:
   m_GameObject: {fileID: 5305923934913743474}
   m_LocalRotation: {x: 0, y: -0.9929573, z: 0, w: 0.11847333}
   m_LocalPosition: {x: 23.46, y: -0.17, z: 103.38}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.5000002, y: 1.5, z: 1.5000002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4492736772964171862}
@@ -2476,7 +2477,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &4999844843515279163
@@ -2567,6 +2568,7 @@ MonoBehaviour:
   passiveDistance: 40
   attackDistance: 5
   rotationSpeed: 3
+  isGrounded: 0
 --- !u!114 &4999844843515279136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2704,6 +2706,20 @@ MonoBehaviour:
   attack_audioClip: {fileID: 8300000, guid: 855bd96fd2641f04bbe5ca0707c9ac8a, type: 3}
   idleVolume: 0.5
   audioSource: {fileID: 4999844843515279137}
+--- !u!114 &1825110140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5305923934913743474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71aeebdfcd495f64d9c8ffe33f987212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droppedItemPrefab: {fileID: 1710180603594776170, guid: 2627ade88acee4444ac8c66443013981, type: 3}
+  lootList: []
 --- !u!1 &5362057316411773302
 GameObject:
   m_ObjectHideFlags: 0
@@ -4707,6 +4723,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4821592788656623816}
     m_Modifications:
+    - target: {fileID: 753418093281927434, guid: 1844b2c29c5461b43a4efabf34b46f7d, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2760114367552969128, guid: 1844b2c29c5461b43a4efabf34b46f7d, type: 3}
       propertyPath: m_Name
       value: EnemyHealthbar

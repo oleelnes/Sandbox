@@ -31,7 +31,7 @@ public class LootBag : MonoBehaviour
         Loot droppedItem = GetDroppedItem();
         if (droppedItem != null)
         {
-            GameObject lootGameObject = Instantiate(droppedItem.lootGameObject, spawnPosition, Quaternion.identity);
+            Instantiate(droppedItem.lootGameObject, transform.position, Quaternion.identity);
         }
     }
 

@@ -2244,21 +2244,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 273225280}
     m_Modifications:
-    - target: {fileID: 1613032370053342592, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
-      propertyPath: m_PresetInfoIsWorld
+    - target: {fileID: 1825110140, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
+      propertyPath: droppedItemPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825110140, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
+      propertyPath: lootList.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1825110140, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
+      propertyPath: lootList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 69f3739253b55094781a7474607e2a44, type: 2}
     - target: {fileID: 4821592788656623816, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4821592788656623816, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5000002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4821592788656623816, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.5000002
       objectReference: {fileID: 0}
     - target: {fileID: 4821592788656623816, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2304,10 +2304,6 @@ PrefabInstance:
       propertyPath: currentTarget
       value: 
       objectReference: {fileID: 855019645}
-    - target: {fileID: 4999844843515279162, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5305923934913743474, guid: 398d84f1e6b0464449050e74b3bd31f5, type: 3}
       propertyPath: m_Name
       value: Caveman
