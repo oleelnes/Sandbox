@@ -9,12 +9,21 @@ public class PopulateWithObjects : MonoBehaviour
     public GameObject treeObjectTwo;
     public GameObject treeObjectThree;
     public GameObject treeObjectFour;
+
+    //dungeon
     public GameObject dungeonEntranceToClone;
+
     public GameObject rockOne;
     public GameObject rockBigOne;
+
+
     public GameObject grassOne;
     public GameObject flowerOne;
     public GameObject mushroomOne;
+
+    public GameObject bushOne;
+    public GameObject bushTwo;
+    public GameObject bushThree;
 
 
     /// <summary>
@@ -53,8 +62,27 @@ public class PopulateWithObjects : MonoBehaviour
                 return GetRockType(subType);
             case "plant":
                 return GetPlantType(subType);
+            case "bush":
+                return GetBushType(subType);
             default:
                 Debug.Log(objectName + " did not match any of the cases");
+                return null;
+        }
+    }
+
+    public GameObject GetBushType(string subType)
+    {
+        if (subType == null) return null;
+        switch(subType.ToLower())
+        {
+            case "bushone":
+                return Instantiate(bushOne);
+            case "bushtwo":
+                return Instantiate(bushTwo);
+            case "bushthree": 
+                return Instantiate(bushThree);
+            default:
+                Debug.Log(subType + " did not match any of the cases");
                 return null;
         }
     }

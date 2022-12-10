@@ -102,29 +102,49 @@ public class ChunkObjects
 	private void populateWithPlants(GameObject meshObject, EndlessTerrain world, PopulateWithObjects objectPopulator, MeshData meshData)
 	{
 		//grass
-		addToList(plantList, meshObject, world, meshData, objectPopulator, "plant", "grassOne", 80, 120, 1);
+		addToList(plantList, meshObject, world, meshData, objectPopulator, "plant", "grassOne", 400, 600, 1, 0.2f);
 		//flowers
-		addToList(plantList, meshObject, world, meshData, objectPopulator, "plant", "flowerOne", 15, 30, 1);
+		addToList(plantList, meshObject, world, meshData, objectPopulator, "plant", "flowerOne", 50, 100, 1);
 		//mushroom
-		addToList(plantList, meshObject, world, meshData, objectPopulator, "plant", "mushroomOne", 3, 10, 1);
+		addToList(plantList, meshObject, world, meshData, objectPopulator, "plant", "mushroomOne", 20, 60, 2);
+
+		addToList(plantList, meshObject, world, meshData, objectPopulator, "bush", "bushOne", 50, 100, 5, 4, 0.3f, 0.6f);
+
+		addToList(plantList, meshObject, world, meshData, objectPopulator, "bush", "bushTwo", 20, 50, 5, 4, 0.3f, 0.6f);
+
+		addToList(plantList, meshObject, world, meshData, objectPopulator, "bush", "bushThree", 20, 50, 5, 4, 0.3f, 0.5f);
 	}
 
-	private void addToList(List<GameObject> list, GameObject meshObject, EndlessTerrain world, MeshData meshData, PopulateWithObjects objectPopulator, 
-		string type, string subType, int randomLow, int randomHigh, int scaleRandomHigh)
+	private void addToList(List<GameObject> list, GameObject meshObject, EndlessTerrain world, MeshData meshData, PopulateWithObjects objectPopulator,
+		string type, string subType, int randomLow, int randomHigh, int scaleRandomHigh, float scaleStart = 1.0f, float forestHeightStart = -1f
+		, float forestHeightEnd = -1f)
     {
 		for (int i = 0; i < random.Next(randomLow, randomHigh); i++)
 		{
-			float x = 0f + meshObject.transform.position.x + (float)random.Next(0, chunkSize);
-			float z = 0f + meshObject.transform.position.z + (float)random.Next(0, chunkSize);
+			float randX = (float)random.Next(0, chunkSize);
+			float randZ = (float)random.Next(0, chunkSize);
+
+			float x = 0f + meshObject.transform.position.x + randX;
+			float z = 0f + meshObject.transform.position.z + randZ;
 
 			float height = world.GetHeight(x, z);
 
-			if (!IsWater(height - 0.2f, meshData))
+			if (!IsWater(height - 0.5f, meshData))
 			{
-				list.Add(objectPopulator.createNewObject(new Vector3(x, height, z), type, 1.0f + (float)random.Next(0, scaleRandomHigh), subType));
+				if(forestHeightStart < 0) list
+						.Add(objectPopulator.createNewObject(new Vector3(x, height, z), 
+						type, scaleStart + (float)random.Next(0, scaleRandomHigh), subType));
+				else if(forest[(int)((randZ / 5) * (chunkSize / 5) + (randX / 5))].y > forestHeightStart 
+					&& forest[(int)((randZ / 5) * (chunkSize / 5) + (randX / 5))].y < forestHeightEnd)
+                {
+					list.Add(objectPopulator.createNewObject(new Vector3(x, height, z),
+						type, scaleStart + (float)random.Next(0, scaleRandomHigh), subType));
+				}
 			}
 		}
 	}
+
+	
 
 
 	/// <summary>
@@ -189,28 +209,47 @@ public class ChunkObjects
 		{
 			for (int y = 0; y < chunkSize; y += 10)
 			{
+
+				int treeInterval = Mathf.RoundToInt(forest[i].y * 12);
+				int randomNumber = random.Next(0, 10);
+
+				//The higher the noise value in the forest noisemap, the greater the probability that a tree will appear
+				bool placeTree = randomNumber + Mathf.RoundToInt(forest[i].y * 10) < 14;
+
+				float internalX = (float)x + (float)random.Next(-treeInterval, treeInterval);
+				float internalY = (float)y + (float)random.Next(-treeInterval, treeInterval);
+				float placementLocationX = internalX + meshObject.transform.position.x;
+				float placementLocationZ = internalY + meshObject.transform.position.z;
+				float height = world.GetHeight(placementLocationX, placementLocationZ);
 				//Addition of the random makes the edges of the forests have wider spacing
-				if(forest[i].y > 0.6f + ((float)random.NextDouble() % 0.15))
+				if (forest[i].y > 0.6f + ((float)random.NextDouble() % 0.15))
                 {
-					int treeInterval = Mathf.RoundToInt(forest[i].y * 12);
-					int randomNumber = random.Next(0, 10);
-
-					//The higher the noise value in the forest noisemap, the greater the probability that a tree will appear
-					bool placeTree = randomNumber + Mathf.RoundToInt(forest[i].y * 10) < 14;
-
-					float internalX = (float)x + (float)random.Next(-treeInterval, treeInterval);
-					float internalY = (float)y + (float)random.Next(-treeInterval, treeInterval);
-					float placementLocationX = internalX + meshObject.transform.position.x;
-					float placementLocationZ = internalY + meshObject.transform.position.z;
-					float height = world.GetHeight(placementLocationX, placementLocationZ);
+				
 
 					if (placeTree && !IsWater(height - 0.6f, meshData) && internalX < (chunkSize ) && internalY < (chunkSize ) )
 					{
 						//hacky solution; !IsWater -- and by extension, getHeight -- doesn't work correctly all the time.
-						if(height > 0 + 0.5f) GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, objectPopulator);
+						if(height > 0 + 0.5f && height < 30) GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, objectPopulator);
 					}
 				}
-				i ++;
+				//
+				else if (random.Next(0, 99) <= 5) {
+
+					int randomBushNumber = random.Next(0, 2);
+					string bushType = "bushOne";
+					if (randomNumber == 0) bushType = "bushTwo";
+					else if (randomNumber == 1) bushType = "bushThree";
+
+					int range = random.Next(10, 50);
+
+					if(height > 0 + 5.0f && height < 30 && random.Next(0, 5) <= 1)
+					{
+						treeList.Add(objectPopulator.createNewObject(new Vector3(placementLocationX, height, placementLocationZ)
+							, "bush", 3.0f + (float)random.NextDouble() % 4.0f, bushType));
+					}
+				}
+				i++;
+				
 			}	
 		}
 	}
