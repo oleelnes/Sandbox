@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.43667555, g: 0.48427176, b: 0.56452405, a: 1}
+  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2746,7 +2746,7 @@ GameObject:
   - component: {fileID: 2140568058}
   - component: {fileID: 2140568057}
   - component: {fileID: 2140568060}
-  - component: {fileID: 2140568062}
+  - component: {fileID: 2140568061}
   m_Layer: 0
   m_Name: ProceduralGeneration
   m_TagString: MeshGenerator
@@ -2834,13 +2834,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewer: {fileID: 1547830491}
   materialTest: {fileID: 2100000, guid: e6cc1e94673bcdc4a9ad6513bcb0a495, type: 2}
+  waterMaterial: {fileID: 2100000, guid: dca3f75a5adb77540aa1ed034d8a7413, type: 2}
   texture: {fileID: 2800000, guid: 3cf543484d2fb7347b203b934a632fa6, type: 3}
   mapChunkSize: 80
   trees: 1
   flatshading: 1
   polyScale: 5
   toDelete: []
---- !u!114 &2140568062
+--- !u!114 &2140568061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2859,8 +2860,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
+      time: 0.0165596
+      value: -0.15029907
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2868,8 +2869,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.3018319
-      value: 0.0000596717
+      time: 0.17804265
+      value: -0.13663015
+      inSlope: -0.011361654
+      outSlope: -0.011361654
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.30997586
+      value: -0.098893
       inSlope: 0.043963566
       outSlope: 0.043963566
       tangentMode: 0
@@ -2877,8 +2887,17 @@ MonoBehaviour:
       inWeight: 0.18223314
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.71895987
-      value: 0.24509278
+      time: 0.5585735
+      value: 0.15074714
+      inSlope: 0.712572
+      outSlope: 0.712572
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6658593
+      value: 0.25455323
       inSlope: 1.6626999
       outSlope: 1.6626999
       tangentMode: 0
@@ -2886,10 +2905,37 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.8791517
-      value: 0.5650665
+      time: 0.74974877
+      value: 0.4181178
+      inSlope: 5.4229856
+      outSlope: 5.4229856
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.31619447
+    - serializedVersion: 3
+      time: 0.7904784
+      value: 0.5474732
+      inSlope: 3.240668
+      outSlope: 3.240668
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8295318
+      value: 0.6643116
       inSlope: 1.5936484
       outSlope: 1.5936484
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8883128
+      value: 0.7962789
+      inSlope: 1.6703123
+      outSlope: 1.6703123
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
