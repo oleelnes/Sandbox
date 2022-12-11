@@ -69,6 +69,21 @@ Or we could have one table for everyone, like this:
 ### Magnus
 
 ### Ole
+| File                   | Claim | Lines |
+|------------------------|-------|-------|
+| NewMesh.cs             | All   | 280   |
+| EndlessTerrain.cs      | All   | 312   |
+| NoiseMapGenerator.cs   | All   |       |
+| ChunkObjects.cs        | All   | 450   |
+| PopulateWithObjects.cs | All   |       |
+| DestructionBar.cs      | All   |       |
+| DestroyObject.cs       | Most  |       |
+| DestructionProgress.cs | All   |       |
+| PlayerMovement.cs      | Half  |       |
+| PlayerCam.cs           | Most  |       |
+| MoveCamera.cs          | All   |       |
+| ChangeScene.cs         | Most  |       |
+
 
 ### Berkay
 
