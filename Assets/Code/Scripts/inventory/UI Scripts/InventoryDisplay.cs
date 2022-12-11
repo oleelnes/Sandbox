@@ -8,6 +8,7 @@ public abstract class InventoryDisplay : MonoBehaviour
     protected InventorySystem inventorySystem; 
     protected Dictionary<InventorySlot_UI, InventorySlot> slotDictionary;
 
+	private bool isShiftPressed = false;
 
     public InventorySystem InventorySystem => inventorySystem;
     public Dictionary<InventorySlot_UI, InventorySlot> SlotDictionary => slotDictionary;
@@ -28,7 +29,7 @@ public abstract class InventoryDisplay : MonoBehaviour
 
     public void SlotClicked(InventorySlot_UI clickedUISlot) {  
         if(clickedUISlot.AssignedInventorySlot.ItemData != null && mouseInventoryItem.AssignedInventorySlot.ItemData == null) {
-            if(Input.GetKey(KeyCode.LeftShift) && clickedUISlot.AssignedInventorySlot.SplitStack(out InventorySlot halfStackSlot)) {
+            if(isShiftPressed && clickedUISlot.AssignedInventorySlot.SplitStack(out InventorySlot halfStackSlot)) {
                 mouseInventoryItem.UpdateMouseSlot(halfStackSlot);
                 clickedUISlot.UpdateUISlot();
                 return;
@@ -91,4 +92,12 @@ public abstract class InventoryDisplay : MonoBehaviour
         clickedUISlot.AssignedInventorySlot.AssignItem(clonedSlot);
         clickedUISlot.UpdateUISlot();
     }
+	
+	public void DoPressShift(){
+		isShiftPressed = true;
+	}
+	public void DoReleaseShift(){
+		isShiftPressed = false;
+	}
+	
 }

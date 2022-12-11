@@ -12,9 +12,13 @@ public class MouseItemData : MonoBehaviour
     public InventorySlot AssignedInventorySlot;
     public KeyCode mouse0 = KeyCode.Mouse0;
 
+	private static Vector2 mousePosition;
+	public void UpdateInput_MousePos(Vector2 pos){ MouseItemData.mousePosition = pos; }
+
     void Awake() {
         ItemSprite.color = Color.clear;
         ItemCount.text = "";
+		MouseItemData.mousePosition  = new Vector2(0.0f, 0.0f);
     }
 
     public void UpdateMouseSlot(InventorySlot invSlot) {
@@ -26,13 +30,22 @@ public class MouseItemData : MonoBehaviour
 
     private void Update() {
         if(AssignedInventorySlot.ItemData != null) {
-            transform.position = Input.mousePosition; 
+            transform.position = MouseItemData.mousePosition; 
 
-            if(Input.GetKeyDown(mouse0) && !IsPointerOverUIObject()) {
-                ClearSlot();
-            }
+            // if(Input.GetKeyDown(mouse0) && !IsPointerOverUIObject()) { // TODO update
+            //     ClearSlot();
+            // }
         }
     }
+
+	// TODO Call by attack by default
+	public void DoClick(){
+		if(!IsPointerOverUIObject()){
+			ClearSlot();
+		}
+		Debug.Log(MouseItemData.mousePosition);
+		
+	}
 
     public void ClearSlot() {
         AssignedInventorySlot.ClearSlot();
@@ -43,7 +56,7 @@ public class MouseItemData : MonoBehaviour
 
     public static bool IsPointerOverUIObject() {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current); 
-        eventDataCurrentPosition.position = Input.mousePosition; 
+        eventDataCurrentPosition.position = MouseItemData.mousePosition; 
         List<RaycastResult> results = new List<RaycastResult>(); 
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0; 
