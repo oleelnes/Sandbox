@@ -768,6 +768,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   InteractionPointRadius: 1
+--- !u!114 &371529168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371529152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03286bb9f61fc4e4090aa4f9fb6fec18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treeItemData: {fileID: 11400000, guid: 0b994bca34180bc47b31ea2299aef016, type: 2}
 --- !u!1 &375436909
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,7 +917,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1087713860155376, guid: 9449f30b8830bf34395a4e029ca9e65d, type: 3}
       propertyPath: m_Name
-      value: SM_Prop_Chest_Wood_01
+      value: chest
       objectReference: {fileID: 0}
     - target: {fileID: 1087713860155376, guid: 9449f30b8830bf34395a4e029ca9e65d, type: 3}
       propertyPath: m_Layer
@@ -1371,6 +1384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   movement: {fileID: 0}
+  woodInInventory: 0
 --- !u!114 &855019645
 MonoBehaviour:
   m_ObjectHideFlags: 0
