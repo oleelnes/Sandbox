@@ -42,11 +42,14 @@ public class NewMesh : MonoBehaviour
         NoiseData noiseData = noiseMapGenerator.CreateNoiseMap(chunkSize, chunkSize, seedMain, scale, position + offset, 7, 2.8f, 0.5f, (int) position.x / (chunkSize - 1), polyScale);
         //NoiseData noiseData = noiseMapGenerator.CreateMurmurationNoiseMap(chunkSize, chunkSize , seedMain, 0.1f, offset, 7, 20, 2, 1.0f, chunkSize * chunkSize, polyScale);
 
+        NoiseData forestNoiseData = noiseMapGenerator.CreateNoiseMap(chunkSize, chunkSize, seedMain + 5, scale, position, 7, 2.8f, 0.5f, (int)position.x / (chunkSize - 1), polyScale);
+        Vector3[] forestVertices = forestNoiseData.noiseMap;
+
         vertices = noiseData.noiseMap;
 
         colors = new Color[vertices.Length];
         //Creating the color array AND adjusting the height according to both heightMapCurve and the heightScale
-        colors = HeightScaleAndColor(vertices, 0.01f, position, material);
+        colors = HeightScaleAndColor(vertices, forestVertices, 0.01f, position, material);
 
 
         //Ordering the vertices of the mesh into triangles
@@ -56,8 +59,7 @@ public class NewMesh : MonoBehaviour
         int[] preTriangles = CreateTriangles(chunkSize * chunkSize * 6, chunkSize, vertices, waterTriangles, landTriangles);
         //triangles = HideWaterTriangles(preTriangles, waterTriangles, landTriangles);
 
-        NoiseData forestNoiseData = noiseMapGenerator.CreateNoiseMap(chunkSize, chunkSize, seedMain + 5, scale, position, 7, 2.8f, 0.5f, (int)position.x / (chunkSize - 1), polyScale);
-        Vector3[] forestVertices = forestNoiseData.noiseMap;
+        
 
         MeshData meshData = new MeshData(vertices, colors, preTriangles, forestVertices);
         meshData.setWaterLevel(globalWaterLevel);
@@ -67,7 +69,7 @@ public class NewMesh : MonoBehaviour
 
   
 
-    private Color[] HeightScaleAndColor(Vector3[] noiseMap, float waterLevel, Vector2 position, Material material)
+    private Color[] HeightScaleAndColor(Vector3[] noiseMap, Vector3[] forestVertices, float waterLevel, Vector2 position, Material material)
     {
         Color[] colorMap = new Color[noiseMap.Length];
 
@@ -90,7 +92,6 @@ public class NewMesh : MonoBehaviour
             }
             else if (noiseMap[i].y > waterLevel && noiseMap[i].y < 0.6f)
             {
-
                 //Groundgrass color is procedurally set(without octaves), thus varying the shade of green of the ground. 
                 //The divisors (254.66 and 291.3) are arbitrarily set and adjust the rate of change of color.
                 //
@@ -98,12 +99,23 @@ public class NewMesh : MonoBehaviour
                 groundGrassColor = Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 254.66f,
                     ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 291.3f);
                 groundGrassColor += (Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 2.26f,
-                    ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 2.3f)) / 9.5f ;
+                    ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 2.3f)) / 9.5f;
                 groundGrassColor += (Mathf.PerlinNoise((offset.x + ((float)noiseMap[i].x + position.x)) / 0.012f,
                     ((float)offset.y + ((float)noiseMap[i].z + position.y)) / 0.014f)) / 10.5f;
+                
+                if (forestVertices[i].y > 0.4f && forestVertices[i].y < 0.6f)
+                {
+                    colorMap[i] = new Color(0.1f + (groundGrassColor / 2.5f), 0.2f + (groundGrassColor / 1.2f), 0.1f + (groundGrassColor / 2.5f));
+                }
+                else if (forestVertices[i].y < 0.3f)
+                {
+                    colorMap[i] = new Color(0.2f + (groundGrassColor / 1.5f), 0.1f + (groundGrassColor / 1.2f), 0.0f + (groundGrassColor / 2.5f));
+                } else
+                {
+                    colorMap[i] = new Color(0.1f + (groundGrassColor / 2.5f), 0.4f + (groundGrassColor / 1.2f), 0.1f + (groundGrassColor / 2.5f));
+                }
 
-
-                colorMap[i] = new Color(0.1f + (groundGrassColor / 2.5f), 0.2f + (groundGrassColor / 1.2f), 0.1f + (groundGrassColor / 2.5f));
+                
 
             }
             else if (noiseMap[i].y >= 0.6f && noiseMap[i].y < 0.87f)
