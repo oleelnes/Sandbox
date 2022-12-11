@@ -27,7 +27,7 @@ public class WeaponSwitching : MonoBehaviour
     {
         int previousSelectedWeaopn = selectedWeapon;
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        /*if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             if (selectedWeapon >= transform.childCount - 1)
             {
@@ -48,9 +48,9 @@ public class WeaponSwitching : MonoBehaviour
             {
                 selectedWeapon--;
             }
-        }
+        }*/
 
-        CheckNumberKeyPressed();
+        // CheckNumberKeyPressed();
 
         if (previousSelectedWeaopn != selectedWeapon)
         {
@@ -60,7 +60,7 @@ public class WeaponSwitching : MonoBehaviour
 
     private void CheckNumberKeyPressed()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+    /*    if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             selectedWeapon = 0;
         }
@@ -96,14 +96,41 @@ public class WeaponSwitching : MonoBehaviour
         {
             selectedWeapon = 8;
         }
+		*/
     }
+	
+	public void SetSlot(int index){
+		Debug.Log("Changing slot to "+index);
+		if( index >= 0 && index <= 8 
+		&&  transform.childCount >= index+1)
+			selectedWeapon = index;
+	}
+	
+	public void ChangeSlot_Right(){
+		int index = selectedWeapon + 1;
+		if (index > 8)
+			index = 0;
+			
+		SetSlot(index);
+	}
+	public void ChangeSlot_Left(){
+		int index = selectedWeapon - 1;
+		if (index < 0)
+			index = transform.childCount; // ? -1 maybe
+		
+		SetSlot(index);
+	}
+	public void ChangeSlot(float direction){
+		if(direction < 0) ChangeSlot_Left();
+		if(direction > 0) ChangeSlot_Right();
+	}
+
 
     private void selectWeapon()
     {
         int i = 0;
         foreach (Transform weapon in transform)
         {
-
             weapon.gameObject.SetActive(i == selectedWeapon);
             i++;
         }
