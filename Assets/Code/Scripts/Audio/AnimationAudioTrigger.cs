@@ -9,6 +9,9 @@ public class AnimationAudioTrigger : MonoBehaviour
     public AudioClip scream_audioClip;
     public AudioClip chase_audioClip;
     public AudioClip attack_audioClip;
+    public AudioClip pound_audioClip;
+    public AudioClip death_audioClip;
+    public AudioClip jump_audioClip;
 
     public float idleVolume = 0.5f;
 
@@ -29,7 +32,7 @@ public class AnimationAudioTrigger : MonoBehaviour
     public void ScreamEvent()
     {
         audioSource.clip = scream_audioClip;
-        audioSource.PlayOneShot(audioSource.clip);
+        audioSource.PlayOneShot(audioSource.clip, 1.2f);
     }
     public void ChaseEvent()
     {
@@ -41,5 +44,25 @@ public class AnimationAudioTrigger : MonoBehaviour
     {
         audioSource.clip = attack_audioClip;
         audioSource.PlayOneShot(audioSource.clip);
+    }
+
+    public void PoundEvent()
+    {
+        audioSource.clip = pound_audioClip;
+        audioSource.PlayOneShot(audioSource.clip);
+    }
+
+    public void DeathEvent()
+    {
+        audioSource.clip = death_audioClip;
+        audioSource.PlayOneShot(audioSource.clip);
+    }
+
+    public void JumpEvent()
+    {
+        audioSource.clip = jump_audioClip;
+        audioSource.pitch = 0.2f;
+        audioSource.PlayOneShot(audioSource.clip, 1.5f);
+        audioSource.pitch = 1.0f;
     }
 }

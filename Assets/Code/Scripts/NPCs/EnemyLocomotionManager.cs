@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class EnemyLocomotionManager : MonoBehaviour
 {
@@ -28,6 +31,9 @@ public class EnemyLocomotionManager : MonoBehaviour
     public float rotationSpeed = 3f;
     public bool isGrounded;
 
+    //if boss play death animation
+    public bool boss = false;
+
 
     private void Awake()
     {
@@ -48,6 +54,8 @@ public class EnemyLocomotionManager : MonoBehaviour
         distance = Vector3.Distance(transform.position, Player.instance.transform.position);
         //Enemy falls down (!)
         enemyRigidBody.AddForce(Vector3.down * 1000f);
+
+        if (enemyStats.currentHP == 0) Death();
     }
 
     public void HandleDetection()
@@ -109,6 +117,26 @@ public class EnemyLocomotionManager : MonoBehaviour
     {
         //ATTACK CODE HERE
         setState("Attack State", true);
+        setState("Chase State", false);
+    }
+
+    private void Death()
+    {
+        if (boss)
+        {
+            //make sure the enemy doesn't follow the player when death
+            currentTarget = null;
+            setState("Attack State", false);
+            setState("Death State", true);
+            //Kill the boss music
+            GameObject.FindGameObjectWithTag("generalMusic").SetActive(false);
+            //Destroy healthbar
+            Destroy(transform.GetComponentInChildren<Canvas>());
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void setState(string state, bool active)
@@ -173,10 +201,23 @@ public class EnemyLocomotionManager : MonoBehaviour
 
     public void EnemyAttackDamage()
     {
-        if(distance < attackDistance)
+        if (distance < attackDistance)
         {
             Player.instance.GetComponent<PlayerHealth>().TakeDamage(enemyStats.damage);
         }
+    }
+
+    public void AttackHitEvent(int damage)
+    {
+        if (distance < attackDistance)
+        {
+            Player.instance.GetComponent<PlayerHealth>().TakeDamage(damage);
+        }
+    }
+
+    public void PushEvent()
+    {
+        Player.instance.movement.movePlayerBack();
     }
 
 

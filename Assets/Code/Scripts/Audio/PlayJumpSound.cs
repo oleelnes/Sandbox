@@ -9,8 +9,6 @@ public class PlayJumpSound : MonoBehaviour
     private AudioSource jumpAudioSource;
     public AudioClip[] jump_start;
     public AudioClip[] jump_end;
-/*    public AudioClip jump_start;
-    public AudioClip jump_end;*/
     public int jumpVolume = 5;
 
     private bool onPlatformLastFrame = false;
@@ -34,7 +32,6 @@ public class PlayJumpSound : MonoBehaviour
 
     public void playJumpAudio()
     {
-        // onPlatform = Physics2D.OverlapCircle(platformChecker.position, platformCheckRadius, whatIsPlatform);*/
 
         jumpAudioSource.PlayOneShot(jump_start[Random.Range(0, jump_start.Length)], jumpVolume);   
     }
