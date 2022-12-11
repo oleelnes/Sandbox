@@ -21,6 +21,11 @@ public class Actions_OnFoot : MonoBehaviour
     //[SerializeField] private InventoryUIController inventoryUIController; ///< Reference to relevant inventoryUIController script, makes one if null.
     [SerializeField] private PlayerInventoryHolder playerInventoryHolder;
     [SerializeField] private InventoryUIController playerInventoryUIController;
+	
+    [SerializeField] private WeaponSwitching weaponSwitching;
+	[SerializeField] private Interactor interactor;
+	[SerializeField] private MouseItemData mouseItemData;
+	[SerializeField] private InventoryDisplay[] inventoryDisplays;
     
     /**********************\
     | Configurables values |
@@ -46,6 +51,10 @@ public class Actions_OnFoot : MonoBehaviour
     }
     public Vector2 input_cameraDelta {
         get { return inputActions.OnFoot.Camera.ReadValue<Vector2>()   * cameraInputSensitivity; }
+        set { return; }
+    }
+    public Vector2 input_mousePos {
+        get { return inputActions.OnFoot.MousePos.ReadValue<Vector2>(); }
         set { return; }
     }
     
@@ -79,8 +88,9 @@ public class Actions_OnFoot : MonoBehaviour
     private void FixedUpdate(){
         if(inputActions != null && !disable){
             // Could check if the variables are changed before updating, but I think calculating the magnitude of a vector is more performance intensive than just updating a variable
-            playerMovementScript.UpdateInput_Movement(input_movement);
-            playerCameraScript  .UpdateInput_Camera(  input_cameraDelta  );
+            playerMovementScript.UpdateInput_Movement(	input_movement		);
+            playerCameraScript  .UpdateInput_Camera(	input_cameraDelta 	);
+			mouseItemData		.UpdateInput_MousePos(	input_mousePos		);
             // Updating input in player movement script (because this script calls the player movement script, not the other way around)
         } 
     }
@@ -127,7 +137,14 @@ public class Actions_OnFoot : MonoBehaviour
         /*\ Sprint action \*/
         inputActions.OnFoot.Sprint      .started     += context => playerMovementScript.DoSprint();
         inputActions.OnFoot.Sprint      .canceled    += context => playerMovementScript.ReleaseSprint();
+		
+		for(int i=0; i<inventoryDisplays.Length; i++){
+			inputActions.OnFoot.Sprint      .started     += context => inventoryDisplays[i].DoPressShift();
+			inputActions.OnFoot.Sprint      .canceled    += context => inventoryDisplays[i].DoReleaseShift();
+			if(doPrintVerbose) Debug.Log("inventory display index: "+i);
+		}
         
+		
         /*\ Crouch action \*/
         inputActions.OnFoot.Crouch      .started     += context => playerMovementScript.DoCrouch();
         inputActions.OnFoot.Crouch      .canceled    += context => playerMovementScript.ReleaseCrouch();
@@ -138,13 +155,31 @@ public class Actions_OnFoot : MonoBehaviour
         inputActions.OnFoot.Attack      .canceled    += context => playerMeleeAttackScript.ReleaseAttack();
         inputActions.OnFoot.Attack      .started     += context => destroyObjectScript.DoAttack();
         inputActions.OnFoot.Attack      .canceled    += context => destroyObjectScript.ReleaseAttack();
+		/*\ Click action \*/
+		inputActions.OnFoot.Attack      .canceled    += context => mouseItemData.DoClick();
         
+		
         /*\ Interact action \*/
-        inputActions.OnFoot.Interact    .performed   += context => playerMovementScript.DoInteract();
+        // inputActions.OnFoot.Interact    .performed   += context => playerMovementScript.DoInteract();
+        inputActions.OnFoot.Interact    .performed   += context => interactor.DoInteract();
         
         /*\ Inventory action \*/
         inputActions.OnFoot.Inventory   .performed   += context => playerInventoryHolder.OpenBackpack();
-        
+		
+		/*\ Slot change action \*/
+		inputActions.OnFoot.SlotChange	.performed	 += context => weaponSwitching.ChangeSlot(inputActions.OnFoot.SlotChange.ReadValue<float>());
+		
+		/*\ Slot set actions \*/
+		inputActions.OnFoot.SlotSet_1   .performed 	 += context => weaponSwitching.SetSlot(0);
+		inputActions.OnFoot.SlotSet_2   .performed 	 += context => weaponSwitching.SetSlot(1);
+		inputActions.OnFoot.SlotSet_3   .performed 	 += context => weaponSwitching.SetSlot(2);
+		inputActions.OnFoot.SlotSet_4   .performed 	 += context => weaponSwitching.SetSlot(3);
+		inputActions.OnFoot.SlotSet_5   .performed 	 += context => weaponSwitching.SetSlot(4);
+		inputActions.OnFoot.SlotSet_6   .performed 	 += context => weaponSwitching.SetSlot(5);
+		inputActions.OnFoot.SlotSet_7   .performed 	 += context => weaponSwitching.SetSlot(6);
+		inputActions.OnFoot.SlotSet_8   .performed 	 += context => weaponSwitching.SetSlot(7);
+		inputActions.OnFoot.SlotSet_9   .performed 	 += context => weaponSwitching.SetSlot(8);
+		
         /*\ Pause action \*/
         inputActions.OnFoot.Pause       .performed   += context => pauseMenu.TogglePause(); //(pauseMenu != null ? pauseMenu.TogglePause() : inventoryUIController.DisplayPlayerBackpack(inventorySystem));
         inputActions.OnFoot.Pause       .performed   += context => playerInventoryUIController.CancelButtonPressed();
@@ -162,7 +197,23 @@ public class Actions_OnFoot : MonoBehaviour
         inputActions.OnFoot.Pause       .Enable();
         inputActions.OnFoot.Movement    .Enable();
         inputActions.OnFoot.Camera      .Enable();
+		
+		inputActions.OnFoot.MousePos    .Enable();
+		inputActions.OnFoot.SlotChange	.Enable();
+		
+		inputActions.OnFoot.SlotSet_1	.Enable();
+		inputActions.OnFoot.SlotSet_2	.Enable();
+		inputActions.OnFoot.SlotSet_3	.Enable();
+		inputActions.OnFoot.SlotSet_4	.Enable();
+		inputActions.OnFoot.SlotSet_5	.Enable();
+		inputActions.OnFoot.SlotSet_6	.Enable();
+		inputActions.OnFoot.SlotSet_7	.Enable();
+		inputActions.OnFoot.SlotSet_8	.Enable();
+		inputActions.OnFoot.SlotSet_9	.Enable();
+		
+		
     }
+
 
 
     /**
@@ -180,15 +231,29 @@ public class Actions_OnFoot : MonoBehaviour
     private void Disable() {
         if (doPrint) Debug.Log("[Actions OnFoot> \nDisable called");
         // Disabling the action inputs, so they won't call
-        inputActions.OnFoot.Jump         .Disable();
-        inputActions.OnFoot.Sprint       .Disable();
-        inputActions.OnFoot.Crouch       .Disable();
-        inputActions.OnFoot.Attack       .Disable();
-        inputActions.OnFoot.Interact     .Disable();
-        inputActions.OnFoot.Inventory    .Disable();
-        inputActions.OnFoot.Pause        .Disable();
-        inputActions.OnFoot.Movement     .Disable();
-        inputActions.OnFoot.Camera       .Disable();
+        inputActions.OnFoot.Jump        .Disable();
+        inputActions.OnFoot.Sprint      .Disable();
+        inputActions.OnFoot.Crouch      .Disable();
+        inputActions.OnFoot.Attack      .Disable();
+        inputActions.OnFoot.Interact    .Disable();
+        inputActions.OnFoot.Inventory   .Disable();
+        inputActions.OnFoot.Pause       .Disable();
+        inputActions.OnFoot.Movement    .Disable();
+        inputActions.OnFoot.Camera		.Disable();
+		
+		inputActions.OnFoot.MousePos    .Disable();
+		inputActions.OnFoot.SlotChange	.Disable();
+		
+		inputActions.OnFoot.SlotSet_1	.Disable();
+		inputActions.OnFoot.SlotSet_2	.Disable();
+		inputActions.OnFoot.SlotSet_3	.Disable();
+		inputActions.OnFoot.SlotSet_4	.Disable();
+		inputActions.OnFoot.SlotSet_5	.Disable();
+		inputActions.OnFoot.SlotSet_6	.Disable();
+		inputActions.OnFoot.SlotSet_7	.Disable();
+		inputActions.OnFoot.SlotSet_8	.Disable();
+		inputActions.OnFoot.SlotSet_9	.Disable();
+		
     }
 
 }
