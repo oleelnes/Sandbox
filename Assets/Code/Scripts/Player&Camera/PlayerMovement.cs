@@ -86,7 +86,6 @@ public class PlayerMovement : MonoBehaviour {
         } else {   
             rb.drag = 0;
         }
-
         SpawnPlayer();
     }
 
@@ -120,6 +119,7 @@ public class PlayerMovement : MonoBehaviour {
         if(!grounded) {
             // in air
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            
         }
     }
 

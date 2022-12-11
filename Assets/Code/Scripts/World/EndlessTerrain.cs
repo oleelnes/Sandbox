@@ -200,11 +200,15 @@ public class EndlessTerrain : MonoBehaviour
 			meshFilter.mesh = meshData.CreateMesh(flatShading);
 
 			lake = meshData.CreateWaterMesh();
-			lake.transform.position = new Vector3(position.x, meshData.getWaterLevel(), position.y);
-			lake.transform.rotation = Quaternion.Euler(0, 0, 0);
+			lake.transform.position = new Vector3(bounds.center.x + (mapChunkSize * 2) + 40, 0.0f, bounds.center.y + (mapChunkSize * 2) + 40);
+			lake.transform.parent = parent;
+			//lake.transform.rotation = Quaternion.Euler(0, 0, 0);
+			lake.GetComponent<MeshCollider>().convex = true;
+			lake.GetComponent<MeshCollider>().isTrigger = true;
+			//lake.GetComponent<MeshRenderer>().material.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
 
 			// Scale the plane to the desired size
-			lake.transform.localScale = new Vector3(chunkSize, 1, chunkSize);
+			lake.transform.localScale = new Vector3(mapChunkSize / 1.9f, 1, mapChunkSize / 1.9f);
 			lake.GetComponent<Renderer>().material = waterMaterial;
 			//lake.GetComponent<Renderer>().material.color = Color.blue;
 
