@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour {
     bool spawned;
     EndlessTerrain world;
 
-    Vector3 moveDirection;
+    public Vector3 moveDirection;
 
     public Rigidbody rb;
 
@@ -190,6 +190,11 @@ public class PlayerMovement : MonoBehaviour {
     // public void DoInventory(){
     //     Debug.Log("DoInventory called");
     // }
+    public void movePlayerBack()
+    {
+        // Add vertical force
+        rb.AddForce(transform.forward * 500, ForceMode.Impulse);
+    }
 
         
     
