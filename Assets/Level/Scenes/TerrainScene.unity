@@ -1217,6 +1217,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 241720026582609493, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 581267515506537711, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375532324465906914, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3694999139941406942, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1287,6 +1299,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3694999140642553462, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694999140650603709, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3694999140853474240, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
@@ -1452,6 +1468,14 @@ PrefabInstance:
     - target: {fileID: 3694999141856732395, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
       propertyPath: m_Name
       value: Player Objects
+      objectReference: {fileID: 0}
+    - target: {fileID: 8299251549267945599, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8675918585635910341, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1f16502657e4f644884e83dc66b8dc7, type: 3}
