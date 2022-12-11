@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,8 @@ public class EndlessTerrain : MonoBehaviour
 	static NewMesh mapGenerator;
 	static PopulateWithObjects treePopulator;
 
+	private DateTime currentTime;
+
 	int chunkSize;
 	int chunksVisibleInViewDst;
 
@@ -37,6 +40,7 @@ public class EndlessTerrain : MonoBehaviour
 	{
 		mapGenerator = FindObjectOfType<NewMesh>();
 		treePopulator = FindObjectOfType<PopulateWithObjects>();
+		currentTime = FindObjectOfType<TimeController>().currentTime;
 		chunkSize = ((mapChunkSize) * polyScale);// + eller - 1, originalt -;
 		chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / (chunkSize ));
 		
@@ -111,7 +115,8 @@ public class EndlessTerrain : MonoBehaviour
 
 				if (terrainChunkDictionary.ContainsKey(viewedChunkCoord))
 				{
-					terrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk(new Vector2(viewerPosition.x, viewerPosition.y), trees);
+					terrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk(new Vector2(viewerPosition.x, viewerPosition.y)
+						, trees, FindObjectOfType<TimeController>().currentTime);
 					if (terrainChunkDictionary[viewedChunkCoord].IsVisible())
 					{
 						terrainChunksVisibleLastUpdate.Add(terrainChunkDictionary[viewedChunkCoord]);
@@ -162,6 +167,8 @@ public class EndlessTerrain : MonoBehaviour
 		int corrTest = 0;
 		List<int> corruptionIndices;
 
+		bool spawnMonsters = false;
+
 		public TerrainChunk(Vector2 coord, int size, Transform parent, Material material, Material waterMaterial, 
 			int polyScale, Texture texture, int mapChunkSize, bool flatShading, bool trees)
 		{
@@ -203,7 +210,8 @@ public class EndlessTerrain : MonoBehaviour
 
 
 			forest = meshData.forestVertices;
-			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees, Mathf.RoundToInt(coord.x) * 5 + Mathf.RoundToInt(coord.y) * 3, forest, world);
+			chunkObjects = new ChunkObjects(meshCollider, chunkSize, trees, Mathf.RoundToInt(coord.x) * 5 
+				+ Mathf.RoundToInt(coord.y) * 3, forest, meshObject, meshData, world, treePopulator);
 
 			//Setting the material of the mesh renderer. This will be done elsewhere in the future.
 			meshRenderer.material = material;
@@ -217,9 +225,15 @@ public class EndlessTerrain : MonoBehaviour
 			this.trees = trees;
 		}
 
+		public void updateSpawnMonsters(DateTime currentTime)
+        {
+			spawnMonsters = currentTime.Hour >= 21 || currentTime.Hour <= 6;
+        }
 
-		public void UpdateTerrainChunk(Vector2 position, bool visibility)
+
+		public void UpdateTerrainChunk(Vector2 position, bool visibility, DateTime currentTime)
 		{
+			updateSpawnMonsters(currentTime);
 			count++;
 			float viewerDstFromNearestEdge = Mathf.Sqrt(bounds.SqrDistance(viewerPosition));
 			bool visible = viewerDstFromNearestEdge <= maxViewDst;
@@ -228,12 +242,14 @@ public class EndlessTerrain : MonoBehaviour
 			if (chunkObjects.worldPopulated == ChunkObjects.WorldPopulated.FALSE )
 			{
 				chunkObjects.worldPopulated = ChunkObjects.WorldPopulated.TRUE;
-				chunkObjects.populateTerrainChunk(true, meshObject, meshData, world, treePopulator);
+				chunkObjects.populateTerrainChunk(true);
+				
 			}
 			if (count >= 45)
 			{
 				corrTest++;
 				chunkObjects.SetObjectsVisible(position, visibility);
+				chunkObjects.enemiesHandler(spawnMonsters);
 				count = 0;
 				//EnableCorruption(corrTest);
 			}

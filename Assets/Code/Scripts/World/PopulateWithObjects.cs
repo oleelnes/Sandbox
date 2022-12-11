@@ -4,29 +4,51 @@ using UnityEngine;
 
 public class PopulateWithObjects : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject treeObjectOne;
+    [SerializeField]
+    private GameObject treeObjectTwo;
+    [SerializeField]
+    private GameObject treeObjectThree;
+    [SerializeField]
+    private GameObject treeObjectFour;
 
-    public GameObject treeObjectOne;
-    public GameObject treeObjectTwo;
-    public GameObject treeObjectThree;
-    public GameObject treeObjectFour;
-
-    public GameObject treeRoundTwo;
-    public GameObject treeRoundThree;
+    [SerializeField]
+    private GameObject treeRoundTwo;
+    [SerializeField]
+    private GameObject treeRoundThree;
 
     //dungeon
-    public GameObject dungeonEntranceToClone;
+    [SerializeField]
+    private GameObject dungeonEntranceToClone;
 
-    public GameObject rockOne;
-    public GameObject rockBigOne;
+    [SerializeField]
+    private GameObject rockOne;
+    [SerializeField]
+    private GameObject rockBigOne;
 
+    [SerializeField]
+    private GameObject grassOne;
+    [SerializeField]
+    private GameObject flowerOne;
+    [SerializeField]
+    private GameObject mushroomOne;
 
-    public GameObject grassOne;
-    public GameObject flowerOne;
-    public GameObject mushroomOne;
+    [SerializeField]
+    private GameObject bushOne;
+    [SerializeField]
+    private GameObject bushTwo;
+    [SerializeField]
+    private GameObject bushThree;
 
-    public GameObject bushOne;
-    public GameObject bushTwo;
-    public GameObject bushThree;
+    [SerializeField]
+    private GameObject goblinEnemy;
+
+    [SerializeField]
+    private GameObject houndManEnemy;
+
+    [SerializeField]
+    private GameObject squidManEnemy;
 
 
     /// <summary>
@@ -67,9 +89,27 @@ public class PopulateWithObjects : MonoBehaviour
                 return GetPlantType(subType);
             case "bush":
                 return GetBushType(subType);
+            case "enemy":
+                return GetEnemyType(subType);
             default:
                 Debug.Log(objectName + " did not match any of the cases");
                 return null;
+        }
+    }
+
+    private GameObject GetEnemyType(string subType)
+    {
+        if (subType == null) return Instantiate(squidManEnemy);
+        switch (subType.ToLower())
+        {
+            case "goblin":
+                return Instantiate(goblinEnemy);
+            case "houndman":
+                return Instantiate(houndManEnemy);
+            case "squidman":
+                return Instantiate(squidManEnemy);
+            default:
+                return Instantiate(squidManEnemy);
         }
     }
 
