@@ -63,7 +63,7 @@ public class ChunkObjects
     public void populateTerrainChunk(bool visible, GameObject meshObject, MeshData meshData, EndlessTerrain world, PopulateWithObjects objectPopulator)
     {
 
-		populateWithCaveEntrances(meshObject, world, objectPopulator);
+		populateWithCaveEntrances(meshObject, world, objectPopulator, meshData);
 		populateWithTrees(meshObject, meshData, world, objectPopulator);
 		populateWithRocks(meshObject, world, objectPopulator, meshData);
 		populateWithPlants(meshObject, world, objectPopulator, meshData);
@@ -189,9 +189,7 @@ public class ChunkObjects
 				list.RemoveAt(i);
 
 			}
-
 		}
-
 	}
 
 	/// <summary>
@@ -224,30 +222,17 @@ public class ChunkObjects
 				//Addition of the random makes the edges of the forests have wider spacing
 				if (forest[i].y > 0.6f + ((float)random.NextDouble() % 0.15))
                 {
-				
-
-					if (placeTree && !IsWater(height - 0.6f, meshData) && internalX < (chunkSize ) && internalY < (chunkSize ) )
+					if (placeTree && !IsWater(height - 0.5f, meshData) && height > 0.5f && height < 30 && internalX < (chunkSize ) && internalY < (chunkSize ) )
 					{
-						//hacky solution; !IsWater -- and by extension, getHeight -- doesn't work correctly all the time.
-						if(height > 0 + 0.5f && height < 30) GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, objectPopulator);
+						if (forest[i].y > 0.75f && forest[i].y < 0.85f)
+                        {
+							string treeTypeRandom = (random.Next(0, 2) == 1) ? "treeRoundTwo" : "treeRoundThree";
+							GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, objectPopulator, treeTypeRandom);
+                        }
+						else GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, objectPopulator);
 					}
 				}
-				//
-				else if (random.Next(0, 99) <= 5) {
 
-					int randomBushNumber = random.Next(0, 2);
-					string bushType = "bushOne";
-					if (randomNumber == 0) bushType = "bushTwo";
-					else if (randomNumber == 1) bushType = "bushThree";
-
-					int range = random.Next(10, 50);
-
-					if(height > 0 + 5.0f && height < 30 && random.Next(0, 5) <= 1)
-					{
-						treeList.Add(objectPopulator.createNewObject(new Vector3(placementLocationX, height, placementLocationZ)
-							, "bush", 3.0f + (float)random.NextDouble() % 4.0f, bushType));
-					}
-				}
 				i++;
 				
 			}	
@@ -261,55 +246,88 @@ public class ChunkObjects
 	/// <param name="height"></param>
 	/// <param name="placementLocationZ"></param>
 	/// <param name="objectPopulator"></param>
-	void GenerateNewTree(float placementLocationX, float height, float placementLocationZ, PopulateWithObjects objectPopulator)
+	void GenerateNewTree(float placementLocationX, float height, float placementLocationZ, PopulateWithObjects objectPopulator, string defaultTreeType = "")
 	{
-		
-
 		Vector3 vec = new Vector3(placementLocationX, height, placementLocationZ);
 
-		int treeIndicator = random.Next(0, 100);
-		string subType = "treeOne";
-		float treeScale = 5f;
 
-		//Change to switch-case?
-		if (treeIndicator == 0)
-		{
-			subType = "treeOne";
-			treeScale = 5f + random.Next(-2, 3);
-		}
-		else if (treeIndicator == 1)
-		{
-			subType = "treeTwo";
-			treeScale = 2f + random.Next(-1, 4);
-		}
-		else if (treeIndicator > 1 && treeIndicator < 5)
-		{
-			subType = "treeThree";
-			treeScale = 5f + random.Next(-1, 3);
-		}
-		else
-		{
-			subType = "treeFour";
-			treeScale = 5f + random.Next(-1, 3);
-		}
-		GameObject newTree = objectPopulator.createNewObject(vec, "tree", treeScale, subType);
+		int treeIndicator = random.Next(0, 100);
+		string subType = decideTree(treeIndicator);
+		float treeScale = (defaultTreeType == "") ? getScale(subType) : getScale(defaultTreeType);
+		
+		GameObject newTree = objectPopulator.createNewObject(vec, "tree", treeScale, (defaultTreeType == "") ? subType : defaultTreeType);
 		newTree.SetActive(false);
 		if (newTree != null) treeList.Add(newTree);
 	}
 
+
+	public string  decideTree(int treeIndicator)
+    {
+		if (treeIndicator == 0) return "treeOne";
+		else if (treeIndicator == 1) return "treeTwo";
+		else if (treeIndicator > 1 && treeIndicator < 5) return "treeThree";
+		else return "treeFour";
+	}
+
+
+	private float getScale(string tree)
+    {
+		switch(tree)
+        {
+			case "treeOne":
+				return 5f + random.Next(-2, 3);
+			case "treeTwo":
+				return 5f + random.Next(-1, 4);
+			case "treeThree":
+				return 5f + random.Next(-1, 3);
+			case "treeFour":
+				return  5f + random.Next(-1, 3);
+			case "treeRoundTwo":
+				return (random.Next(0, 30) == 1) ? 8.5f : 4f + (float)random.NextDouble() % 2.0f;
+			case "treeRoundThree":
+				return (random.Next(0, 30) == 1) ? 9f : 4f + (float)random.NextDouble() % 2.0f;
+			default: return 3f;
+		}
+    }
+
 	/// <summary>
-	/// TODO: update function.
-	/// This function populates the world with cave entrances.
+	///  This function populates the world with cave entrances.
 	/// </summary>
 	/// <param name="meshObject"></param>
 	/// <param name="world"></param>
 	/// <param name="objectPopulator"></param>
-	public void populateWithCaveEntrances(GameObject meshObject, EndlessTerrain world, PopulateWithObjects objectPopulator)
+	/// <param name="meshData"></param>
+	public void populateWithCaveEntrances(GameObject meshObject, EndlessTerrain world, PopulateWithObjects objectPopulator, MeshData meshData)
 	{
-		float height = world.GetHeight((float)(200) + meshObject.transform.position.x, (float)(200) + meshObject.transform.position.z);
-		caveEntranceList.Add(objectPopulator.createNewObject(new Vector3((float)(200) + meshObject.transform.position.x, height,
-			(float)(200) + meshObject.transform.position.z), "dungeonEntrance", 1.5f));
+		float x = 0f;
+		float z = 0f;
+		bool placeDungeonEntrance = false;
+
+		//Tries 10 random locations in the chunk, if none meet the required parameters, no dungeon entrance will be placed.
+		for (int i = 0; i < 10; i++)
+        {
+			x = (float)random.Next(0, chunkSize) ;
+			z = (float)random.Next(0, chunkSize) ;
+			if (forest[(int)getPosition(x, z)].y < 0.5f && 
+				!IsWater(world.GetHeight(x + meshObject.transform.position.x, z + meshObject.transform.position.z), meshData)) 
+				placeDungeonEntrance = true;
+			if (placeDungeonEntrance) break;
+		}
+
+		if(placeDungeonEntrance)
+        {
+			x += meshObject.transform.position.x;
+			z += meshObject.transform.position.z;
+			float height = world.GetHeight(x, z);
+			caveEntranceList.Add(objectPopulator
+				.createNewObject(new Vector3(x, height, z), "dungeonEntrance", 1.5f));
+        }
 	}
+
+	private float getPosition(float x, float z)
+    {
+		return ((x / 5) * (chunkSize / 5) + (x / 5));
+    }
 
 
 

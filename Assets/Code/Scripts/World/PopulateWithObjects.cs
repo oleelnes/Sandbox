@@ -10,6 +10,9 @@ public class PopulateWithObjects : MonoBehaviour
     public GameObject treeObjectThree;
     public GameObject treeObjectFour;
 
+    public GameObject treeRoundTwo;
+    public GameObject treeRoundThree;
+
     //dungeon
     public GameObject dungeonEntranceToClone;
 
@@ -135,6 +138,10 @@ public class PopulateWithObjects : MonoBehaviour
                 return Instantiate(treeObjectThree);
             case "treefour":
                 return Instantiate(treeObjectFour);
+            case "treeroundtwo":
+                return Instantiate(treeRoundTwo);
+            case "treeroundthree":
+                return Instantiate(treeRoundThree);
             default:
                 Debug.Log(subType + " did not match any of the cases");
                 return null;
