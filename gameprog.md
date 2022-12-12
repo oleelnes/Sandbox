@@ -45,7 +45,7 @@ Work distribution matrix
 
 |                                         | Viktor | Ole     | Magnus | Mateusz | Julian | Berkay |
 |-----------------------------------------|--------|---------|--------|---------|--------|--------|
-| Procedural generation                   |        | All     |        |         |        |Touched | 
+| Procedural generation                   |        | All     |        |         |        |        | 
 | Day-night cycle                         |        |         | All    |         |        |        | 
 | Inventory                               |        | Touched |        | All     |        |        | 
 | Wood cutting / object destruction logic |        | All     |        |         |        |        | 
