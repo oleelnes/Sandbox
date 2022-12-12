@@ -1,3 +1,14 @@
+### Score weighting
+|Description | my weight |
+|----|----|
+|Gameplay video | 10 |
+|Code video | 5 |
+|Good Code  | 20 |
+|Bad Code | 15 |
+|Development process | 30 |
+|Reflection | 30 |
+
+
 ### Point Distribution: 
 The reason for this distribution is I did not personally make the videos, but I had input in content and structure. I was not too happy with my code and felt my contributions to the development process were better.
 
