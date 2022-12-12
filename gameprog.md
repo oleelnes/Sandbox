@@ -12,6 +12,17 @@
 ## Gameplay video
 [Gameplay video](https://youtu.be/QmkOJ7SxWUs)
 
+Bug list:
+* Enemies falling through the ground
+* Inventory breaking when changing scenes
+* Movement in cave scene
+* Rebinding keys not working in video
+
+Not implemented
+* Axe/pickaxe animation not implemented
+* Boss battle scene
+* Crafting and loot
+
 ## Code video
 [Code video](https://youtu.be/8Jg-XYgFbog)
 
