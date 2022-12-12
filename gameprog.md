@@ -35,6 +35,34 @@ If you claim you did “All” of a part of code no one else can claim “Most�
 If you claim you did “Most” then others cannot claim “All”, “Most”, or “Half” but up to half the group (N/2) can claim “Some” work.
 If you claim “Half” then others cannot claim “All” or “Most”, but one (1) other can claim “Half” and any number of the group (N) can claim “Some” or “Touched” Others
 
+
+
+Work distribution matrix
+
+|                                         | Viktor | Ole     | Magnus | Mateusz | Julian | Berkay |
+|-----------------------------------------|--------|---------|--------|---------|--------|--------|
+| Procedural generation                   |        | All     |        |         |        |        | 
+| Day-night cycle                         |        |         | All    |         |        |        | 
+| Inventory                               |        | Touched |        | All     |        |        | 
+| Wood cutting / object destruction logic |        | All     |        |         |        |        | 
+| Chunk objects                           |        | All     |        |         |        |        | 
+| Lakes                                   |        | All     |        |         |        |        | 
+| Input system                            |        |         |        |         | All    |        |
+| Main menu                               |        |         |        |         | All    |        | 
+| Pause menu                              |        |         | All    |         |        |        | 
+
+
+
+
+
+
+
+
+
+
+
+
+
 | | # claim | Others | All	| Most | Half | Some | Touched |
 |------|------|--------|----|-----|-----|-----|-----|
 | All	| 1 |        | 0      | 0 | 0 | 0 | N |
@@ -61,32 +89,3 @@ Or we could have one table for everyone, like this:
 | Prefab.prefab | Touched        | All        | -              |
 | file2.cs | Half           | Half       | Touched        |
 | file2.cs | -              | Most       | Some           |
-
-
-
-### Mateusz
-
-### Magnus
-
-### Ole
-| File                   | Claim | Lines |
-|------------------------|-------|-------|
-| NewMesh.cs             | All   | 280   |
-| EndlessTerrain.cs      | All   | 312   |
-| NoiseMapGenerator.cs   | All   |       |
-| ChunkObjects.cs        | All   | 450   |
-| PopulateWithObjects.cs | All   |       |
-| DestructionBar.cs      | All   |       |
-| DestroyObject.cs       | Most  |       |
-| DestructionProgress.cs | All   |       |
-| PlayerMovement.cs      | Half  |       |
-| PlayerCam.cs           | Most  |       |
-| MoveCamera.cs          | All   |       |
-| ChangeScene.cs         | Most  |       |
-
-
-### Berkay
-
-### Viktor
-
-### Julian
