@@ -4,15 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 
 //attached script to weapon object
-public class MeleeAttack : ClickEvent
+public class ToolsAttack : ClickEvent
 {
-
-
-    [Header("AudioEvent")]
+/*    [Header("AudioEvent")]
     [SerializeField]
     private UnityEvent enemyHitEvent;
     [SerializeField]
-    private UnityEvent nonHitEvent;
+    private UnityEvent nonHitEvent;*/
+
     void OnTriggerEnter(Collider collision)
     {
 
@@ -23,22 +22,22 @@ public class MeleeAttack : ClickEvent
                 collision.SendMessage("receiveDamage", meleeDamage, SendMessageOptions.DontRequireReceiver);
                 //if player attacks enemy but isn't the current target yet
                 collision.SendMessage("setCurrentTargetToPlayer", SendMessageOptions.DontRequireReceiver);
-                enemyHitEvent.Invoke();
+                //enemyHitEvent.Invoke();
             }
         }
     }
 
     override public void DoAttack()
     {
+
             //audio
-            nonHitEvent.Invoke();
+            //nonHitEvent.Invoke();
             //Trigger only when clicked
             weaponColl.isTrigger = true;
 
             //initialize animation
             if (!disableAnimation) anim.SetBool("attacking", true);
     }
-
 
 
 }
