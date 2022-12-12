@@ -5,11 +5,11 @@
 ### Score weighting
 | Description         | my weight |
 |---------------------|-----------|
-| Gameplay video      | 10        |
-| Code video          | 10        |
+| Gameplay video      | 15        |
+| Code video          | 15        |
 | Good Code           | 15        |
 | Bad Code            | 15        |
-| Development process | 25        |
+| Development process | 15        |
 | Reflection          | 25        |
 
 
