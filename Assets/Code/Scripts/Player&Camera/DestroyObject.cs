@@ -82,7 +82,9 @@ public class DestroyObject : MonoBehaviour
 
             if (inventory.InventorySystem.AddToInventory(treeItemData, 1))
             {
-                //Success
+                PlayerPrefs.SetInt("wood", ++FindObjectOfType<Player>().woodInInventory);
+                Debug.Log("wood: " + FindObjectOfType<Player>().woodInInventory);
+                
             }
         }
     }

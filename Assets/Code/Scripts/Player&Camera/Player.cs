@@ -10,9 +10,11 @@ public class Player : MonoBehaviour
     public PlayerStats stats;
     public PlayerMovement movement;
 
+    public int woodInInventory;
+
     private void Awake()
     {
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this);
         }
@@ -21,6 +23,7 @@ public class Player : MonoBehaviour
             movement = gameObject.GetComponent<PlayerMovement>();
             stats = gameObject.GetComponent<PlayerStats>();
             instance = this;
+            woodInInventory = 0;
         }
     }
 
