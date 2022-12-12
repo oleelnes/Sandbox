@@ -34,8 +34,8 @@ Not implemented
 | Day-night cycle                         |         |         | All    |         |        |        | 
 | Inventory                               |         | Touched |        | All     |        |        | 
 | Wood cutting / object destruction logic |         | All     |        |         |        |        | 
-| Chunk objects                           |         | All     |        |         |        |        | 
-| Lakes                                   |         | All     |        |         |        |        | 
+| Chunk objects                           |         | All     |        |         |        | Touched| 
+| Lakes                                   |         | All     |        |         |        | Touched| 
 | Caves                                   |         | Half    | Half   |         |        |        |
 | Animals                                 |         |         |        |         |        | All    |
 | Enemies                                 | All     |         |        |         |        |        |
