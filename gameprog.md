@@ -10,7 +10,18 @@
 * [Julian](Reports/julian.md)
 
 ## Gameplay video
-[Gameplay video]
+[Gameplay video](https://youtu.be/QmkOJ7SxWUs)
+
+Bug list:
+* Enemies falling through the ground
+* Inventory breaking when changing scenes
+* Movement in cave scene
+* Rebinding keys not working in video
+
+Not implemented
+* Axe/pickaxe animation not implemented
+* Boss battle scene
+* Crafting and loot
 
 ## Code video
 [Code video](https://youtu.be/8Jg-XYgFbog)
@@ -23,8 +34,8 @@
 | Day-night cycle                         |         |         | All    |         |        |        | 
 | Inventory                               |         | Touched |        | All     |        |        | 
 | Wood cutting / object destruction logic |         | All     |        |         |        |        | 
-| Chunk objects                           |         | All     |        |         |        |        | 
-| Lakes                                   |         | All     |        |         |        |        | 
+| Chunk objects                           |         | All     |        |         |        | Touched| 
+| Lakes                                   |         | All     |        |         |        | Touched| 
 | Caves                                   |         | Half    | Half   |         |        |        |
 | Animals                                 |         |         |        |         |        | All    |
 | Enemies                                 | All     |         |        |         |        |        |
