@@ -35,10 +35,6 @@ public class DestroyObject : MonoBehaviour
     private void HitManager()
     {
         PlayerCam playerCam = FindObjectOfType<PlayerCam>();
-
-
-
-        // ray = playerCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         Vector3 centerScreen = new Vector3(Screen.width/2, Screen.height/2, 0);
         ray = playerCam.GetComponent<Camera>().ScreenPointToRay(centerScreen);
 
@@ -52,7 +48,6 @@ public class DestroyObject : MonoBehaviour
             else QuitHitting();
 
             if (hitting) HitAction(hitObject);
-
         }
         else if (CheckQuitHitting()) QuitHitting();
     }
@@ -87,9 +82,8 @@ public class DestroyObject : MonoBehaviour
 
             if (inventory.InventorySystem.AddToInventory(treeItemData, 1))
             {
-                
+                //Success
             }
-            //TODO: add to inventory
         }
     }
 
