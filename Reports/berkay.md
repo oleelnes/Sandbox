@@ -34,7 +34,7 @@ I also appreciated the hands-on approach of the course, with plenty of opportuni
 
 I had the opportunity to learn a wide range of concepts and techniques related to game design and development. 
 I learned about the principles of game design and the different stages of the development process, from concept and planning to implementation and testing. 
-I also learned about the technical aspects of game programming, such as data structures, algorithms, and software design patterns.
+I also learned about the technical aspects of game programming, such as data structures, algorithms, and software design patterns. 
 
 One of the challenges I faced during the course was the overlap with some of my other courses at my home university. 
 I was dealing with a heavy workload from my other courses, which made it difficult to find time to code. 
@@ -49,7 +49,8 @@ It was a different time in my life when I had a lot on my desk and finding time 
 However, I believe that these challenges have also helped me to grow and to develop new skills.
 
 Despite the challenges, I tried my best to stay engaged and to make progress in the course. I sought help from my group members when I needed it. 
-I am extremely grateful to Ole for his hard work and dedication on this project. 
+I am extremely grateful to Ole for his hard work and dedication on this project. I sometimes worked with him on different parts of the project other than my part where
+he helped me to understand the different sections of our game.
 He was a valuable asset to our group as our bear and always willing to lend a helping hand.
 I was able to improve my developing skills and learn a lot about game programming. I particularly enjoyed working on the final project, 
 where I had the chance to design and implement a game from scratch with my group. Overall, I found the game programming course to be both challenging and rewarding. 
