@@ -87,7 +87,7 @@ public class DestroyObject : MonoBehaviour
 
             if (inventory.InventorySystem.AddToInventory(treeItemData, 1))
             {
-
+                
             }
             //TODO: add to inventory
         }

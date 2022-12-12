@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
+
 
 public class PlayerCam : MonoBehaviour
 {
@@ -16,13 +18,10 @@ public class PlayerCam : MonoBehaviour
     public PlayerInventoryHolder abc; 
     public static bool isBackpackOpen = false; 
 
-    
     private Vector2 input_CameraVec;
     public void UpdateInput_Camera(Vector2 delta){
         input_CameraVec = delta;
     }
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +52,18 @@ public class PlayerCam : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+        /*
+        if(FindObjectOfType<Player>().transform.position.y < -205.0f)
+        {
+            // Enable the Screen Space Reflection effect
+           // postProcessProfile.GetSetting<ScreenSpaceReflections>().enabled.value = true;
+        }
+        else
+        {
+            // Disable the Screen Space Reflection effect
+           // postProcessProfile.GetSetting<ScreenSpaceReflections>().enabled.value = false;
+        }*/
 
 
     }

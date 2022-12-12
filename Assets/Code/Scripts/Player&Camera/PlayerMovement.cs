@@ -74,8 +74,6 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Update()
     {
-
-        
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
 
@@ -88,7 +86,6 @@ public class PlayerMovement : MonoBehaviour {
         } else {   
             rb.drag = 0;
         }
-
         SpawnPlayer();
     }
 
@@ -122,6 +119,7 @@ public class PlayerMovement : MonoBehaviour {
         if(!grounded) {
             // in air
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            
         }
     }
 
