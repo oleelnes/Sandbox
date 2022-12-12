@@ -69,7 +69,7 @@ creating the forests.
 The forest array is an array filled with noise map values. The value of the 
 noise decides whether a tree should be placed in the location that the value represents. 
 Above a certain threshold (0.6), trees might be placed, and the probability of a tree being planted
-increases as the noise value increases. TODO: more
+increases as the noise value increases. 
 <br><br>
 ![image](images/goodcode_trees_ole.png)
 
@@ -97,6 +97,10 @@ of the project and everything else built on top of it; if I was slow with implem
 the others would be greatly reduce others' ability to implement what they were working on, and potentially 
 cause irritation. In hindsight, it could have been a better approach to
 put two people on procedural generation, and accomplish it through discussions and pair programming.
+
+I learned a lot about Unity in general. How to make scripts interact with each other, how to fetch game objects 
+from the hierarchy, implementing assets and using features like post processing volume for changing the look
+of the camera, and navigating and attaching gameobjects to other gameobjects in the hierarchy.
 
 I am very pleased with how the look of the game turned out. Designing the algorithm and logic behind
 the forests and the rest of the procedural object placement was perhaps the greatest challenge, but also
