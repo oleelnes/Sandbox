@@ -1,12 +1,12 @@
 ### Score weighting
 | Description  | Weight |
 | ------------- | ------------- |
-| Gameplay video  | 10  |
-| Code video  | 5  |
+| Gameplay video  | 5  |
+| Code video  | 0  |
 | Good code  | 20  |
 | Bad code  | 20  |
-| Development process  | 25  |
-| Reflection  | 20  |
+| Development process  | 30  |
+| Reflection  | 25  |
 
 ### Good Code
 The wander scripts that are in the animals are the code I think is good, despite the fact that I didn't write much because I was more involved in the game's assets. 
