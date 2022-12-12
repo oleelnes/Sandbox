@@ -13,7 +13,7 @@
 [Gameplay video]
 
 ## Code video
-[Code video]
+[Code video](https://youtu.be/8Jg-XYgFbog)
 
 ### Work distribution matrix
 
