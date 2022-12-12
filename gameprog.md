@@ -41,7 +41,7 @@ The game is a  first person 3D exploration game, where the player explores a cha
 
 There are 3 types of enemies in the game and 1 boss encounter. Some enemies use borrowed assets while the Squidman is using a self made animation and model.
 
-The player has 3 types of equipment, a sword, a knife and an axe. The sword and knife are used for combat purposes as the world is filled with different enemies. The axe is used for collecting lumber, storing it in the player inventory.
+The player has 3 types of equipment, a knife, a pickaxe and an axe. The knife is used for combat purposes as the world is filled with different enemies. The axe and pickaxe is used for collecting lumber, storing it in the player inventory.
 
 The inventory is used to store items, mainly the resources gathered from the world. There is also an equipment bar where you can drag items from your inventory. The functionality for using the items on the equipment bar is not yet implemented.
 
