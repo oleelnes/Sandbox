@@ -280,7 +280,7 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                     ""id"": ""76a2bc50-3673-4939-848e-57aff22181e7"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=1.5,y=1.5)"",
                     ""groups"": """",
                     ""action"": ""Camera"",
                     ""isComposite"": false,
