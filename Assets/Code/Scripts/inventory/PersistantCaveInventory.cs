@@ -6,6 +6,7 @@ public class PersistantCaveInventory : MonoBehaviour
 {
 
     public InventoryItemData treeItemData;
+    public InventoryItemData keyItemData; 
 
     void Start()
     {
@@ -13,13 +14,9 @@ public class PersistantCaveInventory : MonoBehaviour
         var inventory = player.transform.GetComponent<InventoryHolder>();
         inventory.InventorySystem.AddToInventory(treeItemData, PlayerPrefs.GetInt("wood"));
 
-        Debug.Log("------------------------" + PlayerPrefs.GetInt("wood"));
-        Debug.Log("------------------------" + PlayerPrefs.HasKey("wood"));
-
         var chest = GameObject.Find("chest");
         var chestInv = chest.transform.GetComponent<ChestInventory>();
-        Debug.Log(chestInv);
-        chestInv.InventorySystem.AddToInventory(treeItemData, PlayerPrefs.GetInt("wood"));
+        chestInv.InventorySystem.AddToInventory(keyItemData, 1);
     }
 
 }
