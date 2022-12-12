@@ -12,6 +12,7 @@
 | Reflection          | 15        |
 ### Good code
 There are a few contributions that I consider good code. For one the Singleton in the Player script. Working with a Singleton is not always considered good, but in our case, we only have one player, which makes it useful to ensure only one instance of the Player class is initialized. 
+<br><br>
 ![Good code](images/goodcode1_viktor.png)
 
 I also implemented everything surrounding the enemies in the game. For the enemies, I tried to make a facade pattern work to have one script holding all the related enemy objects like animation, movement, stats, etc. As we are using procedural generation baking a map for the navMesh was not a possibility. That is why I used another way to move the enemy around and target the player. I used quaternation to rotate the enemy towards the player, a raycast to recognize hitting an obstacle (in our case the ground), and lastly a stopping distance to make sure the enemy only moves toward the player until it has reached a certain distance. 
