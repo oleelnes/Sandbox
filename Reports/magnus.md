@@ -11,4 +11,4 @@ In addition I have taught the group good practice for using GiT version control.
 ### Good Code
 One contribution I was happy with was the health system. It is dynamic, where you can increase or decrease the amount of health the player has, as well as having half hearts. I made the sprite myself using pixel art, and had 3 versions. A full, half and empty heart. The numbers are stored in an enum that helps decide which heart needs to be drawn.
 
-![](https://github.com/oleelnes/Sandbox/blob/master/Reports/images/magnus/draw_hearts_magnus.png=raw=true)
+![](https://github.com/oleelnes/Sandbox/blob/master/Reports/images/magnus/draw_hearts_magnus.png?raw=true)
