@@ -67,7 +67,7 @@ as an example. However, this code is somewhat clever, because these two function
 creating the forests. 
 
 The forest array is an array filled with noise map values. The value of the 
-noise decides whether or not a tree should be placed in the location that the value represents. 
+noise decides whether a tree should be placed in the location that the value represents. 
 Above a certain threshold (0.6), trees might be placed, and the probability of a tree being planted
 increases as the noise value increases. TODO: more
 <br><br>
@@ -78,10 +78,7 @@ increases as the noise value increases. TODO: more
 Being able to make this game has been valuable experience for me. As the bear of the group, I have felt 
 a great attachment to the project. The game was based on a long-lived dream I have had to create a game 
 set in a procedurally generated world. And getting to co-create it with so many talented and invested
-group members was a joy. As we mentioned in the group discussion, our main priority shifted over time 
-to be the technical aspects of the game, as we realized the scope of making both an intriguing story and 
-gameplay in addition to an impressive procedural world, was simply too much. Coming to this conclusion 
-felt like a defeat — knowing that it, for the most part, would not be fun to play our game.
+group members was a joy. 
 
 I have learned a lot as a result of this project, and it has felt like one of the first real tests 
 of our skills in team- and project development in practice. Of the things that I have learned about 
@@ -101,14 +98,30 @@ the others would be greatly reduce others' ability to implement what they were w
 cause irritation. In hindsight, it could have been a better approach to
 put two people on procedural generation, and accomplish it through discussions and pair programming.
 
-About teamwork here.
-
 I am very pleased with how the look of the game turned out. Designing the algorithm and logic behind
 the forests and the rest of the procedural object placement was perhaps the greatest challenge, but also
 the most fulfilling when it all finally came together, and this time without following any tutorials. 
 
-Lastly, this project has given me a newfound respect for game development. There are many moving pieces 
+As we mentioned in the group discussion, our main priority shifted over time
+to be the technical aspects of the game, as we realized the scope of making both an intriguing story and
+gameplay in addition to an impressive procedural world, was simply too much. Coming to this conclusion
+felt like a defeat to me — knowing that it, for the most part, would not be fun to play our game. 
+We came to this conclusion after Magnus and I discussed this with Simon. This was not 
+that big of a deal for me, but I this must have let the others down. As I was the bear, I was supposed 
+to have the clear vision of the game, but as our game evolved into something else, I found it difficult 
+to know exactly what I wanted with it, and I think the others did, too.
+
+In terms of the development process and the teamwork, I feel like we were consistent and serious. We made
+scrum boards and followed them religiously. We had meetings every week, except for the weeks when 
+we were preoccupied with other courses. Generally, the group members were great at asking for help 
+when they were stuck, and did not shy away from helping others. But there were some aspects that were not great, too.
+While we had set up work sessions
+of 2-4 hours every week, there was never one work session when everyone showed up. Most of the time,
+we were two or three people. The work sessions were remote, and most of the time, we ended up muting our
+microphones after 15 minutes and worked in silence, unmuting only when we had problems that needed to be solved. We should
+have tried harder to use the work sessions as a way to work together as a team.
+
+This project has given me a newfound respect for game development. There are many moving pieces 
 in a game. In the beginning, it felt like walking on eggshells when writing new code or adding new features/
 gameobjects — you never knew what odd error would show up. With time, this gave me a greater understanding 
 of how everything in the project was tied together, as well as making me more careful.
-

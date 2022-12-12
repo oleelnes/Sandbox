@@ -114,9 +114,6 @@ public class NewMesh : MonoBehaviour
                 {
                     colorMap[i] = new Color(0.1f + (groundGrassColor / 2.5f), 0.4f + (groundGrassColor / 1.2f), 0.1f + (groundGrassColor / 2.5f));
                 }
-
-                
-
             }
             else if (noiseMap[i].y >= 0.6f && noiseMap[i].y < 0.87f)
             {
@@ -129,11 +126,7 @@ public class NewMesh : MonoBehaviour
 
             noiseMap[i].y *= heightScale;
 
-            if (water)
-            {
-                globalWaterLevel = noiseMap[i].y;
-            }
-          
+            if (water) globalWaterLevel = noiseMap[i].y;
         }
 
         return colorMap;
