@@ -2,12 +2,12 @@
 
 ## Group members
 
-* Mateusz
-* Magnus
-* Ole
-* Berkay
-* Viktor
-* Julian
+* [Mateusz](Reports/mateusz.md)
+* [Magnus](Reports/magnus.md)
+* [Ole](Reports/ole.md)
+* [Berkay](Reports/berkay.md)
+* [Viktor](Reports/viktor.md)
+* [Julian](Reports/julian.md)
 
 ## Link to repository
 
