@@ -453,17 +453,6 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""845d4ef3-6bb7-4524-b324-4234cfcbf87f"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SlotSet_1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""4f69bad4-2a40-44ca-979c-d01ce20ed48a"",
                     ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
@@ -475,12 +464,12 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0d08b26a-a2b1-4749-b8f4-81b7bd1a971b"",
-                    ""path"": """",
+                    ""id"": ""d6337487-ff9e-4a0d-8a2e-83eb28a50ec7"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SlotSet_2"",
+                    ""action"": ""SlotSet_1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -497,12 +486,12 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""29a73e9e-a3f6-4b29-a145-96d442e0fad2"",
-                    ""path"": """",
+                    ""id"": ""840aa173-bce1-42ac-914d-b3702c94214b"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SlotSet_3"",
+                    ""action"": ""SlotSet_2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -519,12 +508,12 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c04a976e-3c59-4973-8e93-50f6245769f9"",
-                    ""path"": """",
+                    ""id"": ""ac05589b-930f-4d25-a9ac-55e6e22adb44"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SlotSet_4"",
+                    ""action"": ""SlotSet_3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -541,12 +530,12 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""901098c6-2077-404f-96ee-65950428b338"",
-                    ""path"": """",
+                    ""id"": ""89f0253c-d714-4b2e-a26c-725eb8c53b79"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SlotSet_5"",
+                    ""action"": ""SlotSet_4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -563,8 +552,19 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""acb8fb71-909d-4396-8904-3738596ff39f"",
-                    ""path"": """",
+                    ""id"": ""c6d7ed71-b88c-41b1-ad7c-0d7aaaeaeb2a"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotSet_5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bc6d85d-a067-4e02-9513-a305df0e3182"",
+                    ""path"": ""<Keyboard>/6"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -585,17 +585,6 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6e6445ac-6710-434f-ab54-6b240680ba01"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SlotSet_7"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""414d9898-4623-4a24-875b-87f707bbe704"",
                     ""path"": ""<Keyboard>/7"",
                     ""interactions"": """",
@@ -607,12 +596,12 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9df2bfa9-0c75-4f32-a37a-f52f31038973"",
-                    ""path"": """",
+                    ""id"": ""b44c1e15-6efd-4c06-b034-97365c856f20"",
+                    ""path"": ""<Keyboard>/7"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SlotSet_8"",
+                    ""action"": ""SlotSet_7"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -629,8 +618,19 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e32ad5bd-2403-4bab-976d-e908557d39de"",
-                    ""path"": """",
+                    ""id"": ""7944689b-4afe-4545-b2d2-3c460c5aa4b8"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlotSet_8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b1c8320-351d-49a1-83f0-bb053a676e74"",
+                    ""path"": ""<Keyboard>/9"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -640,7 +640,7 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9b1c8320-351d-49a1-83f0-bb053a676e74"",
+                    ""id"": ""5abe1e61-a8f0-4641-9314-f0100fe881f3"",
                     ""path"": ""<Keyboard>/9"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -695,8 +695,8 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2df83c14-ca9d-491b-be76-62c82f957432"",
-                    ""path"": """",
+                    ""id"": ""d285d0d1-6539-4897-8d0f-da0e9b1c505b"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -706,7 +706,7 @@ public partial class @PlayerInputActionsClass : IInputActionCollection2, IDispos
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d285d0d1-6539-4897-8d0f-da0e9b1c505b"",
+                    ""id"": ""01abde0c-cfaf-4a89-82b0-62a3a7a96325"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",

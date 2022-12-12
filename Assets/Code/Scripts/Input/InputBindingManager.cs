@@ -54,6 +54,8 @@ public class InputBindingManager : MonoBehaviour
     */
     public static void StartRebind(string actionName, int bindingIndex, Text bindingText, TMPro.TMP_Text bindingText_tmp) {
         // Try to find input action from given name
+		Debug.LogWarning("[StartRebind]: action name: "+actionName);
+		if(actionName == null) return;
         InputAction inputAction = playerInputActionsClass.asset.FindAction(actionName); 
         
         // Check if matching action found
@@ -163,6 +165,7 @@ public class InputBindingManager : MonoBehaviour
     public static void ResetBinding(string actionName, int bindingIndex)
     {
 		// Get action asset by name
+		Debug.LogWarning("reset name: "+actionName);
         InputAction action = playerInputActionsClass.asset.FindAction(actionName); 
 		
         if (action == null || action.bindings.Count <= bindingIndex) {
@@ -222,8 +225,13 @@ public class InputBindingManager : MonoBehaviour
     public static void ApplySavedCustomBinding(string actionName)
     {
         InitializeInputActionClass();
+		if (actionName == null || actionName == "") {
+			Debug.LogWarning("[ApplySavedCustomBinding] No actionname!");
+			return;
+		}
 		
 		// Get default action info
+		// Debug.LogWarning("[ApplySavedCustomBinding] name: "+actionName);
         InputAction action = playerInputActionsClass.asset.FindAction(actionName);
         
         // Loop over every binding

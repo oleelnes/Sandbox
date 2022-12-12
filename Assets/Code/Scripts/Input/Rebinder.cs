@@ -25,6 +25,7 @@ public class Rebinder : MonoBehaviour
 	[SerializeField] private Text 			text_BindingName_NonTMP;	///< Alternative non-tmp text element to show current binding
 	[SerializeField] private bool 			doUseNonTMPText = false;	///< Whether to use the alternative non-tmp text element
     
+	private bool enabled = false;
 
 
     [SerializeField] private InputBinding.DisplayStringOptions displayStringOptions; ///< A built-in enumerator to format the names of the bindings
@@ -41,10 +42,28 @@ public class Rebinder : MonoBehaviour
 
 	// Bind methods and events, and load previously saved binding if one exists
     private void OnEnable() {
-
-		// Bind methods to buttons
-        button_Rebind.onClick.AddListener(() => InputBindingManager.StartRebind(actionName, bindingIndex, text_BindingName_NonTMP, text_BindingName));
-		button_Reset .onClick.AddListener(() => ResetBinding());
+		
+		if(inputActionReference == null) Debug.LogWarning("NO INPUT ACTION REFERENCE FOR A REBINDING PREFAB");
+		if(selectedBindingIndex == null) Debug.LogWarning("NO BINDING SELECTED FOR REBINDING PREFAB");
+		
+		if(inputActionReference != null
+		&& selectedBindingIndex != null)
+		{
+			DoEnable();
+		} 
+    }
+	
+	private void Update(){
+		if ( !enabled ) {
+			if(inputActionReference != null
+			&& selectedBindingIndex != null)
+			{
+				DoEnable();
+			} 
+		}
+	}
+	
+	private void DoEnable(){
 		
 		// Bind events to update the given text object's text to show the current binding (or status text)    
         InputBindingManager.event_RebindingComplete  += RefreshUI;
@@ -57,8 +76,14 @@ public class Rebinder : MonoBehaviour
             InputBindingManager.ApplySavedCustomBinding(actionName);
             UpdateBindingInfo();
             RefreshUI();
+			
+			// Debug.LogWarning("[REBINDER] ENABLED  - name{"+actionName+"} index{"+bindingIndex+"}");
+			enabled = true;
+			// Bind methods to buttons
+			button_Rebind.onClick.AddListener(() => InputBindingManager.StartRebind(actionName, bindingIndex, text_BindingName_NonTMP, text_BindingName));
+			button_Reset .onClick.AddListener(() => ResetBinding());
         }
-    }
+	}
     
 	
 	// Unbind events that update UI
@@ -126,6 +151,7 @@ public class Rebinder : MonoBehaviour
 				
 				// If in play mode, getting info from the InputBindingManager
 				InputBindingManager.InitializeInputActionClass();
+				Debug.LogWarning("reset name: "+actionName);
 				var an = InputBindingManager.playerInputActionsClass.asset.FindAction(actionName);
 				var bi = an.GetBindingDisplayString(bindingIndex);
 				string bindingText = bi.ToString();
