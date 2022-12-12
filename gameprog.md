@@ -45,11 +45,13 @@ Work distribution matrix
 
 |                                         | Viktor | Ole     | Magnus | Mateusz | Julian | Berkay |
 |-----------------------------------------|--------|---------|--------|---------|--------|--------|
-| Procedural generation                   |        | All     |        |         |        |        | 
+| Procedural generation                   |        | All     |        |         |        |Touched | 
 | Day-night cycle                         |        |         | All    |         |        |        | 
 | Inventory                               |        | Touched |        | All     |        |        | 
 | Wood cutting / object destruction logic |        | All     |        |         |        |        | 
 | Chunk objects                           |        | All     |        |         |        |        | 
+| Enemies                                 |        |         |        |         |        |        | 
+| Animals                                 |        |         |        |         |        | All    | 
 | Lakes                                   |        | All     |        |         |        |        | 
 | Input system                            |        |         |        |         | All    |        |
 | Main menu                               |        |         |        |         | All    |        | 
