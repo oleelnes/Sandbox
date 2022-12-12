@@ -23,6 +23,8 @@ The following code I consider good:
 
 ![Good code](images/mateuszGoodCode.PNG)
 
+In this code section we have three functions: AddToInventory, ContainsItem and HasFreeSlot. I consider this code good because this is one of the functions I have spent the most amount of time developing and I am happy with the results.
+
 ### Reflection
 This project is my first meeting with game design and development, working with Unity and using C#. For the better part of the last 6 months I have been part of group with 5 other people i didn't knew before.
 This journey has been fun and challenging most of the time, but it could sometimes be brutal with numerous errors and countless merge conflicts. 
@@ -41,5 +43,6 @@ This was also challenging as we had different schedules and not everyone could m
 
 This has been a challenging and sometimes frustrating experience. I learned alot about the game development in general, how to use Unity and write scripts in C#. As mentioned before, my initial thought was to create the inventory system as one of contributions to the game. 
 I wanted to make a bigger impact, but I learned quickly that implementing bigger features, especially if that feature need to live in symbiosis with other elements in its enviroment, isn't easy and takes time. 
+My vision of the game before we began was different from our en product, but I am still happy with both my contribution and the overall group effort.
 After this course I definitly have much deeper understanding of the game development process and bigger respect for developers. 
 
