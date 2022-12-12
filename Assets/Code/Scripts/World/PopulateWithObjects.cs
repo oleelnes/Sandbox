@@ -4,17 +4,51 @@ using UnityEngine;
 
 public class PopulateWithObjects : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject treeObjectOne;
+    [SerializeField]
+    private GameObject treeObjectTwo;
+    [SerializeField]
+    private GameObject treeObjectThree;
+    [SerializeField]
+    private GameObject treeObjectFour;
 
-    public GameObject treeObjectOne;
-    public GameObject treeObjectTwo;
-    public GameObject treeObjectThree;
-    public GameObject treeObjectFour;
-    public GameObject dungeonEntranceToClone;
-    public GameObject rockOne;
-    public GameObject rockBigOne;
-    public GameObject grassOne;
-    public GameObject flowerOne;
-    public GameObject mushroomOne;
+    [SerializeField]
+    private GameObject treeRoundTwo;
+    [SerializeField]
+    private GameObject treeRoundThree;
+
+    //dungeon
+    [SerializeField]
+    private GameObject dungeonEntranceToClone;
+
+    [SerializeField]
+    private GameObject rockOne;
+    [SerializeField]
+    private GameObject rockBigOne;
+
+    [SerializeField]
+    private GameObject grassOne;
+    [SerializeField]
+    private GameObject flowerOne;
+    [SerializeField]
+    private GameObject mushroomOne;
+
+    [SerializeField]
+    private GameObject bushOne;
+    [SerializeField]
+    private GameObject bushTwo;
+    [SerializeField]
+    private GameObject bushThree;
+
+    [SerializeField]
+    private GameObject goblinEnemy;
+
+    [SerializeField]
+    private GameObject houndManEnemy;
+
+    [SerializeField]
+    private GameObject squidManEnemy;
 
 
     /// <summary>
@@ -53,8 +87,45 @@ public class PopulateWithObjects : MonoBehaviour
                 return GetRockType(subType);
             case "plant":
                 return GetPlantType(subType);
+            case "bush":
+                return GetBushType(subType);
+            case "enemy":
+                return GetEnemyType(subType);
             default:
                 Debug.Log(objectName + " did not match any of the cases");
+                return null;
+        }
+    }
+
+    private GameObject GetEnemyType(string subType)
+    {
+        if (subType == null) return Instantiate(squidManEnemy);
+        switch (subType.ToLower())
+        {
+            case "goblin":
+                return Instantiate(goblinEnemy);
+            case "houndman":
+                return Instantiate(houndManEnemy);
+            case "squidman":
+                return Instantiate(squidManEnemy);
+            default:
+                return Instantiate(squidManEnemy);
+        }
+    }
+
+    public GameObject GetBushType(string subType)
+    {
+        if (subType == null) return null;
+        switch(subType.ToLower())
+        {
+            case "bushone":
+                return Instantiate(bushOne);
+            case "bushtwo":
+                return Instantiate(bushTwo);
+            case "bushthree": 
+                return Instantiate(bushThree);
+            default:
+                Debug.Log(subType + " did not match any of the cases");
                 return null;
         }
     }
@@ -107,6 +178,10 @@ public class PopulateWithObjects : MonoBehaviour
                 return Instantiate(treeObjectThree);
             case "treefour":
                 return Instantiate(treeObjectFour);
+            case "treeroundtwo":
+                return Instantiate(treeRoundTwo);
+            case "treeroundthree":
+                return Instantiate(treeRoundThree);
             default:
                 Debug.Log(subType + " did not match any of the cases");
                 return null;

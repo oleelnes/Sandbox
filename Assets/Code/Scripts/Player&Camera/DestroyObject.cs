@@ -89,6 +89,7 @@ public class DestroyObject : MonoBehaviour
             {
                 PlayerPrefs.SetInt("wood", ++FindObjectOfType<Player>().woodInInventory);
                 Debug.Log("wood: " + FindObjectOfType<Player>().woodInInventory);
+                
             }
             //TODO: add to inventory
         }
@@ -102,15 +103,10 @@ public class DestroyObject : MonoBehaviour
     }
 
 
+    // Called by Actions_OnFoot
     private bool leftMouseDown = false;
-    // Called by Actions_OnFoot
-    public void DoAttack()		{  
-		Debug.Log("FGJHFDSGTYUIKYJGFHDFFJKYIKGFJGHYKIJF\ngfdcxfsegrfthgjyhkuljkømjiubhgyv\ngfdhfjioihuigcytfyuiy8hgyhjv");
-		leftMouseDown = true; }
-    // Called by Actions_OnFoot
-    public void ReleaseAttack(){ 
-				Debug.Log("____________--------------______________------------________-");
-leftMouseDown = false; }
+    public void DoAttack()		{ leftMouseDown = true; }
+    public void ReleaseAttack()	{ leftMouseDown = false; }
     /// <summary>
     /// Checks if player has quit hitting an object, either by letting go of the mouse or not 
     /// hitting the hitBox of the object anymore.

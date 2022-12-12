@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3574174652654643700}
   - component: {fileID: 2763962539679426301}
   - component: {fileID: 4505446620929530310}
+  - component: {fileID: 7762299372053313666}
   m_Layer: 0
   m_Name: AxeV1
   m_TagString: Untagged
@@ -122,3 +123,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.36719015, y: 0.72449756, z: 0.04967541}
   m_Center: {x: -0.10937515, y: 0.21025337, z: -0.000004124025}
+--- !u!95 &7762299372053313666
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3070039431449724961}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e4f40f1e956ae1a4a8392f8f0b9aac67, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
