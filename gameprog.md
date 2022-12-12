@@ -9,8 +9,6 @@
 * [Viktor](Reports/viktor.md)
 * [Julian](Reports/julian.md)
 
-## Link to repository
-
 ## Gameplay video
 [Gameplay video]
 
