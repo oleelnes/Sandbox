@@ -9,7 +9,7 @@ public class PlayerSpawn : MonoBehaviour
 
     void Start()
     {
-        player.transform.position = respawnPoint.transform.position;
+        //player.transform.position = respawnPoint.transform.position;
     }
 
 
