@@ -151,7 +151,6 @@ public class Rebinder : MonoBehaviour
 				
 				// If in play mode, getting info from the InputBindingManager
 				InputBindingManager.InitializeInputActionClass();
-				Debug.LogWarning("reset name: "+actionName);
 				var an = InputBindingManager.playerInputActionsClass.asset.FindAction(actionName);
 				var bi = an.GetBindingDisplayString(bindingIndex);
 				string bindingText = bi.ToString();
