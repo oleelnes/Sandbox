@@ -10,7 +10,7 @@
 * [Julian](Reports/julian.md)
 
 ## Gameplay video
-[Gameplay video]
+[Gameplay video](https://youtu.be/8Jg-XYgFbog)
 
 ## Code video
 [Code video]
