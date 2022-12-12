@@ -22,6 +22,10 @@
 * Use of version control systems, ticket tracking, branching, version control
 
 
+
+
+
+
 ## Individual discussions
 * A link to, and discussion of, code you consider good
 * A link to, and discussion of, code you consider bad
