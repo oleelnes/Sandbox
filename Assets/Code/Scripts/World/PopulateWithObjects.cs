@@ -75,6 +75,12 @@ public class PopulateWithObjects : MonoBehaviour
         return objectToCreate;
     }
 
+    /// <summary>
+    /// Function that instantiates clones of GameObjects.
+    /// </summary>
+    /// <param name="objectName"></param>
+    /// <param name="subType"></param>
+    /// <returns></returns>
     public GameObject InstantiateClone(string objectName, string subType = null)
     {
         switch(objectName.ToLower())
