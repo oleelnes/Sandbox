@@ -32,8 +32,8 @@ Not implemented
 |-----------------------------------------|---------|---------|--------|---------|--------|--------|
 | Procedural generation                   |         | All     |        |         |        |        | 
 | Day-night cycle                         |         |         | All    |         |        |        | 
-| Inventory                               |         | Touched |        | All     |        |        | 
-| Wood cutting / object destruction logic |         | All     |        |         |        |        | 
+| Inventory                               |         | Touched |        | All     | Touched|        | 
+| Wood cutting / object destruction logic |         | All     |        |         | Touched|        | 
 | Chunk objects                           |         | All     |        |         |        | Touched| 
 | Lakes                                   |         | All     |        |         |        | Touched| 
 | Caves                                   |         | Half    | Half   |         |        |        |
@@ -43,9 +43,9 @@ Not implemented
 | Main menu                               |         |         | Some   |         | Most   |        | 
 | Pause menu                              |         |         | All    |         |        |        | 
 | health system                           |         |         | All    |         |        |        |
-| Weapon                                  | All     |         |        |         |        |        | 
+| Weapon                                  | All     |         |        |         | Touched|        | 
 | Boss battle                             | All     |         |        |         |        |        |
-| Audio                                   | All     |         |        |         |        |        |
+| Audio                                   | All     |         |        |         | Touched|        |
 
 
 
