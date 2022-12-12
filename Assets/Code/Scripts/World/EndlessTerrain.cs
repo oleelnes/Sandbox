@@ -200,7 +200,7 @@ public class EndlessTerrain : MonoBehaviour
 			meshFilter.mesh = meshData.CreateMesh(flatShading);
 
 			lake = meshData.CreateWaterMesh();
-			lake.transform.position = new Vector3(bounds.center.x + (mapChunkSize * 2) + 40, 0.0f, bounds.center.y + (mapChunkSize * 2) + 40);
+			lake.transform.position = new Vector3(bounds.center.x + (mapChunkSize * 2) + 40, meshData.getWaterLevel(), bounds.center.y + (mapChunkSize * 2) + 40);
 			lake.transform.parent = parent;
 			//lake.transform.rotation = Quaternion.Euler(0, 0, 0);
 			lake.GetComponent<MeshCollider>().convex = true;

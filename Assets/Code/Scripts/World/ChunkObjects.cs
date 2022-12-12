@@ -52,7 +52,6 @@ public class ChunkObjects
 
     public void SetObjectsVisible(Vector2 position, bool objectsVisible)
     {
-		//Debug.Log(treeList.Count);
         if (worldPopulated != WorldPopulated.FALSE)
         {
 			if (!objectsVisible)
@@ -62,7 +61,6 @@ public class ChunkObjects
 			else
             {
 				ObjectsVisible(position, 300f);
-
             }
         }
 		
@@ -70,12 +68,10 @@ public class ChunkObjects
 
     public void populateTerrainChunk(bool visible)
     {
-
 		populateWithCaveEntrances();
 		populateWithTrees();
 		populateWithRocks();
 		populateWithPlants();
-
 	}
 
 	private void populateWithRocks()
@@ -204,63 +200,64 @@ public class ChunkObjects
 	/// Function that fills the treeList with trees depending on the noise map generated for the forest, along
 	/// with some element of random. It will not place a tree in water.
 	/// </summary>
-	/// <param name="meshObject"></param>
-	/// <param name="meshData"></param>
-	/// <param name="world"></param>
-	/// <param name="objectPopulator"></param>
-	void populateWithTrees()
+	private void populateWithTrees()
 	{
-		
 		for (int x = 0, i = 0; x < chunkSize; x += 10)
 		{
-			for (int y = 0; y < chunkSize; y += 10)
+			for (int y = 0; y < chunkSize; y += 10, i++)
 			{
-
-				int treeInterval = Mathf.RoundToInt(forest[i].y * 12);
-				int randomNumber = random.Next(0, 10);
-
-				//The higher the noise value in the forest noisemap, the greater the probability that a tree will appear
-				bool placeTree = randomNumber + Mathf.RoundToInt(forest[i].y * 10) < 14;
-
-				float internalX = (float)x + (float)random.Next(-treeInterval, treeInterval);
-				float internalY = (float)y + (float)random.Next(-treeInterval, treeInterval);
-				float placementLocationX = internalX + meshObject.transform.position.x;
-				float placementLocationZ = internalY + meshObject.transform.position.z;
-				float height = world.GetHeight(placementLocationX, placementLocationZ);
-				//Addition of the random makes the edges of the forests have wider spacing
-				if (forest[i].y > 0.6f + ((float)random.NextDouble() % 0.15))
-                {
-					if (placeTree && !IsWater(height - 0.5f) && height > 0.5f && height < 30 && internalX < (chunkSize ) && internalY < (chunkSize ) )
-					{
-						if (forest[i].y > 0.75f && forest[i].y < 0.85f)
-                        {
-							string treeTypeRandom = (random.Next(0, 2) == 1) ? "treeRoundTwo" : "treeRoundThree";
-							GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, treeTypeRandom);
-                        }
-						else GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ);
-					}
-				}
-
-				i++;
-				
+				createTreeInForest(i, x, y);
 			}	
+		}
+	}
+
+	/// <summary>
+	/// Function that places one tree, given that all necessary criterea are met.
+	/// </summary>
+	/// <param name="i">x and y's corresponding position in the forest array</param>
+	/// <param name="x">x position</param>
+	/// <param name="y">y position</param>
+	/// <returns></returns>
+	private void createTreeInForest(int i, int x, int y)
+    {
+		int treeInterval = Mathf.RoundToInt(forest[i].y * 12);
+		int randomNumber = random.Next(0, 10);
+
+		//The higher the noise value in the forest noisemap, the greater the probability that a tree will appear
+		//Noise value measured in values between 0 and 1.
+		bool placeTree = randomNumber + Mathf.RoundToInt(forest[i].y * 10) < 14;
+
+		float internalX = (float)x + (float)random.Next(-treeInterval, treeInterval);
+		float internalY = (float)y + (float)random.Next(-treeInterval, treeInterval);
+		float placementLocationX = internalX + meshObject.transform.position.x;
+		float placementLocationZ = internalY + meshObject.transform.position.z;
+		float height = world.GetHeight(placementLocationX, placementLocationZ);
+
+		//Addition of the random makes the edges of the forests have wider spacing
+		if (forest[i].y > 0.6f + ((float)random.NextDouble() % 0.15))
+		{
+			if (placeTree && !IsWater(height - 0.5f) && height > 0.5f && height < 30 && internalX < (chunkSize) && internalY < (chunkSize))
+			{
+				if (forest[i].y > 0.75f && forest[i].y < 0.85f)
+				{
+					string treeTypeRandom = (random.Next(0, 2) == 1) ? "treeRoundTwo" : "treeRoundThree";
+					GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ, treeTypeRandom);
+				}
+				else GenerateNewTree(placementLocationX, height - 0.1f, placementLocationZ);
+			}
 		}
 	}
 
     internal void enemiesHandler(bool spawnMonsters)
     {
-        if(spawnMonsters && enemyList.Count > 0)
-        {
-			
-        }
-		else if(spawnMonsters && enemyList.Count < 35)
+		if (spawnMonsters && enemyList.Count < 35)
         {
 			spawnNewEnemies(20 - enemyList.Count);
 
 		}
-		else if(!spawnMonsters && enemyList.Count > 0)
+		else if (!spawnMonsters && enemyList.Count > 0)
         {
-			for(int i = 0; i < enemyList.Count; i++)
+			for (int i = 0; i < enemyList.Count; i++)
             {
 				world.toDelete.Add(enemyList[i]);
             }
@@ -287,12 +284,8 @@ public class ChunkObjects
 
 				height = world.GetHeight(xPosition, zPosition);
 
-
-				if ( !IsWater(height - 0.5f) && height > 1.0f)
-                {
-					found = true;
-                }
-
+				if ( !IsWater(height - 0.5f) && height > 1.0f) found = true;
+    
 				j++;
 			} while (!found || !exhausted);
 
