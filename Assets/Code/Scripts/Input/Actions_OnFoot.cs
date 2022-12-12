@@ -25,7 +25,10 @@ public class Actions_OnFoot : MonoBehaviour
     [SerializeField] private WeaponSwitching weaponSwitching;
 	[SerializeField] private Interactor interactor;
 	[SerializeField] private MouseItemData mouseItemData;
-	[SerializeField] private InventoryDisplay[] inventoryDisplays;
+	// [SerializeField] private InventoryDisplay[] inventoryDisplays;
+	[SerializeField] private StaticInventoryDisplay staticInventoryDisplay;
+	[SerializeField] private DynamicInventoryDisplay dynamicInventoryDisplay1;
+	[SerializeField] private DynamicInventoryDisplay dynamicInventoryDisplay2;
     
     /**********************\
     | Configurables values |
@@ -138,11 +141,18 @@ public class Actions_OnFoot : MonoBehaviour
         inputActions.OnFoot.Sprint      .started     += context => playerMovementScript.DoSprint();
         inputActions.OnFoot.Sprint      .canceled    += context => playerMovementScript.ReleaseSprint();
 		
-		for(int i=0; i<inventoryDisplays.Length; i++){
-			inputActions.OnFoot.Sprint      .started     += context => inventoryDisplays[i].DoPressShift();
-			inputActions.OnFoot.Sprint      .canceled    += context => inventoryDisplays[i].DoReleaseShift();
-			if(doPrintVerbose) Debug.Log("inventory display index: "+i);
-		}
+		// for(int i=0; i<inventoryDisplays.Length; i++){
+		// 	inputActions.OnFoot.Sprint      .started     += context => inventoryDisplays[i].DoPressShift();
+		// 	inputActions.OnFoot.Sprint      .canceled    += context => inventoryDisplays[i].DoReleaseShift();
+		// 	if(doPrintVerbose) Debug.Log("inventory display index: "+i);
+		// }
+		
+		inputActions.OnFoot.Sprint      .started     += context => staticInventoryDisplay.DoPressShift();
+		inputActions.OnFoot.Sprint      .canceled    += context => staticInventoryDisplay.DoReleaseShift();
+		inputActions.OnFoot.Sprint      .started     += context => dynamicInventoryDisplay1.DoPressShift();
+		inputActions.OnFoot.Sprint      .canceled    += context => dynamicInventoryDisplay1.DoReleaseShift();
+		inputActions.OnFoot.Sprint      .started     += context => dynamicInventoryDisplay2.DoPressShift();
+		inputActions.OnFoot.Sprint      .canceled    += context => dynamicInventoryDisplay2.DoReleaseShift();
         
 		
         /*\ Crouch action \*/
