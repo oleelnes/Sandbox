@@ -26,6 +26,8 @@ public class GameOverMenu : MonoBehaviour
 
     public void RestartLevel()
     {
+        Time.timeScale = 1f;
+        PlayerCam.isBackpackOpen = false;
         SceneManager.LoadScene("TerrainScene");
     }
 }

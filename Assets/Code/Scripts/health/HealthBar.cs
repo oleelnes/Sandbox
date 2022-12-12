@@ -42,7 +42,6 @@ public class HealthBar : MonoBehaviour
         }
 
 
-        // From guide, unsure if it is best practice
         // Use the current health value to get the correct image from the heartStatus enum.
         for (int i = 0; i < hearts.Count; i++)
         {
