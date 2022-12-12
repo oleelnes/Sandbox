@@ -3284,7 +3284,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694999140650603709}
-  m_Mesh: {fileID: 4898376589914736847, guid: 7624be69e5b0f7a4992243d86580e503, type: 3}
+  m_Mesh: {fileID: 4300000, guid: d95ed182d9f65694aabeca6cd16cd30a, type: 3}
 --- !u!23 &3694999140650603702
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3374,6 +3374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 3694999140650603696}
+  weaponColl: {fileID: 0}
   disableAnimation: 0
   mouse0: 323
   meleeDamage: 25
