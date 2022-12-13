@@ -33,6 +33,8 @@ it did work, the code remained without being improved upon.
 
 ![Bad code ole](images/badcode_ole.png)
 
+[Link to bad code](https://github.com/oleelnes/Sandbox/blob/master/Assets/Code/Scripts/World/NewMesh.cs)
+
 The code snippet below shows how I'd remedy this function. I would change the name to something more 
 understandable, make it short, as well as clear what it is that it does. I would get rid of the 
 outdated variables and functionalities. Most importantly, I would outsource the setting of the ground
@@ -59,6 +61,8 @@ for other humans, which is one of the most important things in programming. In l
 be unclear what the different parts of the code does. Optimally, I would like all my functions to follow
 this style with the approach of outsourcing.<br><br>
 ![Good code ole](images/goodcode_destroy_ole.png)
+
+[code](https://github.com/oleelnes/Sandbox/blob/master/Assets/Code/Scripts/Player%26Camera/DestroyObject.cs)
 <br><br>
 
 In the figure below is an example of code that I am proud of, but which does not necessarily have the
@@ -72,6 +76,8 @@ Above a certain threshold (0.6), trees might be placed, and the probability of a
 increases as the noise value increases. 
 <br><br>
 ![image](images/goodcode_trees_ole.png)
+
+[good code trees](https://github.com/oleelnes/Sandbox/blob/master/Assets/Code/Scripts/World/ChunkObjects.cs)
 
 
 ## Reflection
