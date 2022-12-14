@@ -22,6 +22,7 @@ Not implemented
 * Axe/pickaxe animation not implemented
 * Boss battle scene
 * Crafting and loot
+* Animals
 
 ## Code video
 [Code video](https://youtu.be/8Jg-XYgFbog)
