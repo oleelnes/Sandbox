@@ -32,6 +32,8 @@ I enjoyed the game programming course. I was impressed by the diversity of topic
 for creating engaging and immersive experiences. 
 I also appreciated the hands-on approach of the course, with plenty of opportunities to apply what I learned to project and through the project.
 
+I mainly worked with the animals, but unfortunately I ran out of time before I could integrate them into the environment. I left the things last minute as it was the exam weeks and I wasn't able to implement them on the terrain before the deadline. As a result, they remained unused.
+
 I had the opportunity to learn a wide range of concepts and techniques related to game design and development. 
 I learned about the principles of game design and the different stages of the development process, from concept and planning to implementation and testing. 
 I also learned about the technical aspects of game programming, such as data structures, algorithms, and software design patterns. 
